@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node src/index.js",
     "test": "jest",
-    "format": "prettier-eslint \"src/**/*.js\" --write"
+    "format": "prettier-eslint \"src/**/*.js\" --write",
+    "githook": "npm run format",
+    "postinstall": "husky install && husky add .husky/pre-commit \"npm run githook\""
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-promise": "^4.3.1",
+    "husky": "^6.0.0",
     "jest": "^26.6.3",
     "parcel": "^2.0.0-beta.2",
     "prettier": "^2.2.1",
@@ -37,6 +40,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "socket.io": "^4.0.1"
+    "socket.io": "^4.0.1",
+    "socket.io-redis": "^6.1.0"
   }
 }
