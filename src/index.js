@@ -24,8 +24,7 @@ const serverOpt = sslFileAvailable
   : undefined;
 
 // Load either HTTP / HTTPS module
-const serverModule =
-  sslFileAvailable === undefined ? require("http") : require("https");
+const serverModule = sslFileAvailable ? require("https") : require("http");
 
 // Create HTTP server and listen
 const port = process.env.PORT || 8080;
