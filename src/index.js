@@ -16,7 +16,12 @@ app.use(express.static(publicDir));
 
 // Load SSL certificates, if exists
 const sslFileAvailable = (process.env.KEY && process.env.CERT) !== undefined;
-const serverOpt = sslFileAvailable ? { key: fs.readFileSync(process.env.KEY), cert: fs.readFileSync(process.env.CERT) } : undefined;
+const serverOpt = sslFileAvailable
+  ? {
+      key: fs.readFileSync(process.env.KEY),
+      cert: fs.readFileSync(process.env.CERT)
+    }
+  : undefined;
 
 // Load either HTTP / HTTPS module
 const serverModule =
@@ -25,9 +30,7 @@ const serverModule =
 // Create HTTP server and listen
 const port = process.env.PORT || 8080;
 const server = serverModule.createServer(serverOpt, app).listen(port, () => {
-  console.log(
-    `Listening to ${port}. HTTPS Status: ${sslFileAvailable}`
-  );
+  console.log(`Listening to ${port}. HTTPS Status: ${sslFileAvailable}`);
 });
 
 // Listen to WS connections

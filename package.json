@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node src/index.js",
     "test": "jest",
-    "format": "prettier-eslint \"src/**/*.js\" --write",
-    "githook": "npm run format",
-    "postinstall": "husky install && husky add .husky/pre-commit \"npm run githook\""
+    "format": "prettier-eslint \"src/*.js\" --write",
+    "githook": "npm run format && git add \"src/**/*.js\"",
+    "postinstall": "husky install"
   },
   "repository": {
     "type": "git",
