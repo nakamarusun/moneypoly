@@ -30,7 +30,9 @@ const serverModule =
 // Create HTTP server and listen
 const port = process.env.PORT || 8080;
 const server = serverModule.createServer(serverOpt, app).listen(port, () => {
-  console.log(`Listening to ${port}. HTTPS Status: ${sslFileAvailable}`);
+  console.log(
+    `Listening to localhost:${port}. HTTPS Status: ${sslFileAvailable}`
+  );
 });
 
 // Listen to WS connections
