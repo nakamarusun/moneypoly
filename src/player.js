@@ -1,11 +1,13 @@
 import Property from './property';
-class Player {
+export default class Player {
     //each player will have a piece, balance, list of properties they control and their status jialed or not.
     constructor(piece) {
         this.piece = piece;
         this.balance = 400;
         this.properties = [];
         this.status = "free"; //other status is "jailed"
+        this.position = 0; //a player's position on the board
+        this.rollValue; //saves the player's roll value 
     }
     //method for a player to buy a property, this method checks if the property if owned yet or not
     buy = (property) => {
