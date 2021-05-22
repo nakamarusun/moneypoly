@@ -35,6 +35,39 @@ export default class Player {
         return roll;
     }
 
+    sell = (property) => {
+        if (this.properties.includes(property)){
+            if (property.level < 1){
+                //TODO make popup saying property already at lowest level
+            }
+            else{
+                property.level -= 1;
+                this.balance += (property.price * 0.5);
+                property.price = (property.price / 2);
+            }
+        }
+        else {
+            //TODO make popup saying you don't own this property or smth
+        } 
+    }
+
+    upgrade = (property) => {
+        if (this.properties.includes(property)){
+            if (property.level > 4){
+                //TODO make popup saying property already at lowest level
+            }
+            else{
+                property.level += 1;
+                this.balance -= (property.price);
+                property.price = (property.price * 2);
+            }
+        }
+        else {
+            //TODO make popup saying you don't own this property or smth
+        } 
+    }
+
+    
 
 
 };

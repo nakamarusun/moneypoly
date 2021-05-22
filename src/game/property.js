@@ -4,6 +4,6 @@ export default class Property {
         this.name = name;
         this.price = price;
         this.status = "free";
-        this.level = 0;
+        this.level = 1;
     }
 };
