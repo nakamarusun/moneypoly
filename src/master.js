@@ -1,5 +1,5 @@
 // Load environment variables
-require("dotenv").config();
+require("dotenv").config({ path: "./master.env" });
 
 const express = require("express");
 const path = require("path");

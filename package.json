@@ -4,7 +4,8 @@
   "description": "Best moneypoly game ever",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node src/master.js",
+    "start-worker": "node src/worker.js",
     "test": "jest",
     "format": "prettier-eslint \"src/**/*.js\" --write",
     "githook": "npm run format && git add \"src/*.js\"",
@@ -42,6 +43,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "socket.io": "^4.0.1",
     "socket.io-redis": "^6.1.0"
   }
