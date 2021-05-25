@@ -1,9 +1,11 @@
 // Load environment variables
-require("dotenv").config();
+require("dotenv").config({ path: "./master.env" });
 
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+
+const gamerouter = require("./routes/game");
 
 // Create the express app
 const app = express();
@@ -28,11 +30,11 @@ const serverModule = sslFileAvailable ? require("https") : require("http");
 
 // Create HTTP server and listen
 const port = process.env.PORT || 8080;
-const server = serverModule.createServer(serverOpt, app).listen(port, () => {
+serverModule.createServer(serverOpt, app).listen(port, () => {
   console.log(
     `Listening to localhost:${port}. HTTPS Status: ${sslFileAvailable}`
   );
 });
 
-// Listen to WS connections
-require("socket.io")().listen(server);
+// Register routes
+app.use("/game", gamerouter);
