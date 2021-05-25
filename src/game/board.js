@@ -15,6 +15,7 @@ export default class Board {
       board.push(makeBoardTile("", ""));
     }
     // TODO add actually board tiles
+  }
 
     initBoard(boardSize){ //default boardSize value is 39
         let board = []
@@ -42,4 +43,5 @@ export default class Board {
     });
     console.log(players);
   }
+}
 }
