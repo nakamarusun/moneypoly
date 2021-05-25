@@ -1,9 +1,11 @@
-<<<<<<< HEAD
 import Property from './property';
 let gachaMoney = [50, 100, 150, 200];
-=======
+
 import Property from "./property";
->>>>>>> d13618e2f4e18f238bc64413cb0e931c5c17089c
+
+
+import Property from "./property";
+
 export default class Player {
   // each player will have a piece, balance, list of properties they control and their status jialed or not.
   constructor(piece) {
@@ -57,7 +59,7 @@ export default class Player {
             console.log("You don't own this property");
         } 
     }
-  }
+  
 
     //function to upgrade a property's level
     upgrade = (property) => {
@@ -91,6 +93,4 @@ export default class Player {
     gachaCard = () => {
 
     }
-
-
-};
+  }
