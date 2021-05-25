@@ -9,7 +9,7 @@ export default class Board {
     this.board;
   }
 
-  initBoard(boardSize) {
+  initBoard = (boardSize) => {
     const board = [];
     for (let i = 0; i < boardSize; i++) {
       board.push(makeBoardTile("", ""));
@@ -17,15 +17,8 @@ export default class Board {
     // TODO add actually board tiles
   }
 
-    initBoard(boardSize){ //default boardSize value is 39
-        let board = []
-        for (let i = 0; i < boardSize; i++){
-            board.push(makeBoardTile("", ""));
-        } 
-        //TODO add actually board tiles
-
   // function gets called when game starts
-  initGame(playerSize) {
+  initGame = (playerSize) => {
     const players = [];
     if (playerSize < 2 || playerSize > 4) {
       console.log("invalid amount of players");
@@ -44,4 +37,4 @@ export default class Board {
     console.log(players);
   }
 }
-}
+
