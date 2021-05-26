@@ -36,8 +36,7 @@ export default class Player {
   }
 
   roll() {
-    const roll =
-      Math.floor(Math.random() * 6) + 1 + (Math.floor(Math.random() * 6) + 1);
+    const roll = Math.floor(Math.random() * 6) + 1 + (Math.floor(Math.random() * 6) + 1);
     return roll;
   }
 
@@ -90,7 +89,17 @@ export default class Player {
         return this.position; 
     }
 
-    gachaCard = () => {
-
+    gachaTile = () => {
+      //gacha ios simplified to add or decrease money
+      //roll1 determines if gacha is add or decrease
+      //roll1 === 0 is add and roll1 === 1 is decrease
+      const roll1 = Math.floor(Math.random() * 2);
+      const roll2 = Math.floor(Math.random() * 4);
+      if(roll1 === 0){
+        this.balance += gachaMoney[roll2];
+      }
+      else{
+        this.balance -= gachaMoney[roll2];
+      }
     }
   }
