@@ -1,11 +1,9 @@
-import Property from './property';
+import Property from './property.js';
+import Board from './board.js';
+import {propertyList} from './propertydata.js'
+let board1 = new Board();
 let gachaMoney = [50, 100, 150, 200];
-
-import Property from "./property";
-
-
-import Property from "./property";
-
+board1.initBoard(39);
 export default class Player {
   // each player will have a piece, balance, list of properties they control and their status jialed or not.
   constructor(piece) {
@@ -19,19 +17,26 @@ export default class Player {
 
   // method for a player to buy a property, this method checks if the property if owned yet or not
   buy(property) {
-    // if property is already owned player can't buy the property
-    if (property.status === "owned") {
-      // TODO make a popup to say that property is owned or disable the button if there is one
-    } else {
-      // if property is not owned, function checks if player has enough money to buy the property if they do,
-      // property status becomes owned player's balance gets deducted and the property gets pushed into the properties array of the player.
-      if (this.balance > property.price) {
-        property.status = "owned";
-        this.balance = this.balance - property.price;
-        this.properties.push(property);
+    if(board1.board[this.position].type === "Property"){
+      let property = propertyList.find((a) => {return a.name === board1.board[this.position].name});
+      // if property is already owned player can't buy the property
+      if (property.status === "owned") {
+        // TODO make a popup to say that property is owned or disable the button if there is one
+        console.log("Property is already owned");
       } else {
-        // TODO make a popup saying player does not have enough money
+        // if property is not owned, function checks if player has enough money to buy the property if they do,
+        // property status becomes owned player's balance gets deducted and the property gets pushed into the properties array of the player.
+        if (this.balance > property.price) {
+          property.status = "owned";
+          this.balance = this.balance - property.price;
+          this.properties.push(property);
+        } else {
+          // TODO make a popup saying player does not have enough money
+        }
       }
+    }
+    else{
+      console.log("You are not on a property tile");
     }
   }
 
@@ -42,6 +47,7 @@ export default class Player {
 
     //function to mortgage or downgrade a property's level
     sell = (property) => {
+      let property = propertyList.find((a) => {return a.name === board1.board[this.position].name});
         if (this.properties.includes(property)){
             if (property.level < 1){
                 //TODO make popup saying property already at lowest level
@@ -101,5 +107,9 @@ export default class Player {
       else{
         this.balance -= gachaMoney[roll2];
       }
+    }
+
+    checkPosition = () => {
+      return this.position;
     }
   }

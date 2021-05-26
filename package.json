@@ -50,5 +50,6 @@
     "socket.io": "^4.0.1",
     "socket.io-redis": "^6.1.0",
     "superagent": "^6.1.0"
-  }
+  },
+  "type": "module"
 }

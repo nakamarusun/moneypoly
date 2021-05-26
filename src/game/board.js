@@ -1,7 +1,7 @@
-import propertyList from "./propertydata";
-import Player from "./Player";
+//import propertyList from "./propertydata.js";
+import Player from "./Player.js";
 const PLAYERS = ["Hat", "Bike", "Salt", "Boat"];
-makeBoardTile = (name, type) => {
+let makeBoardTile = (name, type) => {
   return { name: name, type: type }; // type would be property, gacha tile(?), or others
 };
 export default class Board {
