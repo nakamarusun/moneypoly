@@ -1,10 +1,10 @@
 //import propertyList from "./propertydata.js";
-import Player from "./Player.js";
+const Player = require("./Player.js");
 const PLAYERS = ["Hat", "Bike", "Salt", "Boat"];
 let makeBoardTile = (name, type) => {
   return { name: name, type: type }; // type would be property, gacha tile(?), or others
 };
-export default class Board {
+class Board {
   constructor() {
     this.board;
   }
@@ -21,10 +21,10 @@ export default class Board {
     board[4] = makeBoardTile("Instant -100", "Others");
     board[5] = makeBoardTile("Gacha", "Gacha");
     board[6] = makeBoardTile("Museum Macan", "Property");
-    board[7] = makeBoardTile("Gacha", "Gacha")
+    board[7] = makeBoardTile("Gacha", "Gacha");
     board[8] = makeBoardTile("Museum Wayang", "Property");
     board[9] = makeBoardTile("Sea World", "Property");
-    board[10] = makeBoardTile("Free Parking", "Others");
+    board[10] = makeBoardTile("Jail", "Others");
     board[11] = makeBoardTile("Taman Mini", "Property");
     board[12] = makeBoardTile("Gacha", "Gacha");
     board[13] = makeBoardTile("Taman Menteng", "Property");
@@ -55,7 +55,7 @@ export default class Board {
     board[38] = makeBoardTile("Instant -100", "Others");
     board[39] = makeBoardTile("Hotel Indonesia", "Property");
     this.board = board;
-  }
+  };
 
   // function gets called when game starts
   initGame = (playerSize) => {
@@ -75,6 +75,7 @@ export default class Board {
       return a.rollValue < b.rollValue;
     });
     console.log(players);
-  }
+  };
 }
 
+module.exports = Board;
