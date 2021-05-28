@@ -4,6 +4,8 @@ const validator = require("validator");
 const { getRedis } = require("../../redisdb");
 const { genAlphanum } = require("../../util");
 
+const { genToken } = require("../../interserver/inter");
+
 const IDLENGTH = 5; // Room id length
 const WORKERPREFIX = "/io";
 
@@ -24,27 +26,26 @@ function newRoomId(cl, req, res) {
 
     const server = WORKERS[Math.floor(Math.random() * WORKERS.length)]; // Select random server
 
-    // TODO: Use redis namespaces
-    cl.set(id, server, (err, rep) => {
-      if (err) return res.sendStatus(500);
+    // Send request to the worker server
+    const reqUrl = server + WORKERPREFIX + "/new";
+    superagent
+      .post(reqUrl)
+      .set({
+        Authorization: "Bearer " + genToken(),
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      })
+      .send({
+        room: id
+      })
+      .end((err, resp) => {
+        // TODO: Handle server reject / error
+        if (err || resp.statusCode === 500) return res.sendStatus(500);
 
-      // Send request to the worker server
-      const reqUrl = server + WORKERPREFIX + "/new";
-      superagent
-        .post(reqUrl)
-        .set({
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        })
-        .send({
-          room: id
-        })
-        .end((err, resp) => {
-          // TODO: Handle server reject / error
-          if (err || resp.statusCode === 500) return res.sendStatus(500);
+        cl.set(id, server, (err, rep) => {
+          if (err) return res.sendStatus(500);
 
           // TODO: Make sure the server is available
-
           console.log(resp.body);
 
           // Send back the room id and server.
@@ -54,7 +55,7 @@ function newRoomId(cl, req, res) {
             server: server
           });
         });
-    });
+      });
   });
 }
 

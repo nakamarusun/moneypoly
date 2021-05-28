@@ -1,11 +1,10 @@
-const express = require("express");
 const { getRedis } = require("../redisdb");
 const { RoomStatus } = require("./roomstatus");
 
-const router = express.Router();
+const inter = require("../interserver/inter").router;
 
 // Creates a new room in the database.
-router.post("/new", (req, res) => {
+inter.post("/new", (req, res) => {
   const cl = getRedis();
   const room = req.body.room;
 
@@ -23,8 +22,8 @@ router.post("/new", (req, res) => {
   });
 });
 
-router.post("/join", (req, res) => {
+inter.post("/join", (req, res) => {
   res.sendStatus(200);
 });
 
-module.exports = router;
+module.exports = inter;

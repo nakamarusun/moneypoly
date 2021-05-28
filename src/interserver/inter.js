@@ -1,7 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 
-const EXPIRETIME = 30 * 1000;
+const EXPIRETIME = 3 * 1000;
 
 /**
  *
