@@ -1,12 +1,13 @@
 //import propertyList from "./propertydata.js";
-import Player from "./Player.js";
+const Player = require("./Player.js");
 const PLAYERS = ["Hat", "Bike", "Salt", "Boat"];
 let makeBoardTile = (name, type) => {
   return { name: name, type: type }; // type would be property, gacha tile(?), or others
 };
-export default class Board {
+class Board {
   constructor() {
     this.board;
+    this.players = [];
   }
 
   initBoard = (boardSize) => {
@@ -24,7 +25,7 @@ export default class Board {
     board[7] = makeBoardTile("Gacha", "Gacha");
     board[8] = makeBoardTile("Museum Wayang", "Property");
     board[9] = makeBoardTile("Sea World", "Property");
-    board[10] = makeBoardTile("Free Parking", "Others");
+    board[10] = makeBoardTile("Jail", "Others");
     board[11] = makeBoardTile("Taman Mini", "Property");
     board[12] = makeBoardTile("Gacha", "Gacha");
     board[13] = makeBoardTile("Taman Menteng", "Property");
@@ -59,7 +60,6 @@ export default class Board {
 
   // function gets called when game starts
   initGame = (playerSize) => {
-    const players = [];
     if (playerSize < 2 || playerSize > 4) {
       console.log("invalid amount of players");
       return;
@@ -68,12 +68,14 @@ export default class Board {
     for (let i = 0; i < playerSize; i++) {
       const player = new Player(PLAYERS[i]);
       player.rollValue = player.roll();
-      players.push(player);
+      this.players.push(player);
     }
 
     players.sort((a, b) => {
       return a.rollValue < b.rollValue;
     });
-    console.log(players);
+    console.log(this.players);
   };
 }
+
+module.exports = Board;

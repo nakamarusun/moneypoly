@@ -1,4 +1,4 @@
-import Property from "./property.js";
+const Property = require("./property.js");
 const propertyList = [];
 // this file is used to make and contain all the data on properties
 const propertyName = [
@@ -90,4 +90,4 @@ for (let i = 0; i < propertyName.length; i++) {
 //     }
 // }
 
-export { propertyList };
+module.exports = propertyList;

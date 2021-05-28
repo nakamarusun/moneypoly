@@ -1,0 +1,228 @@
+
+@media screen and (max-width: 1000px) {
+    input[type=submit]{
+        font-size: 30px !important;
+        text-align: center !important;
+        width: fit-content !important;
+    }
+    input[type=text]{
+        font-size: 30px !important;
+    }
+    .heading h1{
+        font-size:30px !important;
+    }
+    .heading h4{
+        font-size:25px !important;
+    }
+    .button{
+        font-size: 35px !important;
+    }
+    .nameSection{
+        font-size: 40px !important;
+    }
+    .choiceSection label{
+        font-size: 40px !important;
+    }
+    .choiceBoxes{
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+    }
+    .or{
+        margin: 30px auto !important;
+    }
+    .joinSection label{
+        font-size: 40px !important;
+    }
+    
+   
+}
+@media screen and (max-width: 670px) {
+    input[type=submit]{
+        font-size: 20px !important;
+        text-align: center !important;
+        width: fit-content !important;
+    }
+    input[type=text]{
+        font-size: 20px !important;
+    }
+    .heading h1{
+        font-size:25px !important;
+    }
+    .heading h4{
+        font-size: 20px !important;
+    }
+    .button{
+        font-size: 30px !important;
+    }
+    .nameSection{
+        font-size: 30px !important;
+    }
+    .choiceSection label{
+        font-size: 30px !important;
+    }
+    .choiceBoxes{
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+    }
+    .or{
+        margin: 30px auto !important;
+    }
+    .joinSection label{
+        font-size: 30px !important;
+    }
+    
+   
+}
+.top-logo{
+    background-color: white;
+    margin: 30px auto;
+
+}
+.top-logo img{
+    width: 100px;
+    height: 100px;
+    margin-left: 30px;
+}
+
+
+/* inputName section */
+
+.heading h1{
+    margin: 20px auto;
+    padding: 20px 0;
+    font-size: 40px;
+    cursor: context-menu;
+    font-weight: bolder;
+}
+.heading h4{
+    font-size: 30px;
+    margin: 20px auto;
+    padding: 20px 0;
+    cursor: context-menu;
+    font-weight: normal;
+}
+.nameSection{
+    margin-top: 40px;
+    font-size: 50px;
+    text-align: center;
+}
+.nameSection input{
+    padding: 30px;
+    margin: 30px auto;
+    width: 50%;
+
+}
+
+
+#goButton{
+    background-color: #ee700c;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 30px;
+    margin: 150px auto;
+    display: block;
+    padding: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 7px #f09937;
+    border-width: 0ch;
+
+}
+  
+#goButton:active {
+    position: relative;
+    top: 7px;
+    box-shadow: none;
+  }
+
+
+
+
+
+
+
+/* choiceSection */
+
+.choiceSection{
+    margin: 40px auto;
+    font-size: 40px;
+    text-align: center;
+
+}
+.choiceSection label{
+    font-size: 50px;
+}
+
+.choiceSection input{
+    margin: 0 auto; 
+    cursor: pointer;
+}
+.choiceBoxes{
+    display: flex;
+    margin: 80px auto;
+}
+.or{
+    margin: auto 0;
+}
+.button{
+    display: block;
+    width: 40% !important;
+    height: 100px;
+    background: #ee700c;
+    text-align: center;
+    border-radius: 10px;
+    color: black;
+    font-weight: bold;
+    line-height: 25px;
+    font-size: 35px;
+    cursor: pointer;
+    box-shadow: 0 7px #f09937;
+    border-width: 0ch;
+}
+.button:active {
+    position: relative;
+    top: 7px;
+    box-shadow: none;
+  }
+
+.button p{
+    position: relative;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    font-size: 35px;
+}
+
+
+
+
+
+
+
+
+/* joinSection */
+.joinSection{
+    margin: 30px 50px;
+    font-size: 50px;
+    text-align: center;
+
+
+}
+.joinSection input{
+    padding: 30px;
+    margin: 30px auto;
+    width: 50%;
+}
+
+
+/* additional */
+.none{
+    display: none;
+}
+.smooth{
+    transition: ease-in-out;
+    opacity: 1;
+}
