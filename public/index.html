@@ -13,17 +13,67 @@
   <meta property="og:image" content="">
 
   <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="icon" href="assets/logo.png">
+  
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400" rel="stylesheet">
+  <!-- JS library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
 
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/stylesheet.css">
+  <link rel="stylesheet" href="css/indexStylesheet.css">
 
   <meta name="theme-color" content="#fafafa">
 </head>
 
 <body>
+  <script src="js/indexPage.js"></script>
 
-  <p>Hello world! This is HTML5 Boilerplate.</p>
+  <div class="top-logo">
+    <img src="assets/logo.png" alt="logo-alt">
+  </div>
+  <div class="homeElements">
+    <div class="heading">
+      <div class="container">
+        <h1>Welcome to Moneypoly!!</h1>
+  
+        <h4>The most popular online monopoly game in the world!</h4>
+  
+      </div>
+      <button id="goButton" onclick="goButtonClicked()">GO!</button>
+    </div>
+  
+    <div class="nameSection none smooth" id="nameSection">
+      <label for="userName" id="enterNameLabel">Please Enter Your Name Here:</label><br>
+      <input type="text" id="userName"><br>
+      <input type="submit" id = "playButton" class="button" value="Let's Play!" onclick="validateUserName();">
+    </div>
+
+    <div class="choiceSection none smooth" id="choiceSection">
+      <label id="choiceLabel">Choose How You Want to Play:</label><br>
+      <div class="choiceBoxes">
+        <input type="submit" id = "hostButton" class="button" value="Host a Game!" onclick="hostGameClicked('waitingRoom.html')">
+        <p class="or">Or</p>
+        <input type="submit" id = "joinButton" class="button" value="Join a Game!">
+
+      </div>
+      
+     
+    </div>
+
+    <div class="joinSection none smooth" id="joinSection">
+      <label id="roomCodeLabel">Enter the room code here:</label><br>
+      <input type="text" id="roomCode"><br>
+      <input type="submit" id = "joinButton" class="button" value="Join Game!">
+    </div>
+
+  </div>
+
+
+ 
+
   <script src="js/vendor/modernizr-3.11.2.min.js"></script>
   <script src="js/plugins.js"></script>
   <script src="js/main.js"></script>

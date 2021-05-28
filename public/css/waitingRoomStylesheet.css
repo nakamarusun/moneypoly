@@ -1,0 +1,218 @@
+@media screen and (max-width: 1000px) {
+    #addBotBtn, #removeBtn, #unusedBtn{
+        border-radius: 10px;
+        font-size: 20px !important;
+        
+    }
+    .body-wrapper{
+        width: 100% !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+    .displayUser{
+        font-size: 20px !important;
+        padding: 40px 20px !important;
+        min-width: 70px !important;;
+    }
+    .body-wrapper h1{
+        position: static !important;
+        margin-bottom: 50px;
+        margin-left: 40px;
+       
+    }
+    .bottom-wrapper{
+        margin: 20px auto !important;
+        width: fit-content;
+        overflow: auto;
+        position: static !important;
+    }
+    .startGameButton{
+        margin-left: auto !important;
+        margin-right: auto !important;
+        float: none !important;
+    }
+    .roomCodeBox{
+        margin-left: auto !important;
+        margin-right: auto !important;
+
+    }
+
+}
+
+
+@media screen and (max-width: 670px) {
+    #addBotBtn, #removeBtn, #unusedBtn{
+        font-size: 10px !important;
+        padding: 20px !important;
+        margin:40px 5px !important;
+
+    }
+    .container{
+        overflow: auto !important;
+    }
+    .displayUser{
+        font-size: 20px !important;
+        min-width: 70px !important;
+        margin-right: 0 !important;
+        margin-left: 10px !important;
+
+    }
+    .body-wrapper{
+        width: 100% !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+    .body-wrapper h1{
+        position: static !important;
+        margin-bottom: 50px;
+       
+    }
+    .bottom-wrapper{
+        margin: 20px auto !important;
+        width: fit-content;
+        overflow: auto;
+        position: static !important;
+
+    }
+    .startGameButton{
+        margin-left: auto !important;
+        margin-right: auto !important;
+        float: none !important;
+    }
+    .roomCodeBox{
+        margin-left: auto !important;
+        margin-bottom: auto !important;
+
+    }
+    
+}
+
+
+
+/* waitingRoom */
+#addBotBtn, #removeBtn, #unusedBtn{
+    border-radius: 10px;
+    height: fit-content !important;
+    width: fit-content!important;
+    box-shadow: 0 7px #f1e1ce;
+    border-width: 0ch;
+    background-color: white;
+    color: black;
+    margin: 30px 15px;
+    padding: 30px;
+    cursor: pointer;
+
+}
+
+input[type=button]:active{
+    position: relative;
+    top: 7px;
+    box-shadow: none !important;
+
+}
+
+.body-wrapper{
+    margin-bottom: 100px;
+    margin-left:100px;
+    width:60%;
+    display: inline-block;
+}
+.body-wrapper h1{
+    position: relative;
+    right: 30px;
+    margin-bottom: 50px;
+   
+}
+.bottom-wrapper{
+    margin: 50px;
+    width: fit-content;
+    overflow: auto;
+    position: absolute;
+    top: 140px;
+    right: 30px;
+
+
+}
+.playerLists{
+    display: block;
+    border-radius: 10px;
+}
+.playerList{
+    display: flex;
+    border-radius: 10px; 
+
+}
+.displayUser{
+    background-color: black;
+    color: white;
+    padding: 40px;
+    display: block;
+    margin: 20px;
+    border-radius: 10px;
+    cursor:context-menu;
+    width: 50%;
+}
+
+/* 
+.bottom-wrapper elements */
+.roomCodeBox{
+    background-color: #424242;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: context-menu;
+    margin: 30px 0 30px 30px;
+    display: block;
+    width: fit-content;
+    
+
+    
+}
+.roomCodeBox p{
+    font-size: 20px;
+    margin: 15px auto;
+}
+
+.startGameButton{
+    background: #ee700c;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    text-decoration: none;
+    padding: 10px;
+    margin-top: 80px;
+    display: block;
+    width: fit-content;
+    float: right;
+    box-shadow: 0 7px #f09937;
+    border-width: 0ch;
+    margin-bottom: 20px;
+}
+  
+.startGameButton:active {
+    position: relative;
+    top: 7px;
+    box-shadow: none;
+  }
+
+.startGameButton p{
+    position: relative;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    font-size: 35px;
+}
+#unusedBtn{
+    visibility: hidden;
+}
+
+
+
+#roomCodeDisplay{
+    font-weight: bold;
+    font-size: 30px;
+    background-color: black;
+}
