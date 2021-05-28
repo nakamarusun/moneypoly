@@ -6,6 +6,7 @@ class Property {
     this.status = "free";
     this.level = 1;
     this.color = color;
+    this.owner;
   }
 }
 
