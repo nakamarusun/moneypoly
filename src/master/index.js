@@ -27,6 +27,9 @@ app.use(
 // Register routes
 app.use("/game", gamerouter);
 
+// Setup redis
+require("../redisdb").prefix = "mm:";
+
 // Load SSL certificates, if exists
 const sslFileAvailable = (process.env.KEY && process.env.CERT) !== undefined;
 const serverOpt = sslFileAvailable

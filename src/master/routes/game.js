@@ -1,5 +1,6 @@
 const express = require("express");
 const superagent = require("superagent");
+const validator = require("validator");
 const { getRedis } = require("../../redisdb");
 const { genAlphanum } = require("../../util");
 
@@ -47,6 +48,7 @@ function newRoomId(cl, req, res) {
           console.log(resp.body);
 
           // Send back the room id and server.
+          res.status(201);
           res.send({
             room: id,
             server: server
@@ -69,8 +71,23 @@ router.post("/new", (req, res) => {
   newRoomId(cl, req, res);
 });
 
+// Responds with a server that hosts the game.
 router.post("/join", (req, res) => {
-  res.sendStatus(200);
+  if (!("room" in req.body)) return res.sendStatus(404);
+  if (!validator.isAlphanumeric(req.body.room)) return res.sendStatus(404); // AlNum checks
+
+  // Room
+  const room = req.body.room.toLowerCase();
+
+  const cl = getRedis();
+  cl.get(room, (err, rep) => {
+    if (err) return res.sendStatus(500);
+    if (!rep) return res.sendStatus(204);
+
+    res.send({
+      server: rep
+    });
+  });
 });
 
 module.exports = router;
