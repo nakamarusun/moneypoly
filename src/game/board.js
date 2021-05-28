@@ -7,6 +7,7 @@ let makeBoardTile = (name, type) => {
 class Board {
   constructor() {
     this.board;
+    this.players = [];
   }
 
   initBoard = (boardSize) => {
@@ -59,7 +60,6 @@ class Board {
 
   // function gets called when game starts
   initGame = (playerSize) => {
-    const players = [];
     if (playerSize < 2 || playerSize > 4) {
       console.log("invalid amount of players");
       return;
@@ -68,13 +68,13 @@ class Board {
     for (let i = 0; i < playerSize; i++) {
       const player = new Player(PLAYERS[i]);
       player.rollValue = player.roll();
-      players.push(player);
+      this.players.push(player);
     }
 
     players.sort((a, b) => {
       return a.rollValue < b.rollValue;
     });
-    console.log(players);
+    console.log(this.players);
   };
 }
 

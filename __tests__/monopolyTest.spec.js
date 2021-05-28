@@ -6,13 +6,9 @@ const { TestScheduler } = require("jest");
 
 let board1 = new Board();
 
-board1.initBoard(39);
+board1.initBoard(40);
 
-let property = propertyList.find((a) => {return a.name === "Bundaran HI"});
-
-console.log(property);
-property.price  = property.price * 2;
-console.log(board1.board);
+board1.initGame(4);
 describe("Moneypoly board test", () => {
     test("Whether BINUS exists", () => {
         expect(property).toEqual(expect.anything());
