@@ -16,6 +16,20 @@ const publicDir = path.join(__dirname, "./../public");
 // Serve static files
 app.use(express.static(publicDir));
 
+// Parser
+app.use(express.json({ limit: "1mb" })); // JSON decoder
+app.use(
+  express.urlencoded({
+    extended: true
+  })
+); // URL format decoder
+
+// Register routes
+app.use("/game", gamerouter);
+
+// Setup redis
+require("../redisdb").prefix = "mm:";
+
 // Load SSL certificates, if exists
 const sslFileAvailable = (process.env.KEY && process.env.CERT) !== undefined;
 const serverOpt = sslFileAvailable
@@ -35,6 +49,3 @@ serverModule.createServer(serverOpt, app).listen(port, () => {
     `Listening to localhost:${port}. HTTPS Status: ${sslFileAvailable}`
   );
 });
-
-// Register routes
-app.use("/game", gamerouter);
