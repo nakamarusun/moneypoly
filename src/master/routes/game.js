@@ -85,6 +85,7 @@ router.post("/join", (req, res) => {
     if (err) return res.sendStatus(500);
     if (!rep) return res.sendStatus(204);
 
+    res.status(200);
     res.send({
       server: rep
     });

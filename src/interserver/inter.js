@@ -29,14 +29,14 @@ function authMiddleware(req, res, next) {
   // Check token validity
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.sendStatus(401);
+  if (token == null) return res.sendStatus(403);
 
   // Verify token
   const verify = authToken(token);
   if (verify && verify.exp > Date.now()) {
     next();
   } else {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 }
 

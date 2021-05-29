@@ -29,7 +29,7 @@ app.use(
 ); // URL format decoder
 
 // Register routes
-app.use("/game", gamerouter);
+app.use("/moneypoly/v1", gamerouter);
 
 // Setup redis
 require("../redisdb").prefix = "mm:";

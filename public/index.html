@@ -54,7 +54,7 @@
     <div class="choiceSection none smooth" id="choiceSection">
       <label id="choiceLabel">Choose How You Want to Play:</label><br>
       <div class="choiceBoxes">
-        <input type="submit" id = "hostButton" class="button" value="Host a Game!" onclick="hostGameClicked('waitingRoom.html')">
+        <input type="submit" id = "hostButton" class="button" value="Host a Game!" onclick="hostGameClicked();">
         <p class="or">Or</p>
         <input type="submit" id = "joinButton" class="button" value="Join a Game!">
 
@@ -66,7 +66,7 @@
     <div class="joinSection none smooth" id="joinSection">
       <label id="roomCodeLabel">Enter the room code here:</label><br>
       <input type="text" id="roomCode"><br>
-      <input type="submit" id = "joinButton" class="button" value="Join Game!">
+      <input type="submit" id="joinButton" class="button" value="Join Game!" onclick="joinGameClicked();">
     </div>
 
   </div>
@@ -77,6 +77,7 @@
   <script src="js/vendor/modernizr-3.11.2.min.js"></script>
   <script src="js/plugins.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/clientio.js"></script>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
   <script>
