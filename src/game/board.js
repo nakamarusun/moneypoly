@@ -1,9 +1,10 @@
 //import propertyList from "./propertydata.js";
-const Player = require("./Player.js");
+var Player = require("./player.js");
 const PLAYERS = ["Hat", "Bike", "Salt", "Boat"];
 let makeBoardTile = (name, type) => {
   return { name: name, type: type }; // type would be property, gacha tile(?), or others
 };
+
 class Board {
   constructor() {
     this.board;
@@ -66,15 +67,14 @@ class Board {
     }
 
     for (let i = 0; i < playerSize; i++) {
-      const player = new Player(PLAYERS[i]);
+      let player = new Player(PLAYERS[i]);
       player.rollValue = player.roll();
       this.players.push(player);
     }
 
-    players.sort((a, b) => {
-      return a.rollValue < b.rollValue;
+    this.players.sort((a, b) => {
+      return b.rollValue - a.rollValue;
     });
-    console.log(this.players);
   };
 }
 

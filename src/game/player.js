@@ -1,4 +1,3 @@
-const Board = require("./board.js");
 const propertyList = require("./propertydata.js");
 let gachaMoney = [50, 100, 150, 200];
 class Player {
@@ -19,6 +18,7 @@ class Player {
       let property = propertyList.find((a) => {
         return a.name === activeBoard.board[this.position].name;
       });
+      console.log(property);
       // if property is already owned player can't buy the property
       if (property.status === "owned") {
         // TODO make a popup to say that property is owned or disable the button if there is one
@@ -30,6 +30,7 @@ class Player {
           property.status = "owned";
           this.balance = this.balance - property.price;
           this.properties.push(property);
+          property.owner = this.piece;
         } else {
           // TODO make a popup saying player does not have enough money
         }
@@ -80,20 +81,19 @@ class Player {
   };
 
   //function to move a player's position on the baord
-  move = () => {
+  move = (activeBoard) => {
     if (this.status === 1) {
       this.jailCD -= 1;
       if (this.jailCD === 0) {
         this.status = 0;
       }
-      break;
     } else {
       this.position += this.roll();
       if (this.position > 39) {
         this.position = this.position - 40;
         this.balance += 200;
       }
-      this.checkPosition();
+      this.checkPosition(activeBoard);
     }
   };
 
@@ -105,8 +105,10 @@ class Player {
     const roll2 = Math.floor(Math.random() * 4);
     if (roll1 === 0) {
       this.balance += gachaMoney[roll2];
+      console.log("You have gained $" + gachaMoney[roll2]);
     } else {
       this.balance -= gachaMoney[roll2];
+      console.log("You have lost $" + gachaMoney[roll2]);
     }
   };
 
@@ -119,6 +121,18 @@ class Player {
       this.status = 1;
       this.position = 10;
       this.jailCD = 2;
+    } else if (activeBoard.board[this.position].type === "Property") {
+      let property = propertyList.find((a) => {
+        return a.name === activeBoard.board[this.position].name;
+      });
+      if (property.owner === this.name) {
+        console.log("You are the owner of this property! :)");
+      } else {
+        console.log(
+          "You are not the owner of this property, your balance will be deducted accordingly"
+        );
+        this.balance -= property.price / 10;
+      }
     }
   };
 }
