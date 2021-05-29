@@ -18,15 +18,18 @@
         font-size: 35px !important;
     }
     .nameSection{
-        font-size: 40px !important;
+        font-size: 30px !important;
     }
     .choiceSection label{
-        font-size: 40px !important;
+        font-size: 25px !important;
     }
     .choiceBoxes{
         display: flex;
         flex-direction: column;
         margin: 0 auto;
+    }
+    .choiceBoxes input{
+        margin: 0 auto !important;
     }
     .or{
         margin: 30px auto !important;
@@ -56,15 +59,18 @@
         font-size: 30px !important;
     }
     .nameSection{
-        font-size: 30px !important;
+        font-size: 25px !important;
     }
     .choiceSection label{
-        font-size: 30px !important;
+        font-size: 20px !important;
     }
     .choiceBoxes{
         display: flex;
         flex-direction: column;
         margin: 0 auto;
+    }
+    .choiceBoxes input{
+        margin: 0 auto !important;
     }
     .or{
         margin: 30px auto !important;
@@ -77,7 +83,7 @@
 }
 .top-logo{
     background-color: white;
-    margin: 30px auto;
+    margin-bottom: 30px;
 
 }
 .top-logo img{
@@ -105,12 +111,12 @@
 }
 .nameSection{
     margin-top: 40px;
-    font-size: 50px;
+    font-size: 35px;
     text-align: center;
 }
 .nameSection input{
-    padding: 30px;
-    margin: 30px auto;
+    padding: 5px;
+    margin: 10px auto;
     width: 50%;
 
 }
@@ -141,8 +147,7 @@
 
 
 
-
-
+  
 /* choiceSection */
 
 .choiceSection{
@@ -152,24 +157,25 @@
 
 }
 .choiceSection label{
-    font-size: 50px;
+    font-size: 35px;
 }
 
 .choiceSection input{
     margin: 0 auto; 
     cursor: pointer;
 }
+
 .choiceBoxes{
     display: flex;
-    margin: 80px auto;
+    margin: 30px auto;
 }
 .or{
     margin: auto 0;
 }
 .button{
     display: block;
-    width: 40% !important;
-    height: 100px;
+    width: 300px !important;
+    height: 50px;
     background: #ee700c;
     text-align: center;
     border-radius: 10px;
@@ -196,6 +202,13 @@
     font-size: 35px;
 }
 
+#hostButton{
+    margin-right: 30px;
+}
+
+#joinButton{
+    margin-left: 30px;
+}
 
 
 
@@ -221,8 +234,4 @@
 /* additional */
 .none{
     display: none;
-}
-.smooth{
-    transition: ease-in-out;
-    opacity: 1;
 }
