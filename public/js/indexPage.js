@@ -1,16 +1,10 @@
-
-
-
-
-
 /* eslint-disable no-undef */
+
 $(document).ready(function(){
     $("#goButton").click(function(){
-      $("#goButton").fadeOut("slow", () => {
-        $("#nameSection").fadeIn("slow");
+      $("#goButton").fadeOut("slow",() => {
+        $("#nameSection").fadeIn();
       });
-
-
     });
 
 });
@@ -24,8 +18,12 @@ function validateUserName() {
         
     }
     $(document).ready(function(){
-        $("#nameSection").fadeOut();
-        $("#choiceSection").fadeIn();
+        $("#playButton").fadeOut("slow", ()=>{
+            $("#choiceSection").fadeIn();
+        })
+        
+        
+
     
     });
 
@@ -35,9 +33,11 @@ function validateUserName() {
 
 $(document).ready(function(){
     $("#joinButton").click(function(){
-      $("#choiceSection").fadeOut("slow");
-      $("#joinSection").removeClass("none");
-      $("#joinSection").fadeIn();
+      $("#choiceSection").fadeOut("slow", () => {
+        $("#joinSection").fadeIn();
+
+      });
+      
 
 
     });
