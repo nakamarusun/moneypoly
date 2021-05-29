@@ -3,8 +3,8 @@ body{
     background-color: black;
     color: black;
     font-family: 'Montserrat', sans-serif;
-    background-size:cover;
-    background-position:center;
+    /* background-size:cover; */
+    /* background-position:center; */
     background-image: url('https://images-na.ssl-images-amazon.com/images/S/sgp-catalog-images/region_US/di3a2-ACJM5H51YKB-Full-Image_GalleryBackground-en-US-1489722831648._SX1080_.jpg');
     position: relative;
 }
@@ -12,16 +12,10 @@ body{
     background-color: #ee700c;
     text-align: center;
     border-radius: 10px;
-    margin: auto 20px;
+    margin: auto;
+    max-width: 800px;
 }
 input{
     border-radius: 10px;
     
 }
-
-
-
-
-
-
-

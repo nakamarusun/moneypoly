@@ -6,9 +6,9 @@
 /* eslint-disable no-undef */
 $(document).ready(function(){
     $("#goButton").click(function(){
-      $("#goButton").fadeOut("slow");
-      $("#nameSection").removeClass("none")
-      $("#nameSection").fadein();
+      $("#goButton").fadeOut("slow", () => {
+        $("#nameSection").fadeIn("slow");
+      });
 
 
     });
@@ -25,8 +25,7 @@ function validateUserName() {
     }
     $(document).ready(function(){
         $("#nameSection").fadeOut();
-        $("#choiceSection").removeClass("none");
-        $("#choiceSection").fadein();
+        $("#choiceSection").fadeIn();
     
     });
 
@@ -38,7 +37,7 @@ $(document).ready(function(){
     $("#joinButton").click(function(){
       $("#choiceSection").fadeOut("slow");
       $("#joinSection").removeClass("none");
-      $("#joinSection").fadein();
+      $("#joinSection").fadeIn();
 
 
     });

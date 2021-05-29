@@ -6,11 +6,18 @@ const sio = require("socket.io");
 const sior = require("socket.io-redis");
 const express = require("express");
 
-const engine = require("./engine");
+const engine = require("./engine/engine");
 const comm = require("./mastercomm");
 
 // Create the express app
 const app = express();
+
+// Allow CORS from master server
+app.use(
+  require("cors")({
+    origin: process.env.MASTERSERVER
+  })
+);
 
 // Parser
 app.use(express.json({ limit: "1mb" })); // JSON decoder
@@ -46,7 +53,14 @@ const server = serverModule.createServer(serverOpt, app).listen(port, () => {
 });
 
 // Listen to WS connections
-const io = sio().listen(server);
+const io = sio(server, {
+  cors: {
+    // CORS is a must
+    origin: process.env.MASTERSERVER,
+    methods: ["GET", "POST"]
+  }
+});
+
 io.adapter(
   sior({
     host: "localhost",
@@ -55,4 +69,3 @@ io.adapter(
 );
 
 engine(io); // Initialize game server
-console.log("Server started!");
