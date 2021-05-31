@@ -1,5 +1,5 @@
 const propertyList = require("./propertydata.js");
-let gachaMoney = [50, 100, 150, 200];
+const gachaMoney = [50, 100, 150, 200];
 class Player {
   // each player will have a piece, balance, list of properties they control and their status jialed or not.
   constructor(piece, activeBoard) {
@@ -16,7 +16,7 @@ class Player {
   // method for a player to buy a property, this method checks if the property if owned yet or not
   buy() {
     if (this.activeBoard[this.position].type === "Property") {
-      let property = propertyList.find((a) => {
+      const property = propertyList.find((a) => {
         return a.name === this.activeBoard[this.position].name;
       });
       console.log(property);
@@ -48,14 +48,14 @@ class Player {
     return roll;
   }
 
-  //function to mortgage or downgrade a property's level
-  sell = (property) => {
-    let prop = propertyList.find((a) => {
+  // function to mortgage or downgrade a property's level
+  sell(property) {
+    const prop = propertyList.find((a) => {
       return a.name === this.activeBoard[property].name;
     });
     if (this.properties.includes(prop)) {
       if (prop.level < 1) {
-        //TODO make popup saying property already at lowest level
+        // TODO make popup saying property already at lowest level
         console.log("Property already at the lowest level");
       } else {
         prop.level -= 1;
@@ -63,19 +63,19 @@ class Player {
         prop.price = prop.price / 2;
       }
     } else {
-      //TODO make popup saying you don't own this property or smth
+      // TODO make popup saying you don't own this property or smth
       console.log("You don't own this property");
     }
-  };
+  }
 
-  //function to upgrade a property's level
-  upgrade = (property) => {
-    let prop = propertyList.find((a) => {
+  // function to upgrade a property's level
+  upgrade(property) {
+    const prop = propertyList.find((a) => {
       return a.name === this.activeBoard[property].name;
     });
     if (this.properties.includes(prop)) {
       if (prop.level > 4) {
-        //TODO make popup saying property already at highest level
+        // TODO make popup saying property already at highest level
         console.log("Property already at the highest level");
       } else {
         prop.level += 1;
@@ -83,13 +83,13 @@ class Player {
         prop.price = prop.price * 2;
       }
     } else {
-      //TODO make popup saying you don't own this property or smth
+      // TODO make popup saying you don't own this property or smth
       console.log("You don't own this property");
     }
-  };
+  }
 
-  //function to move a player's position on the baord
-  move = () => {
+  // function to move a player's position on the baord
+  move() {
     if (this.status === 1) {
       this.jailCD -= 1;
       if (this.jailCD === 0) {
@@ -106,12 +106,12 @@ class Player {
       }
       this.checkPosition(this.activeBoard);
     }
-  };
+  }
 
-  gachaTile = () => {
-    //gacha ios simplified to add or decrease money
-    //roll1 determines if gacha is add or decrease
-    //roll1 === 0 is add and roll1 === 1 is decrease
+  gachaTile() {
+    // gacha ios simplified to add or decrease money
+    // roll1 determines if gacha is add or decrease
+    // roll1 === 0 is add and roll1 === 1 is decrease
     const roll1 = Math.floor(Math.random() * 2);
     const roll2 = Math.floor(Math.random() * 4);
     if (roll1 === 0) {
@@ -121,10 +121,10 @@ class Player {
       this.balance -= gachaMoney[roll2];
       console.log("You have lost $" + gachaMoney[roll2]);
     }
-  };
+  }
 
-  //method to check the position of the player, used for identifying if the player is on a special tile
-  checkPosition = () => {
+  // method to check the position of the player, used for identifying if the player is on a special tile
+  checkPosition() {
     if (this.activeBoard[this.position].type === "Gacha") {
       this.gachaTile();
     } else if (this.activeBoard[this.position].name === "Instant -100") {
@@ -134,7 +134,7 @@ class Player {
       this.position = 10;
       this.jailCD = 2;
     } else if (this.activeBoard[this.position].type === "Property") {
-      let property = propertyList.find((a) => {
+      const property = propertyList.find((a) => {
         return a.name === this.activeBoard[this.position].name;
       });
       if (property.owner === this.name) {
@@ -146,7 +146,7 @@ class Player {
         this.balance -= property.price / 10;
       }
     }
-  };
+  }
 }
 
 module.exports = Player;
