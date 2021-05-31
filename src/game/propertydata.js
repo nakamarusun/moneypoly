@@ -23,7 +23,7 @@ const propertyName = [
   "Merdeka Square",
   "Planetarium Jakarta",
   "Bundaran HI",
-  "Hotel Indonesia"
+  "Hotel Indonesia",
 ];
 const propertyPrice = [
   60,
@@ -47,7 +47,7 @@ const propertyPrice = [
   300,
   320,
   350,
-  400
+  400,
 ];
 const propertyColor = [
   "Brown",
@@ -71,7 +71,7 @@ const propertyColor = [
   "Green",
   "Green",
   "Blue",
-  "Blue"
+  "Blue",
 ];
 for (let i = 0; i < propertyName.length; i++) {
   const newProperty = new Property(

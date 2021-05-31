@@ -184,7 +184,7 @@ input[type=button]:active{
 }
 
 .startGameButton{
-    background: #ee700c;
+    background: #168b12;
     text-align: center;
     border-radius: 10px;
     color: white;
@@ -196,9 +196,10 @@ input[type=button]:active{
     display: block;
     width: fit-content;
     float: right;
-    box-shadow: 0 7px #f09937;
+    box-shadow: 0 7px #18be12;
     border-width: 0ch;
     margin-bottom: 20px;
+    cursor:context-menu;
 }
   
 .startGameButton:active {
@@ -218,8 +219,6 @@ input[type=button]:active{
 #unusedBtn{
     visibility: hidden;
 }
-
-
 
 #roomCodeDisplay{
     font-weight: bold;

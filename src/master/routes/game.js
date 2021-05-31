@@ -33,10 +33,10 @@ function newRoomId(cl, req, res) {
       .set({
         Authorization: "Bearer " + genToken(),
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
       })
       .send({
-        room: id
+        room: id,
       })
       .end((err, resp) => {
         // TODO: Handle server reject / error
@@ -52,7 +52,7 @@ function newRoomId(cl, req, res) {
           res.status(201);
           res.send({
             room: id,
-            server: server
+            server: server,
           });
         });
       });
@@ -87,7 +87,7 @@ router.post("/join", (req, res) => {
 
     res.status(200);
     res.send({
-      server: rep
+      server: rep,
     });
   });
 });
