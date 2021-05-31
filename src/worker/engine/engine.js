@@ -5,7 +5,9 @@ module.exports = function (io) {
 
   console.log("IO server started");
 
-  main.on("connection", () => {
+  main.on("connection", (sock) => {
+    const param = sock.handshake.query;
+    console.log(param);
     console.log("Connection made");
   });
 };

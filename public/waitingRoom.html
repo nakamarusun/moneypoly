@@ -21,6 +21,8 @@
   <link rel="stylesheet" href="css/general.css">
   <link rel="stylesheet" href="css/waitingRoom.css">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <meta name="theme-color" content="#fafafa">
 </head>
 
@@ -63,14 +65,22 @@
       </a>
 
     </div>
-    
-  
 
- 
+
+    <div id="namequery" class="">
+      <div class="box">
+        Enter your name:
+        <form>
+          <input type="text" id="usernamebox">
+        </form>
+        <button onclick="validateAndStart(document.getElementById('usernamebox').value);">Play!</button>
+      </div>
+    </div>
 
   <script src="js/vendor/modernizr-3.11.2.min.js"></script>
   <script src="js/plugins.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/game.js"></script>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
   <script>
