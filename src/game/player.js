@@ -4,7 +4,7 @@ class Player {
   // each player will have a piece, balance, list of properties they control and their status jialed or not.
   constructor(piece) {
     this.piece = piece;
-    this.balance = 400;
+    this.balance = 1000;
     this.properties = [];
     this.status = 0; // 0 === free, 1 === jailed
     this.jailCD = 0;
@@ -29,6 +29,7 @@ class Player {
         if (this.balance > property.price) {
           property.status = "owned";
           this.balance = this.balance - property.price;
+          property.price = property.price * 2;
           this.properties.push(property);
           property.owner = this.piece;
         } else {
@@ -47,15 +48,18 @@ class Player {
   }
 
   //function to mortgage or downgrade a property's level
-  sell = (property) => {
-    if (this.properties.includes(property)) {
-      if (property.level < 1) {
+  sell = (property, activeBoard) => {
+    let prop = propertyList.find((a) => {
+      return a.name === activeBoard.board[property].name;
+    });
+    if (this.properties.includes(prop)) {
+      if (prop.level < 1) {
         //TODO make popup saying property already at lowest level
         console.log("Property already at the lowest level");
       } else {
-        property.level -= 1;
-        this.balance += property.price * 0.5;
-        property.price = property.price / 2;
+        prop.level -= 1;
+        this.balance += prop.price * 0.25;
+        prop.price = prop.price / 2;
       }
     } else {
       //TODO make popup saying you don't own this property or smth
@@ -64,15 +68,18 @@ class Player {
   };
 
   //function to upgrade a property's level
-  upgrade = (property) => {
-    if (this.properties.includes(property)) {
-      if (property.level > 4) {
+  upgrade = (property, activeBoard) => {
+    let prop = propertyList.find((a) => {
+      return a.name === activeBoard.board[property].name;
+    });
+    if (this.properties.includes(prop)) {
+      if (prop.level > 4) {
         //TODO make popup saying property already at highest level
         console.log("Property already at the highest level");
       } else {
-        property.level += 1;
-        this.balance -= property.price;
-        property.price = property.price * 2;
+        prop.level += 1;
+        this.balance -= prop.price;
+        prop.price = prop.price * 2;
       }
     } else {
       //TODO make popup saying you don't own this property or smth
@@ -92,6 +99,9 @@ class Player {
       if (this.position > 39) {
         this.position = this.position - 40;
         this.balance += 200;
+        console.log(
+          "You passed through the start tile you will be awarded $200"
+        );
       }
       this.checkPosition(activeBoard);
     }
