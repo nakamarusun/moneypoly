@@ -2,7 +2,7 @@ const propertyList = require("./propertydata.js");
 let gachaMoney = [50, 100, 150, 200];
 class Player {
   // each player will have a piece, balance, list of properties they control and their status jialed or not.
-  constructor(piece) {
+  constructor(piece, activeBoard) {
     this.piece = piece;
     this.balance = 1000;
     this.properties = [];
@@ -10,13 +10,14 @@ class Player {
     this.jailCD = 0;
     this.position = 0; // a player's position on the board
     this.rollValue; // saves the player's roll value
+    this.activeBoard = activeBoard;
   }
 
   // method for a player to buy a property, this method checks if the property if owned yet or not
-  buy(activeBoard) {
-    if (activeBoard.board[this.position].type === "Property") {
+  buy() {
+    if (this.activeBoard[this.position].type === "Property") {
       let property = propertyList.find((a) => {
-        return a.name === activeBoard.board[this.position].name;
+        return a.name === this.activeBoard[this.position].name;
       });
       console.log(property);
       // if property is already owned player can't buy the property
@@ -48,9 +49,9 @@ class Player {
   }
 
   //function to mortgage or downgrade a property's level
-  sell = (property, activeBoard) => {
+  sell = (property) => {
     let prop = propertyList.find((a) => {
-      return a.name === activeBoard.board[property].name;
+      return a.name === this.activeBoard[property].name;
     });
     if (this.properties.includes(prop)) {
       if (prop.level < 1) {
@@ -68,9 +69,9 @@ class Player {
   };
 
   //function to upgrade a property's level
-  upgrade = (property, activeBoard) => {
+  upgrade = (property) => {
     let prop = propertyList.find((a) => {
-      return a.name === activeBoard.board[property].name;
+      return a.name === this.activeBoard[property].name;
     });
     if (this.properties.includes(prop)) {
       if (prop.level > 4) {
@@ -88,7 +89,7 @@ class Player {
   };
 
   //function to move a player's position on the baord
-  move = (activeBoard) => {
+  move = () => {
     if (this.status === 1) {
       this.jailCD -= 1;
       if (this.jailCD === 0) {
@@ -103,7 +104,7 @@ class Player {
           "You passed through the start tile you will be awarded $200"
         );
       }
-      this.checkPosition(activeBoard);
+      this.checkPosition(this.activeBoard);
     }
   };
 
@@ -122,18 +123,19 @@ class Player {
     }
   };
 
-  checkPosition = (activeBoard) => {
-    if (activeBoard.board[this.position].type === "Gacha") {
+  //method to check the position of the player, used for identifying if the player is on a special tile
+  checkPosition = () => {
+    if (this.activeBoard[this.position].type === "Gacha") {
       this.gachaTile();
-    } else if (activeBoard.board[this.position].name === "Instant -100") {
+    } else if (this.activeBoard[this.position].name === "Instant -100") {
       this.balance -= 100;
-    } else if (activeBoard.board[this.position].name === "Go to Jail") {
+    } else if (this.activeBoard[this.position].name === "Go to Jail") {
       this.status = 1;
       this.position = 10;
       this.jailCD = 2;
-    } else if (activeBoard.board[this.position].type === "Property") {
+    } else if (this.activeBoard[this.position].type === "Property") {
       let property = propertyList.find((a) => {
-        return a.name === activeBoard.board[this.position].name;
+        return a.name === this.activeBoard[this.position].name;
       });
       if (property.owner === this.name) {
         console.log("You are the owner of this property! :)");
