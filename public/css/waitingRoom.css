@@ -6,7 +6,7 @@
     }
     .body-wrapper{
         width: 100% !important;
-        display: block !important;
+        display: block ;
         margin: 0 auto !important;
     }
     .displayUser{
@@ -58,7 +58,6 @@
         margin-right: 10px !important;
         margin-left: 10px !important;
         padding: 20px 10px!important;
-        height: 20px !important;
 
     }
     .playerList{
@@ -66,7 +65,7 @@
     }
     .body-wrapper{
         width: 100% !important;
-        display: block !important;
+        display: block;
         margin: 0 auto !important;
     }
     .body-wrapper h1{
@@ -130,7 +129,7 @@ input[type=button]:active{
 .body-wrapper h1{
     position: relative;
     right: 30px;
-    margin-bottom: 50px;
+    margin: 50px 0px;
    
 }
 .bottom-wrapper{

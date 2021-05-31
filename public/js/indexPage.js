@@ -35,6 +35,7 @@ $(document).ready(function(){
 $(document).ready(function(){
   $(".startGameButton").click(function(){
     $(".body-wrapper, .bottom-wrapper").fadeOut("slow", () => {
+      $(".body-wrapper, .bottom-wrapper").hide();
       $(".infoSection").fadeIn();
       $(".table").fadeIn();
 

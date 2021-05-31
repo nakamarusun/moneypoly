@@ -415,6 +415,16 @@ h6 {
 }
 /* 
 for info section */
+@media screen and (max-width: 670px) {
+  .infoSection{
+    font-size: 17px !important;
+    width: 100% !important;
+  }
+  .infoSection p{
+    margin-top: 35px !important;
+  }
+
+}
 
 .infoSection{
   background-color: white;
