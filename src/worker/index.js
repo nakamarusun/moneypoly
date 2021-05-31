@@ -15,7 +15,7 @@ const app = express();
 // Allow CORS from master server
 app.use(
   require("cors")({
-    origin: process.env.MASTERSERVER,
+    origin: process.env.MASTERSERVER
   })
 );
 
@@ -23,7 +23,7 @@ app.use(
 app.use(express.json({ limit: "1mb" })); // JSON decoder
 app.use(
   express.urlencoded({
-    extended: true,
+    extended: true
   })
 ); // URL format decoder
 
@@ -37,7 +37,7 @@ const sslFileAvailable = (process.env.KEY && process.env.CERT) !== undefined;
 const serverOpt = sslFileAvailable
   ? {
       key: fs.readFileSync(process.env.KEY),
-      cert: fs.readFileSync(process.env.CERT),
+      cert: fs.readFileSync(process.env.CERT)
     }
   : undefined;
 
@@ -57,14 +57,14 @@ const io = sio(server, {
   cors: {
     // CORS is a must
     origin: process.env.MASTERSERVER,
-    methods: ["GET", "POST"],
-  },
+    methods: ["GET", "POST"]
+  }
 });
 
 io.adapter(
   sior({
     host: "localhost",
-    port: process.env.REDISPORT || 6379,
+    port: process.env.REDISPORT || 6379
   })
 );
 

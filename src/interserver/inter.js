@@ -10,7 +10,7 @@ const EXPIRETIME = 3 * 1000;
  */
 function genToken(expires = EXPIRETIME) {
   const payload = {
-    exp: Date.now() + expires,
+    exp: Date.now() + expires
   };
 
   return jwt.sign(payload, process.env.JWTKEY);

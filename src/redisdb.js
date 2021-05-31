@@ -9,6 +9,6 @@ module.exports.prefix = ""; // Prefix the redis will do its operation to.
 module.exports.getRedis = function () {
   // TODO: Use accounts and use namespaces
   return redis.createClient(process.env.REDISPORT, {
-    prefix: module.exports.prefix,
+    prefix: module.exports.prefix
   });
 };

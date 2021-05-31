@@ -16,7 +16,7 @@ const publicDir = path.join(__dirname, "../../public");
 // Serve static files
 app.use(
   express.static(publicDir, {
-    extensions: ["html", "htm"],
+    extensions: ["html", "htm"]
   })
 );
 
@@ -24,7 +24,7 @@ app.use(
 app.use(express.json({ limit: "1mb" })); // JSON decoder
 app.use(
   express.urlencoded({
-    extended: true,
+    extended: true
   })
 ); // URL format decoder
 
@@ -39,7 +39,7 @@ const sslFileAvailable = (process.env.KEY && process.env.CERT) !== undefined;
 const serverOpt = sslFileAvailable
   ? {
       key: fs.readFileSync(process.env.KEY),
-      cert: fs.readFileSync(process.env.CERT),
+      cert: fs.readFileSync(process.env.CERT)
     }
   : undefined;
 
