@@ -6,7 +6,6 @@ $(document).ready(function(){
         $("#nameSection").fadeIn();
       });
     });
-
 });
 
 function validateUserName() {
@@ -21,28 +20,29 @@ function validateUserName() {
         $("#playButton").fadeOut("slow", ()=>{
             $("#choiceSection").fadeIn();
         })
-        
-        
-
-    
-    });
-
-
-    
+    });   
 }
 
 $(document).ready(function(){
     $("#joinButton").click(function(){
       $("#choiceSection").fadeOut("slow", () => {
         $("#joinSection").fadeIn();
-
       });
-      
+    });
+});
 
+//Transition waiting to board
+$(document).ready(function(){
+  $(".startGameButton").click(function(){
+    $(".body-wrapper, .bottom-wrapper").fadeOut("slow", () => {
+      $(".body-wrapper, .bottom-wrapper").hide();
+      $(".infoSection").fadeIn();
+      $(".table").fadeIn();
 
     });
-
+  });
 });
+
 
 // Requests to create a new room from the server
 function hostGameClicked() {

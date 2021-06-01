@@ -16,7 +16,7 @@ class Board {
     for (let i = 0; i < boardSize; i++) {
       board.push(makeBoardTile("", ""));
     }
-    board[0] = makeBoardTile("Start", "Property");
+    board[0] = makeBoardTile("Start", "Others");
     board[1] = makeBoardTile("Taman Safari", "Property");
     board[2] = makeBoardTile("Gacha", "Gacha");
     board[3] = makeBoardTile("Ancol", "Property");
