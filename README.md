@@ -27,9 +27,10 @@ Download and install dependencies
 npm install
 ```
 
-#### Depending on whether you want to run both worker, master or either one, do the following:
+### Running the program:
+Depending on whether you want to run both worker, master or either one, do the following:
 
-##### Run worker instance:
+#### a. Run worker instance:
 
 Duplicate worker.env.example, and rename the new one to worker.env
 ```
@@ -39,13 +40,13 @@ worker.env.example >> worker.env
 
 Fill up the values in the file with accordance to the comments
 
-Run the worker instance
+Run the worker  through node
 
 ```bash
 node run start-worker
 ```
 
-##### Run master instance:
+#### b. Run master instance:
 
 Duplicate master.env.example, and rename the new one to master.env
 ```
@@ -55,14 +56,14 @@ master.env.example >> master.env
 
 Fill up the values in the file with accordance to the comments
 
-Run the master instance
+Run the master through node
 
 ```bash
 node run start
 ```
 
-##### Run both worker and master instances:
-Do both `Run worker instance` and `Run master instance` above with the same order.
+#### c. Run both worker and master instances:
+Do both `a. Run worker instance` and `b. Run master instance` in order.
 
 # Scripts
 - npm test: Run Jest tests on scripts
