@@ -3,6 +3,15 @@
 
 This is the best game ever to ever be conceived in the entire world.
 
+- [Moneypoly](#moneypoly)
+- [Description](#description)
+- [Instructions](#instructions)
+    - [Running the program](#running-the-program)
+      - [a. Run worker instance](#a-run-worker-instance)
+      - [b. Run master instance](#b-run-master-instance)
+      - [c. Run both worker and master instances](#c-run-both-worker-and-master-instances)
+- [Scripts](#scripts)
+
 # Description
 This repository contains both the server and worker instances for a monopoly-like game. To run the game, several dependencies are needed:
 - Node.js
@@ -27,10 +36,10 @@ Download and install dependencies
 npm install
 ```
 
-### Running the program:
+### Running the program
 Depending on whether you want to run both worker, master or either one, do the following:
 
-#### a. Run worker instance:
+#### a. Run worker instance
 
 Duplicate worker.env.example, and rename the new one to worker.env
 ```
@@ -46,7 +55,7 @@ Run the worker  through node
 node run start-worker
 ```
 
-#### b. Run master instance:
+#### b. Run master instance
 
 Duplicate master.env.example, and rename the new one to master.env
 ```
@@ -62,7 +71,7 @@ Run the master through node
 node run start
 ```
 
-#### c. Run both worker and master instances:
+#### c. Run both worker and master instances
 Do both `a. Run worker instance` and `b. Run master instance` in order.
 
 # Scripts
