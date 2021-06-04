@@ -1,3 +1,28 @@
+// eslint-disable-next-line no-var
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=typeof require==="function"&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=typeof require==="function"&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+const propertyList = require("../../src/game/propertydata");
+
+// propertyList.forEach(function(e){
+//   console.log(e);
+
+// });
+},{"../../src/game/propertydata":3}],2:[function(require,module,exports){
+class Property {
+  // each property will have their own prices, their own status if they ware owned or not and their building level once a palyer own a full neighbourhood
+  constructor(name, price, color) {
+    this.name = name;
+    this.price = price;
+    this.status = "free";
+    this.level = 1;
+    this.color = color;
+    // eslint-disable-next-line no-unused-expressions
+    this.owner;
+  }
+}
+
+module.exports = Property;
+
+},{}],3:[function(require,module,exports){
 const Property = require("./property.js");
 const propertyList = [];
 // this file is used to make and contain all the data on properties
@@ -92,3 +117,5 @@ for (let i = 0; i < propertyName.length; i++) {
 // }
 
 module.exports = propertyList;
+
+},{"./property.js":2}]},{},[1]);
