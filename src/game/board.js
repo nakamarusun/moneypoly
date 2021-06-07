@@ -1,4 +1,4 @@
-// import propertyList from "./propertydata.js";
+const propertyList = require("./propertydata.js");
 const Player = require("./player.js");
 const PLAYERS = ["Hat", "Bike", "Salt", "Boat"];
 const makeBoardTile = (name, type) => {
@@ -9,6 +9,7 @@ class Board {
   constructor() {
     this.board;
     this.players = [];
+    this.turn = 0;
   }
 
   initBoard(boardSize) {
@@ -75,6 +76,16 @@ class Board {
     this.players.sort((a, b) => {
       return b.rollValue - a.rollValue;
     });
+  }
+
+  returnBoard() {
+    const playerList = [];
+    const boardState = propertyList;
+    const turnNumber = this.turn;
+    for (let i = 0; i < this.players.length; i++) {
+      playerList.push(this.players[i]);
+    }
+    return { boardState, playerList, turnNumber };
   }
 }
 
