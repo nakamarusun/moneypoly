@@ -6,7 +6,7 @@ class Player {
     this.piece = piece;
     this.balance = 1000;
     this.properties = [];
-    this.status = 0; // 0 === free, 1 === jailed
+    this.status = 0; // 0 === free, 1 === jailed, 2 === lost
     this.jailCD = 0;
     this.position = 0; // a player's position on the board
     this.rollValue; // saves the player's roll value
@@ -15,30 +15,34 @@ class Player {
 
   // method for a player to buy a property, this method checks if the property if owned yet or not
   buy() {
-    if (this.activeBoard[this.position].type === "Property") {
-      const property = propertyList.find((a) => {
-        return a.name === this.activeBoard[this.position].name;
-      });
-      console.log(property);
-      // if property is already owned player can't buy the property
-      if (property.status === "owned") {
-        // TODO make a popup to say that property is owned or disable the button if there is one
-        console.log("Property is already owned");
-      } else {
-        // if property is not owned, function checks if player has enough money to buy the property if they do,
-        // property status becomes owned player's balance gets deducted and the property gets pushed into the properties array of the player.
-        if (this.balance > property.price) {
-          property.status = "owned";
-          this.balance = this.balance - property.price;
-          property.price = property.price * 2;
-          this.properties.push(property);
-          property.owner = this.piece;
-        } else {
-          // TODO make a popup saying player does not have enough money
-        }
-      }
+    if (this.status === 2) {
+      return "you have lost this game you cannot act anymore";
     } else {
-      console.log("You are not on a property tile");
+      if (this.activeBoard[this.position].type === "Property") {
+        const property = propertyList.find((a) => {
+          return a.name === this.activeBoard[this.position].name;
+        });
+        console.log(property);
+        // if property is already owned player can't buy the property
+        if (property.status === "owned") {
+          // TODO make a popup to say that property is owned or disable the button if there is one
+          console.log("Property is already owned");
+        } else {
+          // if property is not owned, function checks if player has enough money to buy the property if they do,
+          // property status becomes owned player's balance gets deducted and the property gets pushed into the properties array of the player.
+          if (this.balance > property.price) {
+            property.status = "owned";
+            this.balance = this.balance - property.price;
+            property.price = property.price * 2;
+            this.properties.push(property);
+            property.owner = this.piece;
+          } else {
+            // TODO make a popup saying player does not have enough money
+          }
+        }
+      } else {
+        console.log("You are not on a property tile");
+      }
     }
   }
 
@@ -50,21 +54,25 @@ class Player {
 
   // function to mortgage or downgrade a property's level
   sell(property) {
-    const prop = propertyList.find((a) => {
-      return a.name === this.activeBoard[property].name;
-    });
-    if (this.properties.includes(prop)) {
-      if (prop.level < 1) {
-        // TODO make popup saying property already at lowest level
-        console.log("Property already at the lowest level");
-      } else {
-        prop.level -= 1;
-        this.balance += prop.price * 0.25;
-        prop.price = prop.price / 2;
-      }
+    if (this.status === 2) {
+      return "you have lost this game you cannot act anymore";
     } else {
-      // TODO make popup saying you don't own this property or smth
-      console.log("You don't own this property");
+      const prop = propertyList.find((a) => {
+        return a.name === this.activeBoard[property].name;
+      });
+      if (this.properties.includes(prop)) {
+        if (prop.level < 1) {
+          // TODO make popup saying property already at lowest level
+          console.log("Property already at the lowest level");
+        } else {
+          prop.level -= 1;
+          this.balance += prop.price * 0.25;
+          prop.price = prop.price / 2;
+        }
+      } else {
+        // TODO make popup saying you don't own this property or smth
+        console.log("You don't own this property");
+      }
     }
   }
 
@@ -95,6 +103,9 @@ class Player {
       if (this.jailCD === 0) {
         this.status = 0;
       }
+    } else if (this.status === 2) {
+      console.log("you have lost this game you cannot act anymore");
+      return "you have lost this game you cannot act anymore";
     } else {
       this.position += this.roll();
       if (this.position > 39) {
@@ -143,7 +154,17 @@ class Player {
         console.log(
           "You are not the owner of this property, your balance will be deducted accordingly"
         );
-        this.balance -= property.price / 10;
+        if (this.balance >= property.price) {
+          this.balance -= property.price / 5;
+        } else {
+          console.log(
+            "You do not have enough money to pay the player, you have lost this game"
+          );
+          for (let i = 0; i < this.properties.length; i++) {
+            this.properties[i].owner = "";
+            this.properties[i].status = "free";
+          }
+        }
       }
     }
   }
