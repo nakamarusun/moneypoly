@@ -87,6 +87,15 @@ class Board {
     }
     return { boardState, playerList, turnNumber };
   }
+
+  checkTurn() {
+    return this.players[this.turn % 4];
+  }
+
+  nextTurn() {
+    this.turn += 1;
+    return this.players[this.turn % 4];
+  }
 }
 
 module.exports = Board;
