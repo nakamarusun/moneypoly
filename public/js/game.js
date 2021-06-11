@@ -124,5 +124,14 @@ const IO = {
 
     bindEvents: function() {
         console.log("Yes");
+        const sock = IO.socket;
+        sock.on("dcerror", IO.dcerror)
+    },
+
+    dcerror: function(data) {
+        console.log(data)
+        const $err = $("#errornotif")
+        $err.fadeIn("slow")
+        $err.children().text(data)
     }
 }

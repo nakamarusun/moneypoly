@@ -18,6 +18,7 @@ function freeRooms() {
         if (repl[0] !== RoomStatus.FULL && repl[1] < Date.now()) {
           cl.del(room);
           cl.lrem("rml", room);
+          // TODO: send query to master server to delete the rooms too
         }
       });
     }
