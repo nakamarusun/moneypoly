@@ -87,7 +87,7 @@ function validateAndStart(name) {
     IO.loadSocket(); // Connect game
 }
 
-// initPage();
+initPage();
 
 const IO = {
     socket: undefined, // Socket IO object

@@ -8,17 +8,27 @@ inter.post("/new", (req, res) => {
   const cl = getRedis();
   const room = req.body.room;
 
-  cl.get(room, (err, rep) => {
+  cl.hget(room, "status", (err, rep) => {
     if (err) return res.sendStatus(500);
     if (rep) return res.sendStatus(500); // If room already existed
 
-    cl.set(room, RoomStatus.READY, (err, rep) => {
-      if (err) return res.sendStatus(500);
+    cl.hmset(
+      room,
+      "status",
+      RoomStatus.READY,
+      "expire",
+      Date.now() + process.env.ROOMEXPIRE * 1000,
+      (err, rep) => {
+        if (err) return res.sendStatus(500);
 
-      // TODO: Prepare the room
+        // Insert room in the array
+        cl.lpush("rml", room);
 
-      res.sendStatus(202);
-    });
+        // TODO: Prepare the room
+
+        res.sendStatus(202);
+      }
+    );
   });
 });
 

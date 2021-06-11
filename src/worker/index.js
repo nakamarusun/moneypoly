@@ -8,6 +8,7 @@ const express = require("express");
 
 const engine = require("./engine/engine");
 const comm = require("./mastercomm");
+const scheder = require("./schedjob");
 
 // Create the express app
 const app = express();
@@ -69,3 +70,6 @@ io.adapter(
 );
 
 engine(io); // Initialize game server
+
+// Register schedulers
+scheder.initSchedules();
