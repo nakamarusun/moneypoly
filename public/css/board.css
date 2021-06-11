@@ -133,6 +133,7 @@ for info section */
 
 .places:hover{
   transform: scale(1.2);
+  z-index: 1 !important;
 
 }
 
@@ -312,6 +313,7 @@ for info section */
 .go{
   text-align: center;
   transition: transform .2s;
+  z-index: 1;
 }
 .go .containers{
   transform: rotate(45deg);
@@ -345,7 +347,7 @@ for info section */
   font-size: 25px;
   color: #f50c2b;
   position: relative;
-  bottom: 25px;
+  bottom: 20px;
   right: -30px;
 }
 
@@ -353,6 +355,7 @@ for info section */
 .straight-jail{
   text-align: center;
   transition: transform .2s;
+  z-index: 1;
   
 
 
@@ -387,6 +390,7 @@ for info section */
   justify-content: center;
   align-items: center;
   transition: transform .2s;
+  z-index: 1;
 }
 .jail:hover{
   transform:  rotate(180deg) scale(1.2);
@@ -457,6 +461,7 @@ for info section */
 /* free parking corner */
 .free-parking{
   transition:  transform .2s;
+  z-index: 1;
 }
 .free-parking .containers{
   text-align: center;
@@ -484,8 +489,32 @@ for info section */
   padding: 5px 0px;
 }
 
+.piece{
+  position: absolute;
+  width: 35px;
+  height: auto; 
+  transition: transform ease 1s;
+  z-index: 2;
+  bottom: 50px;
+  margin: 0 5px;
 
 
+}
+#piece-1{
+  left:50px
+
+}
+#piece-2{
+  left:90px
+}
+#piece-3{
+  left:50px;
+  bottom:20px;
+}
+#piece-4{
+  left: 90px;
+  bottom: 20px;
+}
 
 
 

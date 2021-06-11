@@ -41,6 +41,7 @@
     color: white;
     padding: 7px;
     border-radius: 5px;
+    cursor:context-menu;
 
 }
 .properties {
@@ -50,6 +51,7 @@
 .properties ul{
     padding-inline-start: 20px !important;
     text-align: left !important;
+    cursor: context-menu;
 }
 .properties li{
     font-size:10px;
