@@ -6,6 +6,7 @@ const path = require("path");
 const fs = require("fs");
 
 const gamerouter = require("./routes/game");
+const comm = require("./workercomm");
 
 // Create the express app
 const app = express();
@@ -27,6 +28,8 @@ app.use(
     extended: true
   })
 ); // URL format decoder
+
+app.use("/io", comm);
 
 // Register routes
 app.use("/moneypoly/v1", gamerouter);

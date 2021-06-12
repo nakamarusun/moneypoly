@@ -55,6 +55,8 @@ function newRoomId(cl, req, res) {
             server: server
           });
         });
+        // Add to room list
+        cl.lpush("rml", id);
       });
   });
 }
