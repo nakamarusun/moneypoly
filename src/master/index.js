@@ -60,4 +60,3 @@ serverModule.createServer(serverOpt, app).listen(port, () => {
 
 // Register schedulers
 scheder.initSchedules();
-scheder.freeRooms();

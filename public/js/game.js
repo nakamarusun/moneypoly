@@ -66,7 +66,6 @@ function initPage() {
     })
     .catch((err) => {
         console.error(err);
-        console.log("Room does not exist!")
         // Show room does not exist.
         showError("Room does not exist!")
     });
@@ -108,7 +107,7 @@ const IO = {
     loadSocket: function() {
 
         // Rename
-        $("#spanUser")[0].text(IO.uname);
+        $("#spanUser")[0].innerText = IO.uname;
         $("#roomCodeDisplay").text(IO.room);
 
         // Need to have a destination server first
@@ -144,11 +143,13 @@ const IO = {
         const $c = $(".playerLists .playerList");
         const plArr = players.players;
 
+        console.log(plArr);
+
         const isHost = plArr.find((x) => { return x.name === IO.uname; }).host
 
         for (let i = 0; i < 4; i++) {
             if (i < plArr.length) {
-                $c[i].children[0].innerText = plArr[i].name;
+                $c[i].children[0].innerText = (plArr[i].bot ? "[BOT] " : "") + plArr[i].name;
                 $c[i].children[1].classList.add("none");
                 if (isHost)
                     if (IO.uname !== plArr[i].name)
@@ -166,28 +167,3 @@ const IO = {
         }
     }
 }
-
-// IO.updatePlayers({
-//     players: [
-//         {
-//             name: "JasonWillbe",
-//             host: true,
-//             type: 0
-//         },
-//         {
-//             name: "ebin",
-//             host: false,
-//             type: 0
-//         },
-//         {
-//             name: "nakamarusun",
-//             host: false,
-//             type: 1
-//         },
-//         {
-//             name: "smorgastarta",
-//             host: false,
-//             type: 0
-//         }
-//     ]
-// });
