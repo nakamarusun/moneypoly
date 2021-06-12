@@ -11,6 +11,7 @@ class Player {
     this.position = 0; // a player's position on the board
     this.rollValue; // saves the player's roll value
     this.activeBoard = activeBoard;
+    this.action;
   }
 
   // method for a player to buy a property, this method checks if the property if owned yet or not
@@ -138,18 +139,24 @@ class Player {
   checkPosition() {
     if (this.activeBoard[this.position].type === "Gacha") {
       this.gachaTile();
+      this.action = 3;
     } else if (this.activeBoard[this.position].name === "Instant -100") {
       this.balance -= 100;
+      this.action = 4;
     } else if (this.activeBoard[this.position].name === "Go to Jail") {
       this.status = 1;
       this.position = 10;
       this.jailCD = 2;
+      this.action = 5;
     } else if (this.activeBoard[this.position].type === "Property") {
       const property = propertyList.find((a) => {
         return a.name === this.activeBoard[this.position].name;
       });
       if (property.owner === this.name) {
         console.log("You are the owner of this property! :)");
+        this.action = 2;
+      } else if (property.owner === "" || property.owner === undefined) {
+        this.action = 1;
       } else {
         console.log(
           "You are not the owner of this property, your balance will be deducted accordingly"
