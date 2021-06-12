@@ -52,7 +52,6 @@ function initPage() {
     .then(rep => rep.json())
     .then(data => {
         // Server is gotten, either ask for the name, or connect immediately.
-
         IO.destServer = data.server;
         IO.room = params.r;
 
@@ -68,7 +67,16 @@ function initPage() {
     .catch((err) => {
         console.error(err);
         console.log("Room does not exist!")
+        // Show room does not exist.
+        showError("Room does not exist!")
     });
+}
+
+function showError(message) {
+    console.log(message)
+    const $err = $("#errornotif")
+    $err.fadeIn("slow")
+    $err.children().text(message)
 }
 
 function validateAndStart(name) {
@@ -99,6 +107,10 @@ const IO = {
     // Load the socket io instance
     loadSocket: function() {
 
+        // Rename
+        $("#spanUser")[0].text(IO.uname);
+        $("#roomCodeDisplay").text(IO.room);
+
         // Need to have a destination server first
         if (!IO.destServer) return;
 
@@ -123,15 +135,59 @@ const IO = {
     },
 
     bindEvents: function() {
-        console.log("Yes");
         const sock = IO.socket;
-        sock.on("dcerror", IO.dcerror)
+        sock.on("dcerror", showError);
+        sock.on("updateplayerlist", IO.updatePlayers);
     },
 
-    dcerror: function(data) {
-        console.log(data)
-        const $err = $("#errornotif")
-        $err.fadeIn("slow")
-        $err.children().text(data)
+    updatePlayers: function(players) {
+        const $c = $(".playerLists .playerList");
+        const plArr = players.players;
+
+        const isHost = plArr.find((x) => { return x.name === IO.uname; }).host
+
+        for (let i = 0; i < 4; i++) {
+            if (i < plArr.length) {
+                $c[i].children[0].innerText = plArr[i].name;
+                $c[i].children[1].classList.add("none");
+                if (isHost)
+                    if (IO.uname !== plArr[i].name)
+                        $c[i].children[2].classList.remove("none");
+                else
+                    $c[i].children[2].classList.add("none");
+            } else {
+                $c[i].children[0].innerText = "-Empty-";
+                $c[i].children[2].classList.add("none");
+                if (isHost)
+                    $c[i].children[1].classList.remove("none");
+                else
+                    $c[i].children[1].classList.add("none");
+            }
+        }
     }
 }
+
+// IO.updatePlayers({
+//     players: [
+//         {
+//             name: "JasonWillbe",
+//             host: true,
+//             type: 0
+//         },
+//         {
+//             name: "ebin",
+//             host: false,
+//             type: 0
+//         },
+//         {
+//             name: "nakamarusun",
+//             host: false,
+//             type: 1
+//         },
+//         {
+//             name: "smorgastarta",
+//             host: false,
+//             type: 0
+//         }
+//     ]
+// });
