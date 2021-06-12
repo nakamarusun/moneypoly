@@ -7,6 +7,7 @@ const fs = require("fs");
 
 const gamerouter = require("./routes/game");
 const comm = require("./workercomm");
+const scheder = require("./schedjob");
 
 // Create the express app
 const app = express();
@@ -56,3 +57,7 @@ serverModule.createServer(serverOpt, app).listen(port, () => {
     `Listening to localhost:${port}. HTTPS Status: ${sslFileAvailable}`
   );
 });
+
+// Register schedulers
+scheder.initSchedules();
+scheder.freeRooms();

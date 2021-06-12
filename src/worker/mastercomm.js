@@ -12,24 +12,38 @@ inter.post("/new", (req, res) => {
     if (err) return res.sendStatus(500);
     if (rep) return res.sendStatus(500); // If room already existed
 
-    cl.hmset(
-      room,
-      "status",
-      RoomStatus.READY,
-      "expire",
-      Date.now() + process.env.ROOMEXPIRE * 1000,
-      (err, rep) => {
-        if (err) return res.sendStatus(500);
+    cl.hmset(room, "status", RoomStatus.READY, (err, rep) => {
+      if (err) return res.sendStatus(500);
 
-        // Insert room in the array
-        cl.lpush("rml", room);
+      // Insert room in the array
+      cl.sadd("rml", room);
 
-        // TODO: Prepare the room
+      // TODO: Prepare the room
 
-        res.sendStatus(202);
-      }
-    );
+      res.sendStatus(202);
+    });
   });
+});
+
+// Creates a new room in the database.
+inter.post("/keeprooms", (req, res) => {
+  const cl = getRedis();
+
+  // TODO:
+
+  // Active rooms in the other server
+  const otherRooms = req.body;
+  cl.smembers("rml", (err, rep) => {
+    if (err || !rep) return;
+    for (const room of rep) {
+      if (!otherRooms.includes(room)) {
+        cl.srem("rml", room);
+        cl.del(room);
+      }
+    }
+  });
+
+  res.sendStatus(200);
 });
 
 inter.post("/join", (req, res) => {

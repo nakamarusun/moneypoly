@@ -42,19 +42,26 @@ function newRoomId(cl, req, res) {
         // TODO: Handle server reject / error
         if (err || resp.statusCode === 500) return res.sendStatus(500);
 
-        cl.set(id, server, (err, rep) => {
-          if (err) return res.sendStatus(500);
+        cl.hmset(
+          id,
+          "server",
+          server,
+          "expire",
+          Date.now() + process.env.ROOMEXPIRE * 1000,
+          (err, rep) => {
+            if (err) return res.sendStatus(500);
 
-          // TODO: Make sure the server is available
-          console.log(resp.body);
+            // TODO: Make sure the server is available
+            console.log(resp.body);
 
-          // Send back the room id and server.
-          res.status(201);
-          res.send({
-            room: id,
-            server: server
-          });
-        });
+            // Send back the room id and server.
+            res.status(201);
+            res.send({
+              room: id,
+              server: server
+            });
+          }
+        );
         // Add to room list
         cl.lpush("rml", id);
       });
@@ -83,7 +90,7 @@ router.post("/join", (req, res) => {
   const room = req.body.room.toLowerCase();
 
   const cl = getRedis();
-  cl.get(room, (err, rep) => {
+  cl.hget(room, "server", (err, rep) => {
     if (err) return res.sendStatus(500);
     if (!rep) return res.sendStatus(204);
 
