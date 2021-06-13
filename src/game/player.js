@@ -48,8 +48,9 @@ class Player {
   }
 
   roll() {
-    const roll =
-      Math.floor(Math.random() * 6) + 1 + (Math.floor(Math.random() * 6) + 1);
+    const dice1 = Math.floor(Math.random() * 6) + 1;
+    const dice2 = Math.floor(Math.random() * 6) + 1;
+    const roll = [dice1, dice2];
     return roll;
   }
 
@@ -100,7 +101,8 @@ class Player {
   // function to move a player's position on the baord
   move() {
     if (this.status === 1) {
-      this.jailCD -= 1;
+      const rollJail = this.roll();
+      if ((rollJail[0] = rollJail[1])) this.jailCD -= 1;
       if (this.jailCD === 0) {
         this.status = 0;
       }
@@ -108,7 +110,8 @@ class Player {
       console.log("you have lost this game you cannot act anymore");
       return "you have lost this game you cannot act anymore";
     } else {
-      this.position += this.roll();
+      const rollMove = this.roll();
+      this.position = this.position + rollMove[1] + rollMove[0];
       if (this.position > 39) {
         this.position = this.position - 40;
         this.balance += 200;

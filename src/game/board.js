@@ -69,7 +69,8 @@ class Board {
 
     for (let i = 0; i < playerSize; i++) {
       const player = new Player(PLAYERS[i], this.board);
-      player.rollValue = player.roll();
+      const rollOrder = player.roll();
+      player.rollValue = rollOrder[1] + rollOrder[0];
       this.players.push(player);
     }
 
