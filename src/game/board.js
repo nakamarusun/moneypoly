@@ -89,39 +89,40 @@ class Board {
     }
     switch (currentPlayer.action) {
       case 1:
-        const actionType1 = [
-          currentPlayer.piece,
-          currentPlayer.action,
-          "Do you want to buy this property"
-        ];
+        const actionType1 = {
+          piece: currentPlayer.piece,
+          action: currentPlayer.action,
+          msg: "Do you want to buy this property"
+        };
         return { boardState, playerList, turnNumber, actionType1 };
       case 2:
-        const actionType2 = [
-          currentPlayer.piece,
-          currentPlayer.action,
-          "Do you want to upgrade this property"
-        ];
+        const actionType2 = {
+          piece: currentPlayer.piece,
+          action: currentPlayer.action,
+          msg: "Do you want to upgrade this property"
+        };
         return { boardState, playerList, turnNumber, actionType2 };
       case 3:
-        const actionType3 = [
-          currentPlayer.piece,
-          currentPlayer.action,
-          "You have landed on a gacha tile, money will randomly be added or subtracted from your balance"
-        ];
+        const actionType3 = {
+          piece: currentPlayer.piece,
+          action: currentPlayer.action,
+          msg:
+            "You have landed on a gacha tile, money will randomly be added or subtracted from your balance"
+        };
         return { boardState, playerList, turnNumber, actionType3 };
       case 4:
-        const actionType4 = [
-          currentPlayer.piece,
-          currentPlayer.action,
-          "You have been taxed, your balance will be reduced by 100"
-        ];
+        const actionType4 = {
+          piece: currentPlayer.piece,
+          action: currentPlayer.action,
+          msg: "You have been taxed, your balance will be reduced by 100"
+        };
         return { boardState, playerList, turnNumber, actionType4 };
       case 5:
-        const actionType5 = [
-          currentPlayer.piece,
-          currentPlayer.action,
-          "The police have arrested you, you will now be sent to jail"
-        ];
+        const actionType5 = {
+          piece: currentPlayer.piece,
+          action: currentPlayer.action,
+          msg: "The police have arrested you, you will now be sent to jail"
+        };
         return { boardState, playerList, turnNumber, actionType5 };
       default:
         return { boardState, playerList, turnNumber };
@@ -129,12 +130,12 @@ class Board {
   }
 
   checkTurn() {
-    return this.players[this.turn % 4];
+    return this.players[this.turn % this.players.length];
   }
 
   nextTurn() {
     this.turn += 1;
-    return this.players[this.turn % 4];
+    return this.players[this.turn % this.players.length];
   }
 }
 

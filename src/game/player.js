@@ -11,7 +11,7 @@ class Player {
     this.position = 0; // a player's position on the board
     this.rollValue; // saves the player's roll value
     this.activeBoard = activeBoard;
-    this.action;
+    this.action; // 1 = buy, 2 = upgrade, 3 = gacha, 4 = tax, 5 = jail
   }
 
   // method for a player to buy a property, this method checks if the property if owned yet or not
@@ -120,6 +120,7 @@ class Player {
         );
       }
       this.checkPosition(this.activeBoard);
+      return rollMove[0], rollMove[1];
     }
   }
 
