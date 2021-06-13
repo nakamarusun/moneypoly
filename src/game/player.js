@@ -79,9 +79,9 @@ class Player {
   }
 
   // function to upgrade a property's level
-  upgrade(property) {
+  upgrade() {
     const prop = propertyList.find((a) => {
-      return a.name === this.activeBoard[property].name;
+      return a.name === this.activeBoard[this.position].name;
     });
     if (this.properties.includes(prop)) {
       if (prop.level > 4) {
@@ -112,6 +112,7 @@ class Player {
     } else {
       const rollMove = this.roll();
       this.position = this.position + rollMove[1] + rollMove[0];
+      this.rollValue = rollMove;
       if (this.position > 39) {
         this.position = this.position - 40;
         this.balance += 200;
