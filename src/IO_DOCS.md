@@ -25,7 +25,7 @@
 - kickplayer
 ```js
 {
-    player: String // String of the player to kick
+    player: number // Index of the player to kick
 }
 ```
 

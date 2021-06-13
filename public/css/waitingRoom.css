@@ -207,6 +207,11 @@ input[type=button]:active{
     box-shadow: none;
   }
 
+.startGameButton:disabled {
+    background: #88a087;
+    box-shadow: 0 7px #bbccb1;
+}
+
 .startGameButton p{
     position: relative;
     top: 0;

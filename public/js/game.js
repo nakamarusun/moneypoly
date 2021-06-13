@@ -153,9 +153,22 @@ const IO = {
         const $c = $(".playerLists .playerList");
         const plArr = players.players;
 
-        console.log(plArr);
+        // Whether this client is a host.
+        let isHost;
+        try {
+            isHost = plArr.find((x) => { return x.name === IO.uname; }).host;
+        } catch (err) {
+            showError("You have been disconnected from the server.");
+            return;
+        }
 
-        const isHost = plArr.find((x) => { return x.name === IO.uname; }).host
+        // Make the start button appear.
+        if (isHost) {
+            const $start = document.getElementById("startGameButton");
+            $start.classList.remove("none");
+            console.log(plArr.length < 2);
+            $start.disabled = plArr.length < 2;
+        }
 
         // Spawn and delete the buttons for the waiting room
         for (let i = 0; i < 4; i++) {
@@ -171,8 +184,9 @@ const IO = {
                         // Add listener to send remove command.
                         el[2].addEventListener("click", () => {
                             hideButton(el[2]);
+                            console.log(i);
                             IO.socket.emit("kickplayer", {
-                                player: plArr[i].name
+                                player: i
                             });
                         });
                     }
