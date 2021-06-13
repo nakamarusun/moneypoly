@@ -154,6 +154,7 @@ const IO = {
         const sock = IO.socket;
         sock.on("dcerror", showError);
         sock.on("updateplayerlist", IO.updatePlayers);
+        sock.on("updateboard", IO.updateBoard);
     },
 
     updatePlayers: function(players) {
@@ -216,5 +217,10 @@ const IO = {
                 }
             }
         }
+    },
+
+    updateBoard: function(boardData) {
+        // TODO: Kevin
+        
     }
 }
