@@ -70,12 +70,14 @@ class Board {
     for (let i = 0; i < playerSize; i++) {
       const player = new Player(PLAYERS[i], this.board);
       const rollOrder = player.roll();
-      player.rollValue = rollOrder[1] + rollOrder[0];
+      player.rollValue = rollOrder;
       this.players.push(player);
     }
 
     this.players.sort((a, b) => {
-      return b.rollValue - a.rollValue;
+      return (
+        b.rollValue[0] + b.rollValue[1] - (a.rollValue[0] + a.rollValue[1])
+      );
     });
   }
 
