@@ -37,6 +37,13 @@ function initPage() {
     // Puts the URL parameter into an object
     const params = parseParam(location.search);
 
+    // If debug mode is enabled
+    if (params.d) {
+        const $start = document.getElementById("startGameButton");
+        $start.classList.remove("none");
+        return;
+    }
+
     // Test whether parameters exist, and do accordingly.
     // If room parameter does not exist, go back.
     if (!params.r) {
