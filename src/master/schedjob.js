@@ -19,7 +19,7 @@ function freeRooms() {
   }
 
   const cl = getRedis();
-  cl.lrange("rml", 0, 1, (err, rep) => {
+  cl.lrange("rml", 0, -1, (err, rep) => {
     if (err || !rep) return;
 
     const rooms = rep;
@@ -27,8 +27,8 @@ function freeRooms() {
       cl.hmget(room, "server", "expire", (err, resp) => {
         if (err || !resp) return;
         // If not expired yet, then insert the server to "keep list"
-        if (rep[1] > Date.now()) {
-          freeList[rep[0]].push(room);
+        if (resp[1] > Date.now()) {
+          freeList[resp[0]].push(room);
         } else {
           // If expired, delete from redis.
           // TODO: Move this to the response to the delete request

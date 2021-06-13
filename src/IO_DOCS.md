@@ -8,3 +8,25 @@
     msg: String
 }
 ```
+
+- updateplayerlist: Server update the player list and broadcasts it.
+```js
+{
+    players: [{
+        name: String,
+        bot: bool,
+        host: bool
+    }, ...]
+}
+```
+
+## Client
+### Emit
+- kickplayer
+```js
+{
+    player: String // String of the player to kick
+}
+```
+
+- addbot // Adds a new bot to the game

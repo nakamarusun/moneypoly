@@ -2,13 +2,7 @@
 
 const { getRedis } = require("../../redisdb");
 const game = require("./gameengine");
-
-function dcClientError(sock) {
-  sock.emit("dcerror", {
-    msg: "Invalid room code."
-  });
-  sock.disconnect(true);
-}
+const { dcClientError } = require("./sockutil");
 
 module.exports = function (io) {
   const main = io.of("/moneypoly/v1");
@@ -28,7 +22,7 @@ module.exports = function (io) {
     if ("room" in param && "uname" in param) {
       const cl = getRedis();
       cl.hget(param.room, "status", (err, rep) => {
-        if (err || !rep) return dcClientError(sock);
+        if (err || !rep) return dcClientError(sock, "Invalid room code");
 
         // Join room
         sock.join(param.room);

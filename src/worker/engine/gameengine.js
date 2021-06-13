@@ -1,5 +1,6 @@
 const { getRedis } = require("../../redisdb");
 const { RoomStatus } = require("../roomstatus");
+const { dcClientError } = require("./sockutil");
 
 // Socket io reference
 let io;
@@ -62,19 +63,28 @@ module.exports.onConnect = function (sock) {
 
         // Parse the data
         const obj = JSON.parse(rep);
-        // Add player
-        obj.players.push({
-          n: uname,
-          b: false
-        });
-        cl.hset(room, "data", JSON.stringify(obj));
+
+        // TODO: Check player ID sent from server
+
+        // If player is not already in the room, add the data.
+        if (
+          !obj.players.find((x) => {
+            return x.n === uname;
+          })
+        ) {
+          // Add player
+          obj.players.push({
+            n: uname,
+            b: false
+          });
+          cl.hset(room, "data", JSON.stringify(obj));
+        }
 
         // Send player list to room
         sendPlayerList(obj, io.in(room));
       });
     } else if (status === RoomStatus.FULL) {
-      sock.disconnect();
-      
+      dcClientError(sock, "Room is full");
     }
   });
 };

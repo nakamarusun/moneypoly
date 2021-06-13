@@ -20,6 +20,16 @@ function parseParam(query) {
     return queryString;
 }
 
+function addButton(el) {
+    el.classList.remove("none");
+    el.disabled = false;
+}
+
+function hideButton(el) {
+    el.classList.add("none");
+    el.disabled = true;
+}
+
 // Gets the data from the parameter, and verifies it.
 // Then initiates connection to the server.
 function initPage() {
@@ -147,22 +157,42 @@ const IO = {
 
         const isHost = plArr.find((x) => { return x.name === IO.uname; }).host
 
+        // Spawn and delete the buttons for the waiting room
         for (let i = 0; i < 4; i++) {
+            const el = $c[i].children;
             if (i < plArr.length) {
-                $c[i].children[0].innerText = (plArr[i].bot ? "[BOT] " : "") + plArr[i].name;
-                $c[i].children[1].classList.add("none");
-                if (isHost)
-                    if (IO.uname !== plArr[i].name)
-                        $c[i].children[2].classList.remove("none");
-                else
-                    $c[i].children[2].classList.add("none");
+                el[0].innerText = (plArr[i].bot ? "[BOT] " : "") + plArr[i].name;
+                hideButton(el[1]);
+
+                if (isHost) {
+                    if (IO.uname !== plArr[i].name) {
+                        addButton(el[2]);
+
+                        // Add listener to send remove command.
+                        el[2].addEventListener("click", () => {
+                            hideButton(el[2]);
+                            IO.socket.emit("kickplayer", {
+                                player: plArr[i].name
+                            });
+                        });
+                    }
+                } else {
+                    hideButton(el[2]);
+                }
             } else {
-                $c[i].children[0].innerText = "-Empty-";
-                $c[i].children[2].classList.add("none");
-                if (isHost)
-                    $c[i].children[1].classList.remove("none");
-                else
-                    $c[i].children[1].classList.add("none");
+                el[0].innerText = "-Empty-";
+                hideButton(el[2]);
+                if (isHost) {
+                    addButton(el[1]);
+
+                    // Add listener to add bot
+                    el[1].addEventListener("click", () => {
+                        hideButton(el[1]);
+                        IO.socket.emit("addbot");
+                    })
+                } else {
+                    hideButton(el[1]);
+                }
             }
         }
     }
