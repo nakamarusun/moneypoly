@@ -82,10 +82,49 @@ class Board {
     const playerList = [];
     const boardState = propertyList;
     const turnNumber = this.turn;
+    const currentPlayer = this.checkTurn();
     for (let i = 0; i < this.players.length; i++) {
       playerList.push(this.players[i]);
     }
-    return { boardState, playerList, turnNumber };
+    switch (currentPlayer.action) {
+      case 1:
+        const actionType1 = [
+          currentPlayer.piece,
+          currentPlayer.action,
+          "Do you want to buy this property"
+        ];
+        return { boardState, playerList, turnNumber, actionType1 };
+      case 2:
+        const actionType2 = [
+          currentPlayer.piece,
+          currentPlayer.action,
+          "Do you want to upgrade this property"
+        ];
+        return { boardState, playerList, turnNumber, actionType2 };
+      case 3:
+        const actionType3 = [
+          currentPlayer.piece,
+          currentPlayer.action,
+          "You have landed on a gacha tile, money will randomly be added or subtracted from your balance"
+        ];
+        return { boardState, playerList, turnNumber, actionType3 };
+      case 4:
+        const actionType4 = [
+          currentPlayer.piece,
+          currentPlayer.action,
+          "You have been taxed, your balance will be reduced by 100"
+        ];
+        return { boardState, playerList, turnNumber, actionType4 };
+      case 5:
+        const actionType5 = [
+          currentPlayer.piece,
+          currentPlayer.action,
+          "The police have arrested you, you will now be sent to jail"
+        ];
+        return { boardState, playerList, turnNumber, actionType5 };
+      default:
+        return { boardState, playerList, turnNumber };
+    }
   }
 
   checkTurn() {

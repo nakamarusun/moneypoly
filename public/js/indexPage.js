@@ -19,6 +19,7 @@ function validateUserName() {
     }
     $(document).ready(function(){
         $("#playButton").fadeOut("slow", ()=>{
+            $userName.readOnly = true;
             $("#choiceSection").fadeIn();
         })
     });   
