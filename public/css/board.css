@@ -77,7 +77,9 @@ for info section */
 }
 
 
-
+ h1,h2,h3,h4,h5,h6{
+   cursor: context-menu;
+ }
 .layout{
   padding: 0 50px;
   margin: 0;
@@ -133,7 +135,7 @@ for info section */
 
 .places:hover{
   transform: scale(1.2);
-  z-index: 1 !important;
+  z-index: 3 !important;
 
 }
 
@@ -393,7 +395,7 @@ for info section */
   z-index: 1;
 }
 .jail:hover{
-  transform:  rotate(180deg) scale(1.2);
+  transform:  scale(1.2);
 }
 
 .jail .icon{
@@ -497,9 +499,19 @@ for info section */
   z-index: 2;
   bottom: 50px;
   margin: 0 5px;
-
-
 }
+
+@keyframes toJail {
+  /* You could think of as "step 1" */
+  from {
+    transform:  translate(610px, 0);
+  }
+  /* You could think of as "step 2" */
+  to{
+    transform: translate(25px, -600px);
+  }
+}
+
 #piece-1{
   left:50px
 
@@ -516,7 +528,146 @@ for info section */
   bottom: 20px;
 }
 
+/* dialog-sections */
+.dialog{
+  /* display: none; Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 150px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  font-size: 25px;
+  text-transform: none !important;
+}
+.dialog button{
+  margin: 20px 30px;
+  width: 30%;
+}
 
+
+.dialogContainer
+{
+  background-color: white;
+  width: 50%;
+  margin: 15px auto;
+  border-radius: 30px;
+}
+
+
+.dialogBody{
+  display: flex;
+  flex: auto;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 15px;
+
+}
+
+/* buy dialog */
+.buy-section .dialogHead{
+  background-color: rgb(70, 233, 151);
+  width: 100%;
+  padding: 15px;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+
+  
+
+}
+#skipButtonDialog{
+  background-color: rgb(240, 80, 80);
+  box-shadow: 0 7px rgb(238, 113, 113);
+}
+#skipButtonDialog:active {
+  position: relative;
+  top: 7px;
+  box-shadow: none;
+}
+#buyButtonDialog{
+  background-color: rgb(35, 205, 235);
+  box-shadow: 0 7px rgb(134, 242, 250);
+}
+#buyButtonDialog:active {
+  position: relative;
+  top: 7px;
+  box-shadow: none;
+}
+
+/* gacha dialog */
+
+.gacha-section{
+  padding-top: 250px !important;
+}
+.gacha-section .dialogHead{
+  background-color: rgb(253, 177, 11);
+  width: 100%;
+  padding: 15px;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+
+#okButtonDialog{
+  background-color: rgb(35, 205, 235);
+  box-shadow: 0 7px rgb(134, 242, 250);
+}
+#okButtonDialog:active{
+  position: relative;
+  top: 7px;
+  box-shadow: none;
+}
+
+/* upgrade dialog */
+.upgrade-section .dialogHead{
+  background-color: rgb(34, 156, 10);
+  width: 100%;
+  padding: 15px;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+
+#upgradeButtonDialog{
+  background-color: rgb(35, 205, 235);
+  box-shadow: 0 7px rgb(134, 242, 250);
+}
+#upgradeButtonDialog:active{
+  position: relative;
+  top: 7px;
+  box-shadow: none;
+}
+
+
+/* jail dialog */
+.jail-section{
+  padding-top: 250px !important;
+}
+.jail-section .dialogHead{
+  background-color: rgb(235, 35, 62);
+  width: 100%;
+  padding: 15px;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+
+/* tax-dialog */
+
+.tax-section{
+  padding-top: 250px !important;
+}
+.tax-section .dialogHead{
+  background-color: rgb(227, 230, 78);
+  width: 100%;
+  padding: 15px;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
 
 
 

@@ -79,7 +79,7 @@
 
       <div class="layout none">
         <div class="board">
-          <img id="piece-1" class="piece"src="assets/car.png" onclick="move();">
+          <img id="piece-1" class="piece" src="assets/car.png" onclick="move();">
           <img id="piece-2" class="piece" src="assets/hat.png" onclick="move();">
           <img id="piece-3" class="piece" src="assets/shoe.png" onclick="move();">
           <img id="piece-4" class="piece" src="assets/iron.png" onclick="move();">
@@ -130,9 +130,6 @@
             </div>             
           </div>
 
-    
-
-
           <div class="row horizontal-row bottom-row" id="bottom-row">
 
           </div>
@@ -146,7 +143,72 @@
 
           </div>
 
-      
+           <div class="dialog buy-section none">
+             <div class="dialogContainer">
+               <div class="dialogHead">
+                 <h3>You land on: <span id="propertyNameDialog">-none-</span></h3>
+                 <h3>Property Owner: <span id="propertyOwnerDialog">-none-</span></h3>
+                 <h3>Property Price: <span id="propertyPriceDialog">-none-</span></h3>
+                 <h3>Level: <span id="propertyLevelDialog">1</span></h3>
+               </div>
+               <div class="dialogBody">
+                 <h3>Your Choice:</h3>
+                 <button id="skipButtonDialog">Skip</button>
+                 <button id="buyButtonDialog">Buy</button>
+               </div>
+             </div>
+           </div>
+
+           <div class="dialog gacha-section none ">
+             <div class="dialogContainer">
+               <div class="dialogHead">
+                <h3>Gacha Result: <span id="gachaResultDialog">-none-</span></h3>
+               </div>
+               <div class="dialogBody">
+                 <button id="okButtonDialog">OK</button>
+               </div>
+             </div>
+           </div>
+
+           <div class="dialog upgrade-section none ">
+            <div class="dialogContainer">
+              <div class="dialogHead">
+                <h3>You land on: <span id="propertyNameDialog">-none-</span></h3>
+                <h3>Property Owner: <span id="propertyOwnerDialog">-none-</span> (Your Property)</h3>
+                <h3>Level: <span id="propertyLevelDialog">1</span></h3>
+              </div>
+              <div class="dialogBody">
+                <h3>Your Choice:</h3>
+                <button id="skipButtonDialog">Skip</button>
+                <button id="upgradeButtonDialog">Upgrade</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="dialog jail-section none">
+            <div class="dialogContainer">
+              <div class="dialogHead">
+                <h3>Owh No! <br>You Are Sent To Jail</h3>
+              </div>
+              <div class="dialogBody">
+                <h4>Roll the dice and get double six to escape! Good Luck!</h4>
+                <button id="okButtonDialog">OK</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="dialog tax-section none ">
+            <div class="dialogContainer">
+              <div class="dialogHead">
+                <h3>You land on tax tile!<br>Pay $100 Please!</h3>
+              </div>
+              <div class="dialogBody">
+                <button id="okButtonDialog">OK</button>
+              </div>
+            </div>
+          </div>
+
+          
 
 
         </div>
