@@ -102,7 +102,12 @@ class Player {
   move() {
     if (this.status === 1) {
       const rollJail = this.roll();
-      if ((rollJail[0] = rollJail[1])) this.jailCD -= 1;
+      if ((rollJail[0] = rollJail[1])) {
+        this.status = 0;
+        this.jailCD = 0;
+      } else {
+        this.jailCD -= 1;
+      }
       if (this.jailCD === 0) {
         this.status = 0;
       }
