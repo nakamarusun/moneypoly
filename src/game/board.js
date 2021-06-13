@@ -94,14 +94,24 @@ class Board {
           action: currentPlayer.action,
           msg: "Do you want to buy this property"
         };
-        return { boardState, playerList, turnNumber, actionType1 };
+        return {
+          boardState: boardState,
+          playerList: playerList,
+          turnNumber: turnNumber,
+          actionType: actionType1
+        };
       case 2:
         const actionType2 = {
           piece: currentPlayer.piece,
           action: currentPlayer.action,
           msg: "Do you want to upgrade this property"
         };
-        return { boardState, playerList, turnNumber, actionType2 };
+        return {
+          boardState: boardState,
+          playerList: playerList,
+          turnNumber: turnNumber,
+          actionType: actionType2
+        };
       case 3:
         const actionType3 = {
           piece: currentPlayer.piece,
@@ -109,21 +119,36 @@ class Board {
           msg:
             "You have landed on a gacha tile, money will randomly be added or subtracted from your balance"
         };
-        return { boardState, playerList, turnNumber, actionType3 };
+        return {
+          boardState: boardState,
+          playerList: playerList,
+          turnNumber: turnNumber,
+          actionType: actionType3
+        };
       case 4:
         const actionType4 = {
           piece: currentPlayer.piece,
           action: currentPlayer.action,
           msg: "You have been taxed, your balance will be reduced by 100"
         };
-        return { boardState, playerList, turnNumber, actionType4 };
+        return {
+          boardState: boardState,
+          playerList: playerList,
+          turnNumber: turnNumber,
+          actionType: actionType4
+        };
       case 5:
         const actionType5 = {
           piece: currentPlayer.piece,
           action: currentPlayer.action,
           msg: "The police have arrested you, you will now be sent to jail"
         };
-        return { boardState, playerList, turnNumber, actionType5 };
+        return {
+          boardState: boardState,
+          playerList: playerList,
+          turnNumber: turnNumber,
+          actionType: actionType5
+        };
       default:
         return { boardState, playerList, turnNumber };
     }
