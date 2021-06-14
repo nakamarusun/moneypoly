@@ -37,6 +37,11 @@ module.exports.createBoard = function (players) {
   return b;
 };
 
+/**
+ *
+ * @param {string} room
+ * @returns {Promise<Board>} board
+ */
 module.exports.getBoard = async function (room) {
   // Try to get from object
   if (room in roomBoard) return roomBoard[room];

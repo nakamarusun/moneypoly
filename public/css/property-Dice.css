@@ -245,7 +245,7 @@
   
   button {
     align-self: center;
-    background-color: #efefefab;
+    background-color: #efefef;
     border: none;
     color: #333;
     font-size: 1.25rem;
@@ -266,7 +266,7 @@
   }
 
   button:disabled {
-    background-color: #efefefab;
-    color: #efefefab;
+    background-color: #efefef;
+    color: #efefef;
     box-shadow: 0 7px rgba(255, 255, 255, 0.856);
   }

@@ -89,6 +89,9 @@ class Board {
         b.rollValue[0] + b.rollValue[1] - (a.rollValue[0] + a.rollValue[1])
       );
     });
+
+    // Set first person dice to be rollable.
+    this.checkTurn().rollable = true;
   }
 
   returnBoard() {
@@ -166,10 +169,18 @@ class Board {
     }
   }
 
+  /**
+   *
+   * @returns {Player}
+   */
   checkTurn() {
     return this.players[this.turn % this.players.length];
   }
 
+  /**
+   *
+   * @returns {Player}
+   */
   nextTurn() {
     this.turn += 1;
 

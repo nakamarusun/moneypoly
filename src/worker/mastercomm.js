@@ -29,17 +29,22 @@ inter.post("/new", (req, res) => {
 inter.post("/keeprooms", (req, res) => {
   const cl = getRedis();
 
-  // TODO:
-
   // Active rooms in the other server
   const otherRooms = req.body;
   cl.smembers("rml", (err, rep) => {
     if (err || !rep) return;
     for (const room of rep) {
-      if (!otherRooms.includes(room)) {
-        cl.srem("rml", room);
-        cl.del(room);
-      }
+      cl.hget(room, "status", (err, resp) => {
+        if (err || !resp) return;
+
+        if (!otherRooms.includes(room)) {
+          // Dont delete rooms that has game started.
+          if (resp === RoomStatus.STARTED) return;
+          console.log("Deleting room " + room);
+          cl.srem("rml", room);
+          cl.del(room);
+        }
+      });
     }
   });
 

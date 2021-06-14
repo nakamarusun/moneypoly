@@ -164,6 +164,7 @@ const IO = {
             }
         });
         IO.bindEvents();
+        IO.initButtons();
     },
 
     initButtons: function() {
@@ -180,10 +181,15 @@ const IO = {
         sock.on("dcerror", IO.showError);
         sock.on("updateplayerlist", IO.updatePlayers);
         sock.on("updateboard", IO.updateBoard);
+        sock.on("startgame", IO.startGame);
     },
 
     showError(msgObj) {
         showError(msgObj.msg);
+    },
+
+    startGame: function() {
+        displayBoard();
     },
 
     updatePlayers: function(players) {
@@ -225,7 +231,6 @@ const IO = {
                         // Add listener to send remove command.
                         el[2].addEventListener("click", () => {
                             hideButton(el[2]);
-                            console.log(i);
                             IO.socket.emit("kickplayer", {
                                 player: i
                             });
@@ -316,6 +321,8 @@ const IO = {
         // else if (boardData.turnNumber === 3){
 
         // }
+
+        console.log(boardData);
 
         const pRef = boardData.playerList;
         for (const i in pRef) {

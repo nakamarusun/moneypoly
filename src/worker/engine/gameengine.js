@@ -1,6 +1,6 @@
 const { getRedis } = require("../../redisdb");
 const { RoomStatus } = require("../roomstatus");
-const { dcClientError } = require("./sockutil");
+const { dcClientError, notif } = require("./sockutil");
 const { genToken } = require("../../interserver/inter");
 const { getBoard, setBoard, createBoard } = require("./gameref");
 const superagent = require("superagent");
@@ -33,6 +33,10 @@ function sendPlayerList(obj, sock) {
   sock.emit("updateplayerlist", payload);
 }
 
+function broadcastGameboard(room, board) {
+  io.in(room).emit("updateboard", board.returnBoard());
+}
+
 /**
  * Game stuff
  */
@@ -41,8 +45,21 @@ function gameRoll() {
   const uname = this.handshake.query.uname;
   const room = this.handshake.query.room;
 
-  getBoard(room).then(() => {
-    // TODO:
+  getBoard(room).then((res) => {
+    const player = res.checkTurn();
+
+    // Can't roll if not rollable.
+    if (!res.checkTurn().rollable) return notif(this, 1, "Cannot roll.");
+
+    // Move the player in the board
+    player.move();
+    player.checkPosition();
+
+    // Emit to player
+    broadcastGameboard(room, res);
+
+    // Save board
+    setBoard(room, res);
   });
 }
 
@@ -87,7 +104,7 @@ function startGame() {
 
     // Start the game here
     io.in(room).emit("startgame"); // Useless for now
-    io.in(room).emit("updateboard", game.returnBoard());
+    broadcastGameboard(room, game);
   });
 }
 

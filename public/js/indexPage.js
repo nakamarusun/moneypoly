@@ -42,12 +42,6 @@ function displayBoard() {
   });
 }
 
-// Transition waiting to board
-$(document).ready(function(){
-  $(".startGameButton").click(displayBoard);
-});
-
-
 // Requests to create a new room from the server
 function hostGameClicked() {
 
