@@ -347,26 +347,56 @@ const IO = {
         console.log(boardData);
 
         // Roll the dice for every player
-        const diceVal = boardData.playerList[boardData.turnNumber].rollValue;
+        const currentPlayer = boardData.playerList[boardData.turnNumber];
+        const diceVal = currentPlayer.rollValue;
+        const pRef = boardData.playerList;
+        let selfIndex; // Index of this client
+        let clientPlayer;
+
         rollDice(diceVal[0], diceVal[1]);
 
-        const pRef = boardData.playerList;
+        // Do things to all pieces
         for (const i in pRef) {
-            const currentPlayer = pRef[i];
+            const current = pRef[i];
+            // Find self index
+            if (current.uname === IO.uname) {
+                selfIndex = parseInt(i);
+            }
 
             // Run the code after the dice has landed.
             setTimeout(() => {
                 // Updates all the position of the piece
-                IO.pieces[i].setPosition(currentPlayer.position);
-
-                // Handle the current player
-                if (currentPlayer.uname === IO.uname) {
-                    // Set roll button availability
-                    rollDiceToggle(currentPlayer.rollable);
-
-                    // Display action, according to the players.
-                }
+                IO.pieces[i].setPosition(current.position);
             }, 1800);
+        }
+
+        clientPlayer = boardData.playerList[selfIndex];
+        // Handle the current player
+        if (currentPlayer.uname === IO.uname) {
+            // Set roll button availability
+            rollDiceToggle(clientPlayer.rollable);
+        }
+
+        // Display action, according to the players.
+        const action = boardData.actionType;
+        if (action.player === selfIndex) {
+            switch(action.action) {
+                case 1:
+                    console.log("Wanna buy")
+                    break;
+                case 2:
+                    console.log("Wanna buya")
+                    break;
+                case 3:
+                    console.log("Wanna buyaaa")
+                    break;
+                case 4:
+                    console.log("Wanna buyaaaa")
+                    break;
+                case 5:
+                    console.log("Wanna buyaaaaa")
+                    break;
+            }
         }
         
     }

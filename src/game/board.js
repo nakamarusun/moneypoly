@@ -173,7 +173,7 @@ class Board {
           actionType: actionType5
         };
       default:
-        return { boardState, playerList, turnNumber };
+        return { boardState, playerList, turnNumber, actionType: {} };
     }
   }
 
