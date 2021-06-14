@@ -35,6 +35,7 @@ function rollDiceToggle(pressable) {
     const btn = document.getElementById("roll-button");
     IO.canRoll = pressable;
     btn.disabled = !pressable;
+    console.log(pressable);
 }
 
 let init = false;
@@ -134,36 +135,57 @@ $("#usernamebox").keyup(function(event) {
 
 const UI = {
     $allPrompts: [],
+    $skipButtons: [],
 
     init: function() {
         UI.$allPrompts = $("#taxui, #gacui, #upgui, #buyui, #jaiui");
-        $(".okButtonDialog").click(UI.allPromptGone);
+        UI.$skipButtons = $(".okButtonDialog, #skipButtonUpgDialog, #skipBuyButtonDialog");
+        UI.$skipButtons.click(UI.allPromptGone);
+
+        $("#buyButtonDialog").click(() => {
+            IO.socket.emit("game:buy");
+            UI.$allPrompts.addClass("none");
+            // Init skip buttons
+            UI.$skipButtons.prop("disabled", true);
+        });
+        $("#upgradeButtonDialog").click(() => {
+            IO.socket.emit("game:upgrade");
+            UI.$allPrompts.addClass("none");
+            // Init skip buttons
+            UI.$skipButtons.prop("disabled", true);
+        });
     },
 
     allPromptGone: function() {
         UI.$allPrompts.addClass("none");
+        // Init skip buttons
+        UI.$skipButtons.prop("disabled", true);
+        IO.socket.emit("game:next");
     },
 
     displayBuy: function(place, price) {
         $("#buyui").removeClass("none");
+        UI.$skipButtons.prop("disabled", false);
         $("#propertyNameDialog").text(place);
         $("#propertyPriceDialog").text(price);
     },
 
     displayPay: function(place, price, level) {
         $("#payui").removeClass("none");
+        UI.$skipButtons.prop("disabled", false);
         $("#propertyPayNameDialog").text(place);
-        $("#propertyPayPriceDialog").text(price);
-        $("#propertyLevelPayDialog").text(level);
+        // $("#propertyPayPriceDialog").text(price);
+        // $("#propertyLevelPayDialog").text(level);
     },
 
     displayGac: function(res) {
         $("#gacui").removeClass("none");
-        $("#gachaResultDialog").text(res);
+        UI.$skipButtons.prop("disabled", false);
     },
 
     displayUpg: function(place, price, level) {
         // Check level
+        UI.$skipButtons.prop("disabled", false);
         $("#upgui").removeClass("none");
         $("#propertyUpgradeNameDialog").text(place);
 
@@ -178,10 +200,12 @@ const UI = {
 
     displayJail: function() {
         $("#jaiui").removeClass("none");
+        UI.$skipButtons.prop("disabled", false);
     },
 
     displayTax: function() {
         $("#taxui").removeClass("none");
+        UI.$skipButtons.prop("disabled", false);
     }
 }
 
@@ -248,10 +272,15 @@ const IO = {
         sock.on("updateplayerlist", IO.updatePlayers);
         sock.on("updateboard", IO.updateBoard);
         sock.on("startgame", IO.startGame);
+        sock.on("notif", IO.showNotif);
     },
 
     showError(msgObj) {
         showError(msgObj.msg);
+    },
+
+    showNotif(msg) {
+        alert(msg.msg);
     },
 
     startGame: function() {
@@ -320,7 +349,7 @@ const IO = {
                 el[0].innerText = "-Empty-";
                 hideButton(el[2]);
                 if (isHost) {
-                    addButton(el[1]);
+                    // addButton(el[1]); // TODO;
 
                     // Add listener to add bot
                     el[1].addEventListener("click", () => {
@@ -447,10 +476,17 @@ const IO = {
         }
 
         const clientPlayer = boardData.playerList[selfIndex];
+        console.log("Beginning of rolley");
+        console.log(currentPlayer);
+        console.log(IO.uname);
+        console.log(clientPlayer);
         // Handle the current player
         if (currentPlayer.uname === IO.uname) {
             // Set roll button availability
+            console.log(clientPlayer.rollable);
             rollDiceToggle(clientPlayer.rollable);
+        } else {
+            rollDiceToggle(false);
         }
 
         // Set money
@@ -459,25 +495,36 @@ const IO = {
 
         // Display action, according to the players.
         const action = boardData.actionType;
-        if (action.player === selfIndex) {
-            switch(action.action) {
-                case 1:
-                    console.log("Wanna buy")
-                    break;
-                case 2:
-                    console.log("Wanna buya")
-                    break;
-                case 3:
-                    console.log("Wanna buyaaa")
-                    break;
-                case 4:
-                    console.log("Wanna buyaaaa")
-                    break;
-                case 5:
-                    console.log("Wanna buyaaaaa")
-                    break;
+        const currentCell = clientPlayer.activeBoard[clientPlayer.position];
+
+        setTimeout(() => {
+            if (action.player === selfIndex) {
+                switch(action.action) {
+                    case 1: {
+                        UI.displayBuy(currentCell.name, boardData.boardState.find((x) => {return x.name === currentCell.name}).price);
+                        break;
+                    }
+                    case 2: {
+                        const updg = clientPlayer.properties.find((x) => {return x.name === currentCell.name});
+                        UI.displayUpg(currentCell.name, property.price, updg.level);
+                        break;
+                    }
+                    case 3:
+                        UI.displayGac();
+                        break;
+                    case 4:
+                        UI.displayTax();
+                        break;
+                    case 5:
+                        UI.displayJail();
+                        break;
+                    case 6: {
+                        const prop = boardData.boardState.find((x) => {return x.name === currentCell.name});
+                        UI.displayPay(prop.name, 0);
+                    }
+                }
             }
-        }
+        }, 2800);
         
     }
     

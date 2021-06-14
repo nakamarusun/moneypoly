@@ -100,7 +100,7 @@ class Board {
   returnBoard() {
     const playerList = [];
     const boardState = propertyList;
-    const turnNumber = this.turn;
+    const turnNumber = this.turn % this.players.length;
     const currentPlayer = this.checkTurn();
     for (let i = 0; i < this.players.length; i++) {
       playerList.push(this.players[i]);
@@ -113,10 +113,12 @@ class Board {
           action: currentPlayer.action,
           msg: "Do you want to buy this property"
         };
+        this.checkTurn().action = 0;
         return {
           boardState: boardState,
           playerList: playerList,
           turnNumber: turnNumber,
+          turnTotal: this.turn,
           actionType: actionType1
         };
       case 2:
@@ -126,10 +128,12 @@ class Board {
           action: currentPlayer.action,
           msg: "Do you want to upgrade this property"
         };
+        this.checkTurn().action = 0;
         return {
           boardState: boardState,
           playerList: playerList,
           turnNumber: turnNumber,
+          turnTotal: this.turn,
           actionType: actionType2
         };
       case 3:
@@ -140,10 +144,12 @@ class Board {
           msg:
             "You have landed on a gacha tile, money will randomly be added or subtracted from your balance"
         };
+        this.checkTurn().action = 0;
         return {
           boardState: boardState,
           playerList: playerList,
           turnNumber: turnNumber,
+          turnTotal: this.turn,
           actionType: actionType3
         };
       case 4:
@@ -153,10 +159,12 @@ class Board {
           action: currentPlayer.action,
           msg: "You have been taxed, your balance will be reduced by 100"
         };
+        this.checkTurn().action = 0;
         return {
           boardState: boardState,
           playerList: playerList,
           turnNumber: turnNumber,
+          turnTotal: this.turn,
           actionType: actionType4
         };
       case 5:
@@ -166,14 +174,38 @@ class Board {
           action: currentPlayer.action,
           msg: "The police have arrested you, you will now be sent to jail"
         };
+        this.checkTurn().action = 0;
         return {
           boardState: boardState,
           playerList: playerList,
           turnNumber: turnNumber,
+          turnTotal: this.turn,
           actionType: actionType5
         };
+      case 6:
+        const actionType6 = {
+          player: this.turn % this.players.length,
+          piece: currentPlayer.piece,
+          action: currentPlayer.action,
+          msg: "You must pay for this property!"
+        };
+        this.checkTurn().action = 0;
+        return {
+          boardState: boardState,
+          playerList: playerList,
+          turnNumber: turnNumber,
+          turnTotal: this.turn,
+          actionType: actionType6
+        };
       default:
-        return { boardState, playerList, turnNumber, actionType: {} };
+        this.checkTurn().action = 0;
+        return {
+          boardState,
+          playerList,
+          turnNumber,
+          actionType: {},
+          turnTotal: this.turn
+        };
     }
   }
 
@@ -190,11 +222,19 @@ class Board {
    * @returns {Player}
    */
   nextTurn() {
-    this.turn += 1;
+    let count = 0;
+
+    let player = this.players[this.turn % this.players.length];
+
+    // Skip game over players
+    do {
+      player = this.players[this.turn % this.players.length];
+      this.turn += 1;
+      count++;
+    } while (player.status === 2 && count < 4);
 
     // Set the player to be able to roll
-    const player = this.players[this.turn % this.players.length];
-    player.rollable = true;
+    this.players[this.turn % this.players.length].rollable = true;
 
     return player;
   }

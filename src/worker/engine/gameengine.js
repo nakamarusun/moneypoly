@@ -16,6 +16,9 @@ function bindEvents(sock) {
   // sock.on("addbot", undefined); // TODO
 
   sock.on("game:roll", gameRoll);
+  sock.on("game:next", gameNext);
+  sock.on("game:buy", gameBuy);
+  sock.on("game:upgrade", gameUpgrade);
 }
 
 function sendPlayerList(obj, sock) {
@@ -42,6 +45,7 @@ function broadcastGameboard(room, board) {
  */
 // Called when player sends a roll command.
 function gameRoll() {
+  console.log("Roll");
   const uname = this.handshake.query.uname;
   const room = this.handshake.query.room;
 
@@ -49,11 +53,11 @@ function gameRoll() {
     const player = res.checkTurn();
 
     // Can't roll if not rollable or not the player calling it.
-    if (!res.checkTurn().rollable || res.checkTurn().uname !== uname)
+    if (!player.rollable || player.uname !== uname)
       return notif(this, 1, "Cannot roll.");
 
     // Move the player in the board
-    player.move();
+    console.log(player.move());
     player.checkPosition();
 
     // Emit to player
@@ -61,6 +65,64 @@ function gameRoll() {
 
     // Save board
     setBoard(room, res);
+  });
+}
+
+// TODO: Resolve action once action is done.
+
+function gameNext() {
+  console.log("Next");
+  const uname = this.handshake.query.uname;
+  const room = this.handshake.query.room;
+
+  getBoard(room).then((res) => {
+    const player = res.checkTurn();
+
+    // Can't next if not turn or not the player calling it.
+    if (player.uname !== uname) return notif(this, 1, "Can not next");
+
+    res.nextTurn();
+
+    // Emit to player
+    broadcastGameboard(room, res);
+
+    // Save board
+    setBoard(room, res);
+  });
+}
+
+function gameBuy() {
+  console.log("Buy");
+  const uname = this.handshake.query.uname;
+  const room = this.handshake.query.room;
+
+  getBoard(room).then((res) => {
+    const player = res.checkTurn();
+
+    // Can't next if not turn or not the player calling it.
+    if (player.uname !== uname) return notif(this, 1, "Not allowed");
+
+    if (!res.checkTurn().buy()) notif(this, 1, "Can not buy this property!");
+
+    gameNext.bind(this)();
+  });
+}
+
+function gameUpgrade() {
+  console.log("Upgrade");
+  const uname = this.handshake.query.uname;
+  const room = this.handshake.query.room;
+
+  getBoard(room).then((res) => {
+    const player = res.checkTurn();
+
+    // Can't next if not turn or not the player calling it.
+    if (player.uname !== uname) return notif(this, 1, "Not allowed");
+
+    if (!res.checkTurn().upgrade())
+      notif(this, 1, "Can not upgrade this property!");
+
+    gameNext.bind(this)();
   });
 }
 

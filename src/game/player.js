@@ -11,7 +11,7 @@ class Player {
     this.position = 0; // a player's position on the board
     this.rollValue; // saves the player's roll value
     this.activeBoard = activeBoard;
-    this.action; // 1 = buy, 2 = upgrade, 3 = gacha, 4 = tax, 5 = jail
+    this.action; // 1 = buy, 2 = upgrade, 3 = gacha, 4 = tax, 5 = jail, 6 = pay
     this.uname; // Username of the user.
     this.rollable = false; // Whether the user can roll or not.
   }
@@ -19,7 +19,8 @@ class Player {
   // method for a player to buy a property, this method checks if the property if owned yet or not
   buy() {
     if (this.status === 2) {
-      return "you have lost this game you cannot act anymore";
+      // return "you have lost this game you cannot act anymore";
+      return false;
     } else {
       if (this.activeBoard[this.position].type === "Property") {
         const property = propertyList.find((a) => {
@@ -30,6 +31,7 @@ class Player {
         if (property.status === "owned") {
           // TODO make a popup to say that property is owned or disable the button if there is one
           console.log("Property is already owned");
+          return false;
         } else {
           // if property is not owned, function checks if player has enough money to buy the property if they do,
           // property status becomes owned player's balance gets deducted and the property gets pushed into the properties array of the player.
@@ -39,12 +41,15 @@ class Player {
             property.price = property.price * 2;
             this.properties.push(property);
             property.owner = this.piece;
+            return true;
           } else {
             // TODO make a popup saying player does not have enough money
+            return false;
           }
         }
       } else {
         console.log("You are not on a property tile");
+        return false;
       }
     }
   }
@@ -89,14 +94,17 @@ class Player {
       if (prop.level > 4) {
         // TODO make popup saying property already at highest level
         console.log("Property already at the highest level");
+        return false;
       } else {
         prop.level += 1;
         this.balance -= prop.price;
         prop.price = prop.price * 2;
+        return true;
       }
     } else {
       // TODO make popup saying you don't own this property or smth
       console.log("You don't own this property");
+      return false;
     }
   }
 
@@ -173,12 +181,12 @@ class Player {
       } else if (property.owner === "" || property.owner === undefined) {
         this.action = 1;
       } else {
+        this.action = 6;
         console.log(
           "You are not the owner of this property, your balance will be deducted accordingly"
         );
-        if (this.balance >= property.price) {
-          this.balance -= property.price / 5;
-        } else {
+        this.balance -= property.price / 5;
+        if (!this.balance >= property.price) {
           console.log(
             "You do not have enough money to pay the player, you have lost this game"
           );
@@ -186,6 +194,7 @@ class Player {
             this.properties[i].owner = "";
             this.properties[i].status = "free";
           }
+          this.status = 2;
         }
       }
     }
