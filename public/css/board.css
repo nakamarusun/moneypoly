@@ -612,11 +612,11 @@ for info section */
 }
 
 
-#okButtonDialog{
+.okButtonDialog{
   background-color: rgb(35, 205, 235);
   box-shadow: 0 7px rgb(134, 242, 250);
 }
-#okButtonDialog:active{
+.okButtonDialog:active{
   position: relative;
   top: 7px;
   box-shadow: none;

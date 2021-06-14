@@ -132,6 +132,59 @@ $("#usernamebox").keyup(function(event) {
     }
 });
 
+const UI = {
+    $allPrompts: [],
+
+    init: function() {
+        UI.$allPrompts = $("#taxui, #gacui, #upgui, #buyui, #jaiui");
+        $(".okButtonDialog").click(UI.allPromptGone);
+    },
+
+    allPromptGone: function() {
+        UI.$allPrompts.addClass("none");
+    },
+
+    displayBuy: function(place, price) {
+        $("#buyui").removeClass("none");
+        $("#propertyNameDialog").text(place);
+        $("#propertyPriceDialog").text(price);
+    },
+
+    displayPay: function(place, price, level) {
+        $("#payui").removeClass("none");
+        $("#propertyPayNameDialog").text(place);
+        $("#propertyPayPriceDialog").text(price);
+        $("#propertyLevelPayDialog").text(level);
+    },
+
+    displayGac: function(res) {
+        $("#gacui").removeClass("none");
+        $("#gachaResultDialog").text(res);
+    },
+
+    displayUpg: function(place, price, level) {
+        // Check level
+        $("#upgui").removeClass("none");
+        $("#propertyUpgradeNameDialog").text(place);
+
+        if (level) {
+            $("#upgradeButtonDialog").addClass("none");
+            $("#propertyUpgradePriceDialog").text("FULLY UPGRADED");
+        } else {
+            $("#upgradeButtonDialog").removeClass("none");
+            $("#propertyUpgradePriceDialog").text(price);
+        }
+    },
+
+    displayJail: function() {
+        $("#jaiui").removeClass("none");
+    },
+
+    displayTax: function() {
+        $("#taxui").removeClass("none");
+    }
+}
+
 const IO = {
     socket: undefined, // Socket IO object
     destServer: undefined, // Destination server
@@ -149,6 +202,8 @@ const IO = {
 
     // Load the socket io instance
     loadSocket: function() {
+
+        UI.init();
 
         // Rename
         $("#spanUser")[0].innerText = IO.uname;
@@ -371,7 +426,7 @@ const IO = {
             const curInfo = $info[i];
             curInfo.children[0].children[0].innerText = current.uname;
             const $property = curInfo.children[1].children[0];
-            
+
             if (current.properties.length > 0) {
                 $property.innerHTML = "";
             }
@@ -379,7 +434,7 @@ const IO = {
             for (const propOwned of current.properties) {
                 const $prop = document.createElement("li");
                 $prop.classList.add("default-propertyList");
-                $prop.innerText = `${propOwned.name} - Rent:$${propOwned.price * propOwned.level}`;
+                $prop.innerText = `${propOwned.name} - Worth:$ ${propOwned.price * propOwned.level}`;
 
                 $property.appendChild($prop);
             }

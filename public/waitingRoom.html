@@ -143,11 +143,11 @@
 
           </div>
 
-           <div class="dialog buy-section none">
+           <div id="buyui" class="dialog buy-section none">
              <div class="dialogContainer">
                <div class="dialogHead">
                  <h3>You land on: <span id="propertyNameDialog">-none-</span></h3>
-                 <h3>Property Owner: <span id="propertyOwnerDialog">-none-</span></h3>
+                 <!-- <h3>Property Owner: <span id="propertyOwnerDialog">-none-</span></h3> -->
                  <h3>Property Price: <span id="propertyPriceDialog">-none-</span></h3>
                  <h3>Level: <span id="propertyLevelDialog">1</span></h3>
                </div>
@@ -159,22 +159,23 @@
              </div>
            </div>
 
-           <div class="dialog gacha-section none ">
+           <div id="gacui" class="dialog gacha-section none ">
              <div class="dialogContainer">
                <div class="dialogHead">
                 <h3>Gacha Result: <span id="gachaResultDialog">-none-</span></h3>
                </div>
                <div class="dialogBody">
-                 <button id="okButtonDialog">OK</button>
+                 <button class="okButtonDialog">OK</button>
                </div>
              </div>
            </div>
 
-           <div class="dialog upgrade-section none ">
+           <div id="upgui" class="dialog upgrade-section none ">
             <div class="dialogContainer">
               <div class="dialogHead">
-                <h3>You land on: <span id="propertyNameDialog">-none-</span></h3>
-                <h3>Property Owner: <span id="propertyOwnerDialog">-none-</span> (Your Property)</h3>
+                <h3>You land on: <span id="propertyUpgradeNameDialog">-none-</span></h3>
+                <h3>Upgrade price: <span id="propertyUpgradePriceDialog">-none-</span></h3>
+                <!-- <h3>Property Owner: <span id="propertyOwnerDialog">-none-</span> (Your Property)</h3> -->
                 <h3>Level: <span id="propertyLevelDialog">1</span></h3>
               </div>
               <div class="dialogBody">
@@ -185,25 +186,40 @@
             </div>
           </div>
 
-          <div class="dialog jail-section none">
+          <div id="payui" class="dialog upgrade-section none ">
+            <div class="dialogContainer">
+              <div class="dialogHead">
+                <h3>You land on: <span id="propertyPayNameDialog">-none-</span></h3>
+                <h3>Pay price: <span id="propertyPayPriceDialog">-none-</span></h3>
+                <!-- <h3>Property Owner: <span id="propertyOwnerDialog">-none-</span> (Your Property)</h3> -->
+                <h3>Level: <span id="propertyLevelDialog"></span>1</span></h3>
+              </div>
+              <div class="dialogBody">
+                <h3>Your Choice:</h3>
+                <button id="payButtonDialog">Pay</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="jaiui" class="dialog jail-section none">
             <div class="dialogContainer">
               <div class="dialogHead">
                 <h3>Owh No! <br>You Are Sent To Jail</h3>
               </div>
               <div class="dialogBody">
-                <h4>Roll the dice and get double six to escape! Good Luck!</h4>
-                <button id="okButtonDialog">OK</button>
+                <!-- <h4>Roll the dice and get double six to escape! Good Luck!</h4> -->
+                <button class="okButtonDialog">OK</button>
               </div>
             </div>
           </div>
 
-          <div class="dialog tax-section none ">
+          <div id="taxui" class="dialog tax-section none">
             <div class="dialogContainer">
               <div class="dialogHead">
                 <h3>You land on tax tile!<br>Pay $100 Please!</h3>
               </div>
               <div class="dialogBody">
-                <button id="okButtonDialog">OK</button>
+                <button class="okButtonDialog">OK</button>
               </div>
             </div>
           </div>
