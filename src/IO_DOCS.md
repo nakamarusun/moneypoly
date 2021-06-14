@@ -36,6 +36,8 @@ room: Hash
 }
 ```
 
+- startgame: Server broadcast to all client to show the board.
+
 - updateplayerlist: Server update the player list and broadcasts it.
 ```js
 {
@@ -56,4 +58,5 @@ room: Hash
 }
 ```
 
-- addbot // Adds a new bot to the game
+- addbot: Adds a new bot to the game
+- startgame: only host will be accepted. Starts the game if there is >= 2 players.

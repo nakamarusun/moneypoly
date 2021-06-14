@@ -29,7 +29,7 @@ module.exports = function (io) {
         next();
       });
     } else {
-      dcClientError(sock);
+      dcClientError(sock, "Client Error");
     }
   });
 };
