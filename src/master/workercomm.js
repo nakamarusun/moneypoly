@@ -2,8 +2,8 @@ const { getRedis } = require("../redisdb");
 
 const inter = require("../interserver/inter").router;
 
-// Creates a new room in the database.
-inter.post("/roomreport", (req, res) => {
+// Frees the room in the master database.
+inter.post("/delrooms", (req, res) => {
   const cl = getRedis();
 
   // Active rooms in the other server

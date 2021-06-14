@@ -90,10 +90,10 @@ function initPage() {
 }
 
 function showError(message) {
-    console.log(message)
-    const $err = $("#errornotif")
-    $err.fadeIn("slow")
-    $err.children().text(message)
+    console.log(message);
+    const $err = $("#errornotif");
+    $err.fadeIn("slow");
+    $err.children().text(message);
 }
 
 function validateAndStart(name) {
@@ -120,6 +120,7 @@ const IO = {
     room: undefined, // Room code
     uname: undefined, // Username
     connecting: false, // Whether a connection is being attempted or made
+    players: {}, // Players
 
     // Load the socket io instance
     loadSocket: function() {
@@ -153,14 +154,20 @@ const IO = {
 
     bindEvents: function() {
         const sock = IO.socket;
-        sock.on("dcerror", showError);
+        sock.on("dcerror", IO.showError);
         sock.on("updateplayerlist", IO.updatePlayers);
         sock.on("updateboard", IO.updateBoard);
+    },
+
+    showError(msgObj) {
+        showError(msgObj.msg);
     },
 
     updatePlayers: function(players) {
         const $c = $(".playerLists .playerList");
         const plArr = players.players;
+
+        IO.players = plArr;
 
         // Whether this client is a host.
         let isHost;
@@ -175,8 +182,10 @@ const IO = {
         if (isHost) {
             const $start = document.getElementById("startGameButton");
             $start.classList.remove("none");
-            console.log(plArr.length < 2);
             $start.disabled = plArr.length < 2;
+            $(".startGameButton").click(function(){
+                IO.socket.emit("startgame");
+            });
         }
 
         // Spawn and delete the buttons for the waiting room

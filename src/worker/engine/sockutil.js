@@ -1,6 +1,6 @@
-module.exports.dcClientError = function (sock, msg) {
+module.exports.dcClientError = function (sock, _msg) {
   sock.emit("dcerror", {
-    msg: msg
+    msg: _msg
   });
   sock.disconnect(true);
 };
