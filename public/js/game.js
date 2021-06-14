@@ -246,7 +246,7 @@ const IO = {
     },
 
     updateBoard: function(boardData) {
-        // // TODO: Kevin
+        // TODO: Kevin
         // let rollValue = 0;
         // let rollRandom1 = 0;
         // let rollRandom2 = 0;
@@ -261,11 +261,17 @@ const IO = {
         // const piece3 = new Piece(document.getElementById("piece-3"), 34, 24);
         // const piece4 = new Piece(document.getElementById("piece-4"), 17, 24);
 
+        
+
         // if (boardData.turnNumber === 0){
+        //     // console.log(boardData.playerList[0].rollValue)
+        //     // console.log( boardData.playerList[0].properties[0].name)
         //     rollValue = boardData.playerList[0].rollValue.reduce(function(total, sum){
         //         return total + sum;
 
+            
         //     }, 0);
+
         //     rollRandom1 = boardData.playerList[0].rollValue[0];
         //     rollRandom2 = boardData.playerList[0].rollValue[1];
         //     propertiesTotal = boardData.playerList[0].properties.length;
@@ -278,17 +284,30 @@ const IO = {
 
         //     if(propertiesTotal>0){
         //         var ul = document.getElementById("player1-lists");
-        //         var defaultLi = document.getElementById("default-propertyList");
+        //         ul.innerHTML='';
+
         //         var propertyPlayer1 = boardData.playerList[0].properties; // array of properties
-        //         ul.removeChild(defaultLi);
                 
         //         for(var i = 0; i<propertyPlayer1.length; i++){
         //             var li = document.createElement("li");
-        //             var propertiesInfo = document.createTextNode(boardData.playerList[0].properties[i].name + "(" + boardData.playerList[0].properties[i].level +")");
+        //             var propertiesInfo = document.createTextNode(boardData.playerList[0].properties[i].name + "(Level " + boardData.playerList[0].properties[i].level +")");
         //             li.appendChild(propertiesInfo);
         //             ul.appendChild(li);
         //         }
+               
+
+
         //     }
+
+        // }
+        // else if (boardData.turnNumber === 1){
+
+        // }
+        // else if (boardData.turnNumber === 2){
+
+        // }
+        // else if (boardData.turnNumber === 3){
+
         // }
 
         const pRef = boardData.playerList;
