@@ -10,7 +10,7 @@ $(document).ready(function(){
 console.log("HELLO")
 // eslint-disable-next-line no-unused-vars
 function validateUserName() {
-    let $userName = document.getElementById("userName");
+    const $userName = document.getElementById("userName");
     if($userName.value.length <5 || $userName.value.length >15)
     {
         alert("Name should be 5 to 15 characters");
@@ -33,16 +33,18 @@ $(document).ready(function(){
     });
 });
 
-//Transition waiting to board
-$(document).ready(function(){
-  $(".startGameButton").click(function(){
-    $(".body-wrapper, .bottom-wrapper").fadeOut("slow", () => {
-      $(".body-wrapper, .bottom-wrapper").hide();
-      $(".infoSection").fadeIn();
-      $(".layout").fadeIn();
+function displayBoard() {
+  $(".body-wrapper, .bottom-wrapper").fadeOut("slow", () => {
+    $(".body-wrapper, .bottom-wrapper").hide();
+    $(".infoSection").fadeIn();
+    $(".layout").fadeIn();
 
-    });
   });
+}
+
+// Transition waiting to board
+$(document).ready(function(){
+  $(".startGameButton").click(displayBoard);
 });
 
 

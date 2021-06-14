@@ -1,6 +1,10 @@
+let pieces = 0;
+
 class Piece {
 
   constructor(pieceHTML, xOffset, yOffset) {
+    this.pieceNum = pieces;
+    pieces++;
     this.$piece = pieceHTML
     this.boxLength = 96
     this.rectLength = 57
@@ -22,12 +26,14 @@ class Piece {
   jailPiece() {
     this.$piece.style.animation = "toJail 2s forwards";
 
-  }
-
- 
+  } 
 
   move(randomNumber) {
-    const num = this.position + randomNumber
+    this.setPosition(this.position + randomNumber);
+  }
+
+  setPosition(position) {
+    const num = position;
     this.position = (num) > 39 ?
           (num) - 40 : num
 
@@ -67,17 +73,25 @@ class Piece {
         )
 
         if (this.position === 30){
-          document.getElementById("piece-1").style.transform = `translate(-7px, -598px)`;
-          document.getElementById("piece-2").style.transform = `translate(-40px, -630px)`;
-          document.getElementById("piece-3").style.transform = `translate(-7px, -594px)`;
-          document.getElementById("piece-4").style.transform = `translate(0px, -660px)`;
+          // Every position has a special place in the board
+          switch (this.pieceNum) {
+            case 0:
+              this.$piece.style.transform = `translate(-7px, -598px)`;
+              break;
+            case 1:
+              this.$piece.style.transform = `translate(-40px, -630px)`;
+              break;
+            case 2:
+              this.$piece.style.transform = `translate(-7px, -594px)`;
+              break;
+            case 3:
+              this.$piece.style.transform = `translate(0px, -660px)`;
+              break;
+          }
       }
         break;
     }
-    
-    
   }
-
 }
 
 // const piece1 = new Piece(document.getElementById("piece-1"), 34, 18);
