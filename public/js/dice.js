@@ -4,7 +4,7 @@ class Piece {
     this.$piece = pieceHTML
     this.boxLength = 96
     this.rectLength = 57
-    this.position = 29
+    this.position = 9
     this.jail = false
 
     this.xOffset = xOffset
@@ -20,7 +20,7 @@ class Piece {
   }
 
   jailPiece() {
-    this.$piece.style.animation = "toJail 2s both";
+    this.$piece.style.animation = "toJail 2s forwards";
 
   }
 
@@ -33,8 +33,6 @@ class Piece {
 
     const coef = Math.floor((this.position)/10)
     const place = this.position % 10
-
-    
 
     switch (coef) {
       case 0:
@@ -82,37 +80,53 @@ class Piece {
 
 }
 
-const piece1 = new Piece(document.getElementById("piece-1"), 34, 18);
-const piece2 = new Piece(document.getElementById("piece-2"), 17, 18);
-const piece3 = new Piece(document.getElementById("piece-3"), 34, 24);
-const piece4 = new Piece(document.getElementById("piece-4"), 17, 24);
+// const piece1 = new Piece(document.getElementById("piece-1"), 34, 18);
+// const piece2 = new Piece(document.getElementById("piece-2"), 17, 18);
+// const piece3 = new Piece(document.getElementById("piece-3"), 34, 24);
+// const piece4 = new Piece(document.getElementById("piece-4"), 17, 24);
 
 // eslint-disable-next-line no-unused-vars
-function rollDice(turn) {
-  let total = 0
+function rollDice(randomNumber1, randomNumber2) {
+  // let total = 0
   const dice = [...document.querySelectorAll(".die-list")];
-  dice.forEach(die => {
-    toggleClasses(die);
-    die.dataset.roll = getRandomNumber(1, 6);
-    total = total + parseInt(die.dataset.roll)
-  });
-  // if(turn === 1){
+
+  for(let i = 0 ; i<dice.length; i++){
+    if(i === 0){
+      toggleClasses(dice[i]);
+      dice[i].dataset.roll = randomNumber1;
+
+
+    }
+    else if(i === 1){
+      toggleClasses(dice[i]);
+      dice[i].dataset.roll = randomNumber2;
+
+    }
+  }
+
+  
+  // dice.forEach(die => {
+  //   toggleClasses(die);
+  //   die.dataset.roll = randomNumber1;
+  //   total = total + parseInt(die.dataset.roll)
+  // });
+  // if(turn === 0){
   //   piece1.move(total)
   // }
-  // else if(turn === 2){
+  // else if(turn === 1){
   //   piece2.move(total)
   // }
-  // else if(turn === 3){
+  // else if(turn === 2){
   //   piece3.move(total)
   // }
-  // else if(turn === 4){
+  // else if(turn === 3){
   //   piece4.move(total)
   // }
-  console.log(total)
-  piece1.move(1)
-  piece2.move(1)
-  piece3.move(1)
-  piece4.move(1)
+  // console.log(total)
+  // piece1.move(1)
+  // piece2.move(1)
+  // piece3.move(1)
+  // piece4.move(1)
 }
 
 
@@ -122,11 +136,11 @@ function toggleClasses(die) {
   die.classList.toggle("even-roll");
 }
 
-function getRandomNumber(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+// function getRandomNumber(min, max) {
+//   min = Math.ceil(min);
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min + 1)) + min;
+// }
  
   
-  document.getElementById("roll-button").addEventListener("click", rollDice);
+  // document.getElementById("roll-button").addEventListener("click", rollDice);

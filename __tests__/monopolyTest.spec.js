@@ -11,8 +11,9 @@ board1.initGame(4);
 // console.log(board1.players);
 board1.players[0].move()
 board1.players[0].buy();
-board1.players[0].upgrade();
-console.log(board1.players);
+// board1.players[0].upgrade();
+// console.log(board1.players);
+console.log(JSON.stringify(board1.returnBoard()))
 // board1.players[1].position = 8;
 // board1.players[1].checkPosition();
 // board1.players[2].position = 1;
