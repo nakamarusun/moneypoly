@@ -14,6 +14,8 @@ function bindEvents(sock) {
   sock.on("startgame", startGame);
   sock.on("disconnect", onDisconnect);
   // sock.on("addbot", undefined); // TODO
+
+  sock.on("game:roll", gameRoll);
 }
 
 function sendPlayerList(obj, sock) {
@@ -31,6 +33,22 @@ function sendPlayerList(obj, sock) {
   sock.emit("updateplayerlist", payload);
 }
 
+/**
+ * Game stuff
+ */
+// Called when player sends a roll command.
+function gameRoll() {
+  const uname = this.handshake.query.uname;
+  const room = this.handshake.query.room;
+
+  getBoard(room).then(() => {
+    // TODO:
+  });
+}
+
+/**
+ * Waiting room stuff
+ */
 function startGame() {
   const room = this.handshake.query.room;
   const cl = getRedis();
@@ -72,9 +90,6 @@ function startGame() {
     io.in(room).emit("updateboard", game.returnBoard());
   });
 }
-
-// Called when player sends a roll command.
-function roll() {}
 
 function onDisconnect(reason) {
   // Confirm if the sending player is the host.

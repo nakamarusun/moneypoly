@@ -172,7 +172,12 @@ class Board {
 
   nextTurn() {
     this.turn += 1;
-    return this.players[this.turn % this.players.length];
+
+    // Set the player to be able to roll
+    const player = this.players[this.turn % this.players.length];
+    player.rollable = true;
+
+    return player;
   }
 }
 

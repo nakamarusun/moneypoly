@@ -265,4 +265,8 @@
     box-shadow: none;
   }
 
-
+  button:disabled {
+    background-color: #efefefab;
+    color: #efefefab;
+    box-shadow: 0 7px rgba(255, 255, 255, 0.856);
+  }

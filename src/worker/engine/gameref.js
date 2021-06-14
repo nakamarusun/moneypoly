@@ -1,5 +1,7 @@
 const { getRedis } = require("../../redisdb");
+const { promisify } = require("util");
 const Board = require("../../game/board");
+const Player = require("../../game/player");
 
 // Temporary reference to store moneypoly game object
 const roomBoard = {};
@@ -35,30 +37,33 @@ module.exports.createBoard = function (players) {
   return b;
 };
 
-/**
- *
- * @param {string} room
- * @returns {Board} board object
- */
-module.exports.getBoard = function (room) {
+module.exports.getBoard = async function (room) {
   // Try to get from object
   if (room in roomBoard) return roomBoard[room];
 
   // Try to get from redis
   const cl = getRedis();
-  cl.hget(room, "boardref", (err, rep) => {
-    if (err) return undefined;
+  const pr = promisify(cl.hget).bind(cl);
+  const rep = await pr(room, "boardref");
 
-    // If not in redis, make the board. and store it.
-    if (!rep) {
-      return undefined;
-    }
+  // If not in redis, make the board. and store it.
+  if (!rep) {
+    return Promise.reject(rep);
+  }
 
-    // Load the data from redis, and insert it to roomBoard
-    // TODO: player object assign too.
-    roomBoard[room] = Object.assign(new Board(), JSON.parse(rep));
-    return roomBoard[room];
-  });
+  // Load the data from redis
+  const obj = JSON.parse(rep);
+
+  // Parse player
+  for (const i in obj.players) {
+    obj.players[i] = Object.assign(new Player(), obj.players[i]);
+  }
+
+  // Parse board
+  roomBoard[room] = Object.assign(new Board(), obj);
+
+  // insert it to roomBoard
+  return roomBoard[room];
 };
 
 /**

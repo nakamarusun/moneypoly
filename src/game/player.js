@@ -13,6 +13,7 @@ class Player {
     this.activeBoard = activeBoard;
     this.action; // 1 = buy, 2 = upgrade, 3 = gacha, 4 = tax, 5 = jail
     this.uname; // Username of the user.
+    this.rollable = false; // Whether the user can roll or not.
   }
 
   // method for a player to buy a property, this method checks if the property if owned yet or not
@@ -101,6 +102,9 @@ class Player {
 
   // function to move a player's position on the baord
   move() {
+    if (!this.rollable) return;
+    this.rollable = false;
+
     if (this.status === 1) {
       const rollJail = this.roll();
       if ((rollJail[0] = rollJail[1])) {
