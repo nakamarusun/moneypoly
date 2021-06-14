@@ -200,14 +200,16 @@ const IO = {
     },
 
     startGame: function() {
-        // Remove the pieces
-        if (IO.pieces.length > IO.players.length) {
-            for (let i = 3; i >= IO.players.length; i--) {
-                console.log(i);
-                IO.pieces[i].hide();
-            }
-        }
+        // Get info board thingy
+        const $info = $(".info");
+
         IO.pieces.splice(IO.players.length, 4-IO.players.length);
+
+        // Display properties
+        for (let i = 0; i < IO.players.length; i++) {
+            IO.pieces[i].$piece.classList.remove("none")
+            $info[i].classList.remove("none");
+        }
 
         displayBoard();
     },
@@ -279,7 +281,7 @@ const IO = {
 
     updateBoard: function(boardData) {
         // TODO: Kevin
-        //#region 
+        // #region 
         // let rollValue = 0;
         // let rollRandom1 = 0;
         // let rollRandom2 = 0;
@@ -342,7 +344,7 @@ const IO = {
         // else if (boardData.turnNumber === 3){
 
         // }
-        //#endregion
+        // #endregion
 
         console.log(boardData);
 
@@ -351,9 +353,11 @@ const IO = {
         const diceVal = currentPlayer.rollValue;
         const pRef = boardData.playerList;
         let selfIndex; // Index of this client
-        let clientPlayer;
 
         rollDice(diceVal[0], diceVal[1]);
+
+        // Get info board thingy
+        const $info = $(".info");
 
         // Do things to all pieces
         for (const i in pRef) {
@@ -363,6 +367,23 @@ const IO = {
                 selfIndex = parseInt(i);
             }
 
+            // Change info properties
+            const curInfo = $info[i];
+            curInfo.children[0].children[0].innerText = current.uname;
+            const $property = curInfo.children[1].children[0];
+            
+            if (current.properties.length > 0) {
+                $property.innerHTML = "";
+            }
+
+            for (const propOwned of current.properties) {
+                const $prop = document.createElement("li");
+                $prop.classList.add("default-propertyList");
+                $prop.innerText = `${propOwned.name} - Rent:$${propOwned.price * propOwned.level}`;
+
+                $property.appendChild($prop);
+            }
+
             // Run the code after the dice has landed.
             setTimeout(() => {
                 // Updates all the position of the piece
@@ -370,12 +391,16 @@ const IO = {
             }, 1800);
         }
 
-        clientPlayer = boardData.playerList[selfIndex];
+        const clientPlayer = boardData.playerList[selfIndex];
         // Handle the current player
         if (currentPlayer.uname === IO.uname) {
             // Set roll button availability
             rollDiceToggle(clientPlayer.rollable);
         }
+
+        // Set money
+        $("#moneyAmount").text(clientPlayer.balance);
+        $("#turnPlayerName").text(currentPlayer.uname);
 
         // Display action, according to the players.
         const action = boardData.actionType;
