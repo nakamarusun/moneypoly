@@ -1,24 +1,15 @@
 const { createBoard } = require("../src/worker/engine/gameref");
 
+players = ["Player", "Shoob", "Cibaboo"];
 const board = createBoard({
-    players: [
-        {
-            n: "Player"
-        },
-        {
-            n: "Shoob"
-        },
-        {
-            n: "Cibaboo"
-        }
-    ]
+    players: players.map((_n) => {return {n: _n};} )
 });
 
 const boardData = board.returnBoard();
 
 describe("Moneypoly socket board test", () => {
    test("Whether username is there", () => {
-        expect(boardData.playerList[1].uname).toEqual("Shoob");
+        expect(players).toContain(boardData.playerList[1].uname);
     });
 
     test("There is 3 players", () => {

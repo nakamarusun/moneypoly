@@ -14,6 +14,13 @@ class Piece {
     this.xOffset = xOffset
     this.yOffset = yOffset
     this.move(0)
+
+    // Unhide the object
+    pieceHTML.classList.remove("none");
+  }
+
+  hide() {
+    this.$piece.classList.add("none");
   }
   
   positionPiece(x, y) {

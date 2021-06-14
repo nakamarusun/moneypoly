@@ -51,6 +51,14 @@
       <input type="submit" id = "playButton" class="button" value="Let's Play!" onclick="validateUserName();">
     </div>
 
+    <script>
+      $("#userName").keyup(function(event) {
+        if (event.keyCode === 13) {
+            $("#playButton").click();
+        }
+    });
+    </script>
+
     <div class="choiceSection none" id="choiceSection">
       <label id="choiceLabel">Choose How You Want to Play:</label><br>
       <div class="choiceBoxes">

@@ -39,7 +39,7 @@ inter.post("/keeprooms", (req, res) => {
 
         if (!otherRooms.includes(room)) {
           // Dont delete rooms that has game started.
-          if (resp === RoomStatus.STARTED) return;
+          if (parseInt(resp) === RoomStatus.STARTED) return;
           console.log("Deleting room " + room);
           cl.srem("rml", room);
           cl.del(room);

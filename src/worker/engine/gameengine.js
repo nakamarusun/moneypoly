@@ -48,8 +48,9 @@ function gameRoll() {
   getBoard(room).then((res) => {
     const player = res.checkTurn();
 
-    // Can't roll if not rollable.
-    if (!res.checkTurn().rollable) return notif(this, 1, "Cannot roll.");
+    // Can't roll if not rollable or not the player calling it.
+    if (!res.checkTurn().rollable || res.checkTurn().uname !== uname)
+      return notif(this, 1, "Cannot roll.");
 
     // Move the player in the board
     player.move();
@@ -83,16 +84,16 @@ function startGame() {
     cl.hset(room, "status", RoomStatus.STARTED);
 
     // Create request to master to delete the room.
-    const turl = process.env.MASTERSERVER + "/io/delrooms";
-    superagent
-      .post(turl)
-      .set({
-        Authorization: "Bearer " + genToken(),
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      })
-      .send([room])
-      .end();
+    // const turl = process.env.MASTERSERVER + "/io/delrooms";
+    // superagent
+    //   .post(turl)
+    //   .set({
+    //     Authorization: "Bearer " + genToken(),
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json"
+    //   })
+    //   .send([room])
+    //   .end();
 
     // Create board object
     const game = createBoard({
@@ -185,10 +186,10 @@ module.exports.onConnect = function (sock) {
   const cl = getRedis();
 
   // Insert player into the data object.
-  cl.hget(room, "status", (err, rep) => {
+  cl.hmget(room, "status", "count", (err, rep) => {
     if (err || !rep) return;
 
-    const status = parseInt(rep);
+    const status = parseInt(rep[0]);
     // If no player, make the current player the host.
     if (status === RoomStatus.READY) {
       cl.hset(room, "status", RoomStatus.POPULATED);
@@ -239,8 +240,34 @@ module.exports.onConnect = function (sock) {
         // Send player list to room
         sendPlayerList(obj, io.in(room));
       });
-    } else if (status === RoomStatus.FULL || status === RoomStatus.STARTED) {
+    } else if (status === RoomStatus.FULL || parseInt(rep[1]) >= 3) {
       dcClientError(sock, "Room is full!");
+    } else if (status === RoomStatus.STARTED) {
+      // Check if player is already in the game. If not, reject.
+      cl.hget(room, "data", (err, rep) => {
+        if (err || !rep) return;
+
+        // Parse the data
+        const obj = JSON.parse(rep);
+
+        // If player with the same name is not found, then reject.
+        if (
+          !obj.players.find((x) => {
+            return x.n === uname;
+          })
+        ) {
+          dcClientError(sock, "Error connecting");
+        }
+
+        // TODO: Handle a user with the same name is already in the game.
+
+        // Tell the client the game has started.
+        sendPlayerList(obj, sock);
+        sock.emit("startgame");
+        getBoard(room).then((board) => {
+          sock.emit("updateboard", board.returnBoard());
+        });
+      });
     }
   });
 };

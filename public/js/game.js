@@ -37,9 +37,14 @@ function rollDiceToggle(pressable) {
     btn.disabled = !pressable;
 }
 
+let init = false;
 // Gets the data from the parameter, and verifies it.
 // Then initiates connection to the server.
-function initPage() {
+(function initPage() {
+
+    if (init)
+    return;
+    init = true;
     
     // Puts the URL parameter into an object
     const params = parseParam(location.search);
@@ -94,7 +99,7 @@ function initPage() {
         // Show room does not exist.
         showError("Room does not exist!")
     });
-}
+})();
 
 function showError(message) {
     console.log(message);
@@ -116,10 +121,16 @@ function validateAndStart(name) {
     $("#namequery").fadeOut("slow");
     IO.connecting = true;
     IO.uname = $("#usernamebox").val();
+    console.log("Bruhhhhh");
     IO.loadSocket(); // Connect game
 }
 
-initPage();
+// initPage();
+$("#usernamebox").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#usernameboxbutton").click();
+    }
+});
 
 const IO = {
     socket: undefined, // Socket IO object
@@ -127,7 +138,7 @@ const IO = {
     room: undefined, // Room code
     uname: undefined, // Username
     connecting: false, // Whether a connection is being attempted or made
-    players: {}, // Players
+    players: [], // Players
     canRoll: false,
     pieces: [
         new Piece(document.getElementById("piece-1"), 34, 18),
@@ -189,6 +200,15 @@ const IO = {
     },
 
     startGame: function() {
+        // Remove the pieces
+        if (IO.pieces.length > IO.players.length) {
+            for (let i = 3; i >= IO.players.length; i--) {
+                console.log(i);
+                IO.pieces[i].hide();
+            }
+        }
+        IO.pieces.splice(IO.players.length, 4-IO.players.length);
+
         displayBoard();
     },
 
@@ -259,6 +279,7 @@ const IO = {
 
     updateBoard: function(boardData) {
         // TODO: Kevin
+        //#region 
         // let rollValue = 0;
         // let rollRandom1 = 0;
         // let rollRandom2 = 0;
@@ -321,20 +342,31 @@ const IO = {
         // else if (boardData.turnNumber === 3){
 
         // }
+        //#endregion
 
         console.log(boardData);
+
+        // Roll the dice for every player
+        const diceVal = boardData.playerList[boardData.turnNumber].rollValue;
+        rollDice(diceVal[0], diceVal[1]);
 
         const pRef = boardData.playerList;
         for (const i in pRef) {
             const currentPlayer = pRef[i];
-            // Updates all the position of the piece
-            IO.pieces[i].setPosition(currentPlayer.position);
 
-            // Handle the current player
-            if (currentPlayer.uname === IO.uname) {
-                // Set roll button availability
-                rollDiceToggle(currentPlayer.rollable);
-            }
+            // Run the code after the dice has landed.
+            setTimeout(() => {
+                // Updates all the position of the piece
+                IO.pieces[i].setPosition(currentPlayer.position);
+
+                // Handle the current player
+                if (currentPlayer.uname === IO.uname) {
+                    // Set roll button availability
+                    rollDiceToggle(currentPlayer.rollable);
+
+                    // Display action, according to the players.
+                }
+            }, 1800);
         }
         
     }

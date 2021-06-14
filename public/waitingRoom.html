@@ -79,10 +79,10 @@
 
       <div class="layout none">
         <div class="board">
-          <img id="piece-1" class="piece" src="assets/car.png" onclick="move();">
-          <img id="piece-2" class="piece" src="assets/hat.png" onclick="move();">
-          <img id="piece-3" class="piece" src="assets/shoe.png" onclick="move();">
-          <img id="piece-4" class="piece" src="assets/iron.png" onclick="move();">
+          <img id="piece-1" class="piece none" src="assets/car.png" onclick="move();">
+          <img id="piece-2" class="piece none" src="assets/hat.png" onclick="move();">
+          <img id="piece-3" class="piece none" src="assets/shoe.png" onclick="move();">
+          <img id="piece-4" class="piece none" src="assets/iron.png" onclick="move();">
           <div class="middle">
             <h1 class="title">Moneypoly</h1>
             <div class="chance-box">
@@ -329,7 +329,7 @@
                     </li>
                   </ol>
                 </div>
-                <button type="button" id="roll-button">Roll Dice</button>
+                <button type="button" id="roll-button" disabled>Roll Dice</button>
 
               </div>
             </div>
@@ -347,10 +347,8 @@
     <div id="namequery">
       <div class="box white">
         Enter your name:
-        <form>
-          <input type="text" id="usernamebox">
-        </form>
-        <button onclick="validateAndStart(document.getElementById('usernamebox').value);">Play!</button>
+        <input type="text" id="usernamebox">
+        <button id="usernameboxbutton" onclick="validateAndStart(document.getElementById('usernamebox').value);">Play!</button>
       </div>
     </div>
 
