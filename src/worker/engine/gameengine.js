@@ -40,9 +40,15 @@ function kickplayer(data) {
     if (obj.host === uname) {
       // Erase player from data
       obj.players.splice(data.player, 1);
-
       // Save object
       cl.hset(room, "data", JSON.stringify(obj));
+
+      // Decrement player count
+      cl.hincrby(room, "count", -1, (err, rep) => {
+        if (err || !rep) return;
+        // Set room status to full
+        cl.hset(room, "status", RoomStatus.POPULATED);
+      });
     }
 
     // Resend object
@@ -81,7 +87,7 @@ module.exports.onConnect = function (sock) {
           }
         ]
       };
-      cl.hset(room, "data", JSON.stringify(obj));
+      cl.hset(room, "data", JSON.stringify(obj), "count", 1);
 
       // Send player list to room
       sendPlayerList(obj, io.in(room));
@@ -106,12 +112,19 @@ module.exports.onConnect = function (sock) {
             b: false
           });
           cl.hset(room, "data", JSON.stringify(obj));
+
+          // Incr player count
+          cl.hincrby(room, "count", 1, (err, rep) => {
+            if (err || !rep) return;
+            // Set room status to full
+            if (rep >= 4) cl.hset(room, "status", RoomStatus.FULL);
+          });
         }
 
         // Send player list to room
         sendPlayerList(obj, io.in(room));
       });
-    } else if (status === RoomStatus.FULL) {
+    } else if (status === RoomStatus.FULL || status === RoomStatus.STARTED) {
       dcClientError(sock, "Room is full");
     }
   });

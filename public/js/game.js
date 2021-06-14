@@ -119,6 +119,7 @@ const IO = {
     room: undefined, // Room code
     uname: undefined, // Username
     connecting: false, // Whether a connection is being attempted or made
+    players: {}, // Players
 
     // Load the socket io instance
     loadSocket: function() {
@@ -160,6 +161,8 @@ const IO = {
     updatePlayers: function(players) {
         const $c = $(".playerLists .playerList");
         const plArr = players.players;
+
+        IO.players = plArr;
 
         // Whether this client is a host.
         let isHost;
