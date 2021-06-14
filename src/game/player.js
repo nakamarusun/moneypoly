@@ -12,6 +12,7 @@ class Player {
     this.rollValue; // saves the player's roll value
     this.activeBoard = activeBoard;
     this.action; // 1 = buy, 2 = upgrade, 3 = gacha, 4 = tax, 5 = jail
+    this.uname; // Username of the user.
   }
 
   // method for a player to buy a property, this method checks if the property if owned yet or not

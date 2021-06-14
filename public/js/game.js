@@ -316,6 +316,7 @@ const IO = {
             IO.pieces[i].setPosition(pRef[i].position);
         }
 
+        console.log(boardData);
         
     }
     

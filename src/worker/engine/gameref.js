@@ -5,14 +5,35 @@ const Board = require("../../game/board");
 const roomBoard = {};
 
 // Get a new moneypoly game
-function startMoneypoly() {
+
+/* players:[
+    {
+        n: 
+    }
+]
+*/
+/**
+ *
+ * @param {[Object]} players
+ * @returns {Board}
+ */
+module.exports.createBoard = function (players) {
+  const p = players.players;
   const b = new Board();
   b.initBoard(40);
-  b.initGame(4);
 
-  b.players[0].move();
+  // Insert names
+  const names = [];
+  p.forEach((item, i) => {
+    names.push(item.n);
+  });
+
+  // Create the game.
+  b.initGame(names);
+
+  //   b.players[0].move();
   return b;
-}
+};
 
 /**
  *
@@ -30,12 +51,11 @@ module.exports.getBoard = function (room) {
 
     // If not in redis, make the board. and store it.
     if (!rep) {
-      roomBoard[room] = startMoneypoly();
-      cl.hset(room, "boardref", JSON.stringify(roomBoard[room]));
-      return roomBoard[room];
+      return undefined;
     }
 
     // Load the data from redis, and insert it to roomBoard
+    // TODO: player object assign too.
     roomBoard[room] = Object.assign(new Board(), JSON.parse(rep));
     return roomBoard[room];
   });

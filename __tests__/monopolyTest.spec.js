@@ -1,10 +1,6 @@
-const propertyList =  require("../src/game/propertydata.js");
-const Player = require("../src/game/player.js");
-const Property = require ('../src/game/property.js');
 const Board = require('../src/game/board.js'); 
-const { TestScheduler } = require("jest");
 
-let board1 = new Board();
+const board1 = new Board();
 
 board1.initBoard(40);
 board1.initGame(4);
@@ -31,7 +27,7 @@ console.log(JSON.stringify(board1.returnBoard()))
 // console.log(board1.players);
 
 describe("Moneypoly board test", () => {
-   test("Whether BINUS exists", () => {
+   test("Whether the board exists", () => {
         expect(board1.board).toEqual(expect.anything());
-     })
- })
+     });
+ });

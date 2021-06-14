@@ -2,7 +2,7 @@ const { getRedis } = require("../../redisdb");
 const { RoomStatus } = require("../roomstatus");
 const { dcClientError } = require("./sockutil");
 const { genToken } = require("../../interserver/inter");
-const { getBoard, setBoard } = require("./gameref");
+const { getBoard, setBoard, createBoard } = require("./gameref");
 const superagent = require("superagent");
 // const util = require("../../util");
 
@@ -59,9 +59,17 @@ function startGame() {
       .send([room])
       .end();
 
+    // Create board object
+    const game = createBoard({
+      players: obj.players
+    });
+
+    // Save the board to reference manager
+    setBoard(room, game);
+
     // Start the game here
     io.in(room).emit("startgame"); // Useless for now
-    io.in(room).emit("updateboard", getBoard(room).returnBoard());
+    io.in(room).emit("updateboard", game.returnBoard());
   });
 }
 

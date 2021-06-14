@@ -62,6 +62,9 @@ class Board {
 
   // function gets called when game starts
   initGame(playerSize) {
+    const names = Array.isArray(playerSize) ? playerSize : undefined;
+    if (names) playerSize = names.length;
+
     if (playerSize < 2 || playerSize > 4) {
       console.log("invalid amount of players");
       return;
@@ -72,6 +75,13 @@ class Board {
       const rollOrder = player.roll();
       player.rollValue = rollOrder;
       this.players.push(player);
+    }
+
+    // Assign player names
+    if (names) {
+      this.players.forEach((item, i) => {
+        item.uname = names[i];
+      });
     }
 
     this.players.sort((a, b) => {
