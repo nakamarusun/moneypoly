@@ -1,6 +1,6 @@
 const propertyList = require("./propertydata.js");
 const Player = require("./player.js");
-const PLAYERS = ["Hat", "Bike", "Salt", "Boat"];
+const PLAYERS = ["Car", "Hat", "Shoe", "Iron"];
 const makeBoardTile = (name, type) => {
   return { name: name, type: type }; // type would be property, gacha tile(?), or others
 };
@@ -21,33 +21,36 @@ class Board {
     board[1] = makeBoardTile("Taman Safari", "Property");
     board[2] = makeBoardTile("Gacha", "Gacha");
     board[3] = makeBoardTile("Ancol", "Property");
-    board[4] = makeBoardTile("Instant -100", "Others");
-    board[5] = makeBoardTile("Gacha", "Gacha");
-    board[6] = makeBoardTile("Museum Macan", "Property");
-    board[7] = makeBoardTile("Gacha", "Gacha");
-    board[8] = makeBoardTile("Museum Wayang", "Property");
+    board[4] = makeBoardTile("Museum Macan", "Property");
+    board[5] = makeBoardTile("Instant -100", "Others");
+    board[6] = makeBoardTile("Gacha", "Gacha");
+    board[7] = makeBoardTile("Museum Wayang", "Property");
+    board[8] = makeBoardTile("Gacha", "Gacha");
     board[9] = makeBoardTile("Sea World", "Property");
-    board[10] = makeBoardTile("Jail", "Others");
-    board[11] = makeBoardTile("Taman Mini", "Property");
-    board[12] = makeBoardTile("Gacha", "Gacha");
-    board[13] = makeBoardTile("Taman Menteng", "Property");
-    board[14] = makeBoardTile("Museum Indonesia", "Property");
+    board[10] = makeBoardTile("Go to Jail", "Others");
+
+    board[11] = makeBoardTile("BINUS Square", "Property");
+    board[12] = makeBoardTile("Taman Suropati", "Property");
+    board[13] = makeBoardTile("Gacha", "Gacha");
+    board[14] = makeBoardTile("Monas", "Property");
     board[15] = makeBoardTile("Gacha", "Gacha");
-    board[16] = makeBoardTile("Monas", "Property");
-    board[17] = makeBoardTile("Gacha", "Gacha");
-    board[18] = makeBoardTile("Taman Suropati", "Property");
-    board[19] = makeBoardTile("BINUS Square", "Property");
+    board[16] = makeBoardTile("Museum Indonesia", "Property");
+    board[17] = makeBoardTile("Taman Menteng", "Property");
+    board[18] = makeBoardTile("Gacha", "Gacha");
+    board[19] = makeBoardTile("Taman Mini", "Property");
     board[20] = makeBoardTile("Free Parking", "Others");
-    board[21] = makeBoardTile("Senayan City", "Property");
+
+    board[21] = makeBoardTile("Taman Mangrove", "Property");
     board[22] = makeBoardTile("Gacha", "Gacha");
-    board[23] = makeBoardTile("BINUS Senayan", "Property");
-    board[24] = makeBoardTile("Senayan Park", "Property");
+    board[23] = makeBoardTile("Gelora Bung Karno", "Property");
+    board[24] = makeBoardTile("Plaza Senayan", "Property");
     board[25] = makeBoardTile("Gacha", "Gacha");
-    board[26] = makeBoardTile("Plaza Senayan", "Property");
-    board[27] = makeBoardTile("Gelora Bung Karno", "Property");
+    board[26] = makeBoardTile("Senayan Park", "Property");
+    board[27] = makeBoardTile("BINUS Senayan", "Property");
     board[28] = makeBoardTile("Gacha", "Gacha");
-    board[29] = makeBoardTile("Taman Mangrove", "Property");
-    board[30] = makeBoardTile("Go to Jail", "Others");
+    board[29] = makeBoardTile("Senayan City", "Property");
+    board[30] = makeBoardTile("Jail", "Others");
+
     board[31] = makeBoardTile("BINUS Alam Sutera", "Property");
     board[32] = makeBoardTile("Merdeka Square", "Property");
     board[33] = makeBoardTile("Gacha", "Gacha");
@@ -105,6 +108,7 @@ class Board {
     switch (currentPlayer.action) {
       case 1:
         const actionType1 = {
+          player: this.turn % this.players.length,
           piece: currentPlayer.piece,
           action: currentPlayer.action,
           msg: "Do you want to buy this property"
@@ -117,6 +121,7 @@ class Board {
         };
       case 2:
         const actionType2 = {
+          player: this.turn % this.players.length,
           piece: currentPlayer.piece,
           action: currentPlayer.action,
           msg: "Do you want to upgrade this property"
@@ -129,6 +134,7 @@ class Board {
         };
       case 3:
         const actionType3 = {
+          player: this.turn % this.players.length,
           piece: currentPlayer.piece,
           action: currentPlayer.action,
           msg:
@@ -142,6 +148,7 @@ class Board {
         };
       case 4:
         const actionType4 = {
+          player: this.turn % this.players.length,
           piece: currentPlayer.piece,
           action: currentPlayer.action,
           msg: "You have been taxed, your balance will be reduced by 100"
@@ -154,6 +161,7 @@ class Board {
         };
       case 5:
         const actionType5 = {
+          player: this.turn % this.players.length,
           piece: currentPlayer.piece,
           action: currentPlayer.action,
           msg: "The police have arrested you, you will now be sent to jail"

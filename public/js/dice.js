@@ -27,7 +27,7 @@ class Piece {
     this.$piece.style.transform = `translate(
       ${x}px,
       ${y}px)`
-    console.log(this.position)
+    // console.log(this.position)
   }
 
   jailPiece() {
