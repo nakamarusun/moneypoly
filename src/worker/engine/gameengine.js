@@ -2,6 +2,7 @@ const { getRedis } = require("../../redisdb");
 const { RoomStatus } = require("../roomstatus");
 const { dcClientError } = require("./sockutil");
 const { genToken } = require("../../interserver/inter");
+const { getBoard, setBoard } = require("./gameref");
 const superagent = require("superagent");
 // const util = require("../../util");
 
@@ -35,9 +36,10 @@ function startGame() {
   const cl = getRedis();
   // Check if player is enough to start the game.
 
-  cl.hmget(room, "count", "data", (err, rep) => {
+  cl.hmget(room, "count", "data", "boardref", (err, rep) => {
     if (err || !rep) return;
     if (rep[0] < 2) return; // Not enough player
+    if (rep[2]) return; // Game has started
 
     // Check if the sending player is the host.
     const obj = JSON.parse(rep[1]);
@@ -57,9 +59,14 @@ function startGame() {
       .send([room])
       .end();
 
+    // Start the game here
     io.in(room).emit("startgame"); // Useless for now
+    io.in(room).emit("updateboard", getBoard(room).returnBoard());
   });
 }
+
+// Called when player sends a roll command.
+function roll() {}
 
 function onDisconnect(reason) {
   // Confirm if the sending player is the host.
