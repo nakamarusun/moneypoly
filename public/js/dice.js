@@ -4,7 +4,7 @@ class Piece {
     this.$piece = pieceHTML
     this.boxLength = 96
     this.rectLength = 57
-    this.position = 9
+    this.position = 0
     this.jail = false
 
     this.xOffset = xOffset
@@ -143,4 +143,4 @@ function toggleClasses(die) {
 // }
  
   
-  // document.getElementById("roll-button").addEventListener("click", rollDice);
+document.getElementById("roll-button").addEventListener("click", rollDice());
