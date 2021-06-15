@@ -21,7 +21,7 @@ const propertyName = [
   "Taman Mangrove",
   "BINUS Alam Sutera",
   "Merdeka Square",
-  "Planetarium Jakarta",
+  "Ragunan Zoo",
   "Bundaran HI",
   "Hotel Indonesia"
 ];
