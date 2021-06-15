@@ -28,7 +28,11 @@ function freeRooms() {
         if (err || !resp) return;
         // If not expired yet, then insert the server to "keep list"
         if (resp[1] > Date.now()) {
-          freeList[resp[0]].push(room);
+          try {
+            freeList[resp[0]].push(room);
+          } catch (err) {
+            console.log("No server: " + resp[0]);
+          }
         } else {
           // If expired, delete from redis.
           // TODO: Move this to the response to the delete request
