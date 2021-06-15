@@ -189,7 +189,7 @@ const UI = {
         $("#upgui").removeClass("none");
         $("#propertyUpgradeNameDialog").text(place);
 
-        if (level) {
+        if (level > 5) {
             $("#upgradeButtonDialog").addClass("none");
             $("#propertyUpgradePriceDialog").text("FULLY UPGRADED");
         } else {
