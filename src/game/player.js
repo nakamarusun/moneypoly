@@ -110,7 +110,7 @@ class Player {
   }
 
   // function to move a player's position on the baord
-  move() {
+  move(playBoard) {
     if (!this.rollable) return;
     this.rollable = false;
 
@@ -149,7 +149,7 @@ class Player {
           "You passed through the start tile you will be awarded $200"
         );
       }
-      this.checkPosition();
+      this.checkPosition(playBoard);
       return rollMove[0], rollMove[1];
     }
   }
@@ -173,7 +173,7 @@ class Player {
   }
 
   // method to check the position of the player, used for identifying if the player is on a special tile
-  checkPosition() {
+  checkPosition(playBoard) {
     if (this.activeBoard[this.position].type === "Gacha") {
       this.gachaTile();
       this.action = 3;
@@ -201,11 +201,11 @@ class Player {
           "You are not the owner of this property, your balance will be deducted accordingly"
         );
 
-        // for (let i = 0; i < playBoard.players.length; i++) {
-        //   if (playBoard.players[i].piece === property.owner) {
-        //     playBoard.players[i].balance += property.price / 5;
-        //   }
-        // }
+        for (let i = 0; i < playBoard.players.length; i++) {
+          if (playBoard.players[i].piece === property.owner) {
+            playBoard.players[i].balance += property.price / 5;
+          }
+        }
         if (this.balance < property.price) {
           console.log(
             "You do not have enough money to pay the player, you have lost this game"
