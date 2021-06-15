@@ -198,8 +198,9 @@ const UI = {
         }
     },
 
-    displayJail: function() {
+    displayPrompt: function(msg) {
         $("#jaiui").removeClass("none");
+        $("#displayPromptText").text(msg);
         UI.$skipButtons.prop("disabled", false);
     },
 
@@ -463,6 +464,7 @@ const IO = {
             for (const propOwned of current.properties) {
                 const $prop = document.createElement("li");
                 $prop.classList.add("default-propertyList");
+                console.log(`${propOwned.name} - Worth:$ ${propOwned.price} - ${propOwned.level}`)
                 $prop.innerText = `${propOwned.name} - Worth:$ ${propOwned.price / (propOwned.level + 1)}`;
 
                 $property.appendChild($prop);
@@ -485,6 +487,14 @@ const IO = {
             // Set roll button availability
             console.log(clientPlayer.rollable);
             rollDiceToggle(clientPlayer.rollable);
+
+            // Check free parking
+            console.log(currentPlayer.position);
+            console.log("Bruh Bruh");
+            if (currentPlayer.position === 20 && !clientPlayer.rollable) {
+                boardData.actionType.player = selfIndex;
+                boardData.actionType.action = 7;
+            }
         } else {
             rollDiceToggle(false);
         }
@@ -505,6 +515,8 @@ const IO = {
                         break;
                     }
                     case 2: {
+                        console.log(clientPlayer);
+                        console.log(currentCell);
                         const updg = clientPlayer.properties.find((x) => {return x.name === currentCell.name});
                         UI.displayUpg(currentCell.name, property.price, updg.level);
                         break;
@@ -516,11 +528,16 @@ const IO = {
                         UI.displayTax();
                         break;
                     case 5:
-                        UI.displayJail();
+                        UI.displayPrompt("You are in jail so sad.");
                         break;
                     case 6: {
                         const prop = boardData.boardState.find((x) => {return x.name === currentCell.name});
                         UI.displayPay(prop.name, 0);
+                        break;
+                    }
+                    case 7: {
+                        UI.displayPrompt("You have landed on free parking! It does nothing just like in the games when you play with your parents!!");
+                        break;
                     }
                 }
             }

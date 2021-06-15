@@ -49,23 +49,27 @@ function gameRoll() {
   const uname = this.handshake.query.uname;
   const room = this.handshake.query.room;
 
-  getBoard(room).then((res) => {
-    const player = res.checkTurn();
+  getBoard(room)
+    .then((res) => {
+      const player = res.checkTurn();
 
-    // Can't roll if not rollable or not the player calling it.
-    if (!player.rollable || player.uname !== uname)
-      return notif(this, 1, "Cannot roll.");
+      // Can't roll if not rollable or not the player calling it.
+      if (!player.rollable || player.uname !== uname)
+        return notif(this, 1, "Cannot roll.");
 
-    // Move the player in the board
-    console.log(player.move());
-    player.checkPosition();
+      // Move the player in the board
+      console.log(player.move());
+      player.checkPosition();
 
-    // Emit to player
-    broadcastGameboard(room, res);
+      // Emit to player
+      broadcastGameboard(room, res);
 
-    // Save board
-    setBoard(room, res);
-  });
+      // Save board
+      setBoard(room, res);
+    })
+    .catch((errP) => {
+      console.log(errP);
+    });
 }
 
 // TODO: Resolve action once action is done.
@@ -75,20 +79,24 @@ function gameNext() {
   const uname = this.handshake.query.uname;
   const room = this.handshake.query.room;
 
-  getBoard(room).then((res) => {
-    const player = res.checkTurn();
+  getBoard(room)
+    .then((res) => {
+      const player = res.checkTurn();
 
-    // Can't next if not turn or not the player calling it.
-    if (player.uname !== uname) return notif(this, 1, "Can not next");
+      // Can't next if not turn or not the player calling it.
+      if (player.uname !== uname) return notif(this, 1, "Can not next");
 
-    res.nextTurn();
+      res.nextTurn();
 
-    // Emit to player
-    broadcastGameboard(room, res);
+      // Emit to player
+      broadcastGameboard(room, res);
 
-    // Save board
-    setBoard(room, res);
-  });
+      // Save board
+      setBoard(room, res);
+    })
+    .catch((errP) => {
+      console.log(errP);
+    });
 }
 
 function gameBuy() {
@@ -96,16 +104,20 @@ function gameBuy() {
   const uname = this.handshake.query.uname;
   const room = this.handshake.query.room;
 
-  getBoard(room).then((res) => {
-    const player = res.checkTurn();
+  getBoard(room)
+    .then((res) => {
+      const player = res.checkTurn();
 
-    // Can't next if not turn or not the player calling it.
-    if (player.uname !== uname) return notif(this, 1, "Not allowed");
+      // Can't next if not turn or not the player calling it.
+      if (player.uname !== uname) return notif(this, 1, "Not allowed");
 
-    if (!res.checkTurn().buy()) notif(this, 1, "Can not buy this property!");
+      if (!res.checkTurn().buy()) notif(this, 1, "Can not buy this property!");
 
-    gameNext.bind(this)();
-  });
+      gameNext.bind(this)();
+    })
+    .catch((errP) => {
+      console.log(errP);
+    });
 }
 
 function gameUpgrade() {
@@ -113,17 +125,21 @@ function gameUpgrade() {
   const uname = this.handshake.query.uname;
   const room = this.handshake.query.room;
 
-  getBoard(room).then((res) => {
-    const player = res.checkTurn();
+  getBoard(room)
+    .then((res) => {
+      const player = res.checkTurn();
 
-    // Can't next if not turn or not the player calling it.
-    if (player.uname !== uname) return notif(this, 1, "Not allowed");
+      // Can't next if not turn or not the player calling it.
+      if (player.uname !== uname) return notif(this, 1, "Not allowed");
 
-    if (!res.checkTurn().upgrade())
-      notif(this, 1, "Can not upgrade this property!");
+      if (!res.checkTurn().upgrade())
+        notif(this, 1, "Can not upgrade this property!");
 
-    gameNext.bind(this)();
-  });
+      gameNext.bind(this)();
+    })
+    .catch((errP) => {
+      console.log(errP);
+    });
 }
 
 /**
@@ -328,9 +344,13 @@ module.exports.onConnect = function (sock) {
         // Tell the client the game has started.
         sendPlayerList(obj, sock);
         sock.emit("startgame");
-        getBoard(room).then((board) => {
-          sock.emit("updateboard", board.returnBoard());
-        });
+        getBoard(room)
+          .then((board) => {
+            sock.emit("updateboard", board.returnBoard());
+          })
+          .catch((errP) => {
+            console.log(errP);
+          });
       });
     }
   });
