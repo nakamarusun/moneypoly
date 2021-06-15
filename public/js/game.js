@@ -463,7 +463,7 @@ const IO = {
             for (const propOwned of current.properties) {
                 const $prop = document.createElement("li");
                 $prop.classList.add("default-propertyList");
-                $prop.innerText = `${propOwned.name} - Worth:$ ${propOwned.price * propOwned.level}`;
+                $prop.innerText = `${propOwned.name} - Worth:$ ${propOwned.price / (propOwned.level + 1)}`;
 
                 $property.appendChild($prop);
             }

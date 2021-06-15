@@ -177,6 +177,8 @@ function onDisconnect(reason) {
   const room = this.handshake.query.room;
   const cl = getRedis();
 
+  console.log(this.id + " Disconnected");
+
   // Clear the database entry
   cl.hmget(room, "status", "data", (err, rep) => {
     if (err || !rep) return;
