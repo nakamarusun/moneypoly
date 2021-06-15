@@ -116,14 +116,17 @@ class Player {
 
     if (this.status === 1) {
       const rollJail = this.roll();
-      if ((rollJail[0] = rollJail[1])) {
+      if (rollJail[0] === rollJail[1]) {
         this.status = 0;
         this.jailCD = 0;
+        this.action = 0;
       } else {
         this.jailCD -= 1;
       }
-      if (this.jailCD === 0) {
+      if (this.jailCD <= 0) {
         this.status = 0;
+        this.jailCD = 0;
+        this.action = 0;
       }
     } else if (this.status === 2) {
       console.log("you have lost this game you cannot act anymore");
@@ -139,7 +142,7 @@ class Player {
           "You passed through the start tile you will be awarded $200"
         );
       }
-      this.checkPosition(this.activeBoard);
+      this.checkPosition();
       return rollMove[0], rollMove[1];
     }
   }
@@ -187,9 +190,9 @@ class Player {
           "You are not the owner of this property, your balance will be deducted accordingly"
         );
         this.balance -= property.price / 5;
-        // for (let i = 0; i < this.activeBoard.players.length; i++) {
-        //   if (this.activeBoard.players[i].piece === property.owner) {
-        //     this.activeBoard.players[i].balance += property.price / 5;
+        // for (let i = 0; i < playBoard.players.length; i++) {
+        //   if (playBoard.players[i].piece === property.owner) {
+        //     playBoard.players[i].balance += property.price / 5;
         //   }
         // }
         if (!this.balance >= property.price) {
