@@ -175,11 +175,11 @@ class Player {
       const property = propertyList.find((a) => {
         return a.name === this.activeBoard[this.position].name;
       });
-      if (property.owner === this.piece) {
+      if (property.owner === undefined || property.owner === "") {
+        this.action = 1;
+      } else if (property.owner === this.piece) {
         console.log("You are the owner of this property! :)");
         this.action = 2;
-      } else if (property.owner === "" || property.owner === undefined) {
-        this.action = 1;
       } else {
         this.action = 6;
         console.log(
