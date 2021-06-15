@@ -260,6 +260,7 @@ const IO = {
 
     initButtons: function() {
         $("#roll-button").click(() => {
+            console.log("Lole");
             if (IO.canRoll) {
                 IO.socket.emit("game:roll");
                 rollDiceToggle(false);
@@ -492,11 +493,12 @@ const IO = {
             // Check free parking
             console.log(currentPlayer.position);
             console.log("Bruh Bruh");
-            if (currentPlayer.position === 20 && !clientPlayer.rollable) {
+            if ((currentPlayer.position === 20 || (currentPlayer.position === 30 && currentPlayer.status === 0)) && !clientPlayer.rollable) {
                 boardData.actionType.player = selfIndex;
                 boardData.actionType.action = 7;
             }
         } else {
+            console.log("Not player");
             rollDiceToggle(false);
         }
 
@@ -543,6 +545,8 @@ const IO = {
                 }
             }
         }, 2800);
+
+        console.log("Update board done");
         
     }
     
