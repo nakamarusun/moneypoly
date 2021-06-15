@@ -138,7 +138,7 @@ const UI = {
     $skipButtons: [],
 
     init: function() {
-        UI.$allPrompts = $("#taxui, #gacui, #upgui, #buyui, #jaiui");
+        UI.$allPrompts = $("#taxui, #gacui, #upgui, #buyui, #jaiui, #payui");
         UI.$skipButtons = $(".okButtonDialog, #skipButtonUpgDialog, #skipBuyButtonDialog, #payButtonDialog");
         UI.$skipButtons.click(UI.allPromptGone);
 
