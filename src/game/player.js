@@ -117,6 +117,7 @@ class Player {
     if (this.status === 1) {
       console.log("Status == 1");
       const rollJail = this.roll();
+      this.rollValue = rollJail;
       if (rollJail[0] === rollJail[1]) {
         this.status = 0;
         this.jailCD = 0;
@@ -125,6 +126,7 @@ class Player {
       } else {
         console.log("minus jail CD");
         this.jailCD -= 1;
+        this.action = 5;
         if (this.jailCD <= 0) {
           this.status = 0;
           this.jailCD = 0;
