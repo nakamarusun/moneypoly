@@ -177,6 +177,8 @@ function onDisconnect(reason) {
   const room = this.handshake.query.room;
   const cl = getRedis();
 
+  console.log(this.id + " Disconnected");
+
   // Clear the database entry
   cl.hmget(room, "status", "data", (err, rep) => {
     if (err || !rep) return;
@@ -265,7 +267,7 @@ module.exports.onConnect = function (sock) {
           }
         ]
       };
-      cl.hset(room, "data", JSON.stringify(obj), "count", 1);
+      cl.hmset(room, "data", JSON.stringify(obj), "count", 1);
 
       // Send player list to room
       sendPlayerList(obj, io.in(room));

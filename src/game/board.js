@@ -54,7 +54,7 @@ class Board {
     board[31] = makeBoardTile("BINUS Alam Sutera", "Property");
     board[32] = makeBoardTile("Merdeka Square", "Property");
     board[33] = makeBoardTile("Gacha", "Gacha");
-    board[34] = makeBoardTile("Planetarium Jakarta", "Property");
+    board[34] = makeBoardTile("Ragunan Zoo", "Property");
     board[35] = makeBoardTile("Gacha", "Gacha");
     board[36] = makeBoardTile("Gacha", "Gacha");
     board[37] = makeBoardTile("Bundaran HI", "Property");

@@ -62,12 +62,14 @@ const io = sio(server, {
   }
 });
 
+/*
 io.adapter(
   sior({
     host: "localhost",
     port: process.env.REDISPORT || 6379
   })
 );
+*/
 
 engine(io); // Initialize game server
 
