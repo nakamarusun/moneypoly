@@ -57,6 +57,11 @@ function gameRoll() {
       if (!player.rollable || player.uname !== uname)
         return notif(this, 1, "Cannot roll.");
 
+      // // If in jail, move the player.
+      // if (player.status === 1) {
+      //   player.move();
+      // }
+
       // Move the player in the board
       console.log(player.move());
       player.checkPosition();
@@ -85,11 +90,6 @@ function gameNext() {
 
       // Can't next if not turn or not the player calling it.
       if (player.uname !== uname) return notif(this, 1, "Can not next");
-
-      // If in jail, move the player.
-      if (player.status === 1) {
-        player.move();
-      }
 
       res.nextTurn();
 

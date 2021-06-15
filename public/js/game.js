@@ -447,6 +447,7 @@ const IO = {
         // Do things to all pieces
         for (const i in pRef) {
             const current = pRef[i];
+            console.log(current.properties);
             // Find self index
             if (current.uname === IO.uname) {
                 selfIndex = parseInt(i);
@@ -461,7 +462,6 @@ const IO = {
                 $property.innerHTML = "";
             }
 
-            console.log(current.properties);
             for (const propOwned of current.properties) {
                 const $prop = document.createElement("li");
                 $prop.classList.add("default-propertyList");
