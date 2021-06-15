@@ -464,6 +464,7 @@ const IO = {
             for (const propOwned of current.properties) {
                 const $prop = document.createElement("li");
                 $prop.classList.add("default-propertyList");
+                console.log(`${propOwned.name} - Worth:$ ${propOwned.price} - ${propOwned.level}`)
                 $prop.innerText = `${propOwned.name} - Worth:$ ${propOwned.price / (propOwned.level + 1)}`;
 
                 $property.appendChild($prop);
@@ -514,6 +515,8 @@ const IO = {
                         break;
                     }
                     case 2: {
+                        console.log(clientPlayer);
+                        console.log(currentCell);
                         const updg = clientPlayer.properties.find((x) => {return x.name === currentCell.name});
                         UI.displayUpg(currentCell.name, property.price, updg.level);
                         break;
