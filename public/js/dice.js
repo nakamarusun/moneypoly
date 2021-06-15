@@ -28,8 +28,8 @@ class Piece {
   }
 
   jailPiece() {
+    this.jail = true;
     this.$piece.style.animation = "toJail 2s forwards";
-
   } 
 
   move(randomNumber) {
@@ -58,7 +58,6 @@ class Piece {
         )
         if (this.position === 10) {
           this.position = 30;
-          this.jail = true;
           this.jailPiece();
         }
         break;

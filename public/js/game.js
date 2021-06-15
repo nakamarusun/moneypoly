@@ -532,6 +532,7 @@ const IO = {
                         UI.displayTax();
                         break;
                     case 5:
+                        IO.pieces[selfIndex].jailPiece();
                         UI.displayPrompt("You are in jail so sad.");
                         break;
                     case 6: {
