@@ -1,4 +1,5 @@
 const propertyList = require("./propertydata.js");
+const Board = require("./board");
 const gachaMoney = [50, 100, 150, 200];
 class Player {
   // each player will have a piece, balance, list of properties they control and their status jialed or not.
@@ -22,9 +23,9 @@ class Player {
       // return "you have lost this game you cannot act anymore";
       return false;
     } else {
-      if (this.activeBoard[this.position].type === "Property") {
+      if (this.activeBoard.board[this.position].type === "Property") {
         const property = propertyList.find((a) => {
-          return a.name === this.activeBoard[this.position].name;
+          return a.name === this.activeBoard.board[this.position].name;
         });
         console.log(property);
         // if property is already owned player can't buy the property
@@ -67,7 +68,7 @@ class Player {
       return "you have lost this game you cannot act anymore";
     } else {
       const prop = propertyList.find((a) => {
-        return a.name === this.activeBoard[property].name;
+        return a.name === this.activeBoard.board[property].name;
       });
       if (this.properties.includes(prop)) {
         if (prop.level < 1) {
@@ -88,7 +89,7 @@ class Player {
   // function to upgrade a property's level
   upgrade() {
     const prop = propertyList.find((a) => {
-      return a.name === this.activeBoard[this.position].name;
+      return a.name === this.activeBoard.board[this.position].name;
     });
     if (this.properties.includes(prop)) {
       if (prop.level > 4) {
@@ -138,7 +139,7 @@ class Player {
           "You passed through the start tile you will be awarded $200"
         );
       }
-      this.checkPosition(this.activeBoard);
+      this.checkPosition(this.activeBoard.board);
       return rollMove[0], rollMove[1];
     }
   }
@@ -160,20 +161,20 @@ class Player {
 
   // method to check the position of the player, used for identifying if the player is on a special tile
   checkPosition() {
-    if (this.activeBoard[this.position].type === "Gacha") {
+    if (this.activeBoard.board[this.position].type === "Gacha") {
       this.gachaTile();
       this.action = 3;
-    } else if (this.activeBoard[this.position].name === "Instant -100") {
+    } else if (this.activeBoard.board[this.position].name === "Instant -100") {
       this.balance -= 100;
       this.action = 4;
-    } else if (this.activeBoard[this.position].name === "Go to Jail") {
+    } else if (this.activeBoard.board[this.position].name === "Go to Jail") {
       this.status = 1;
       this.position = 10;
       this.jailCD = 2;
       this.action = 5;
-    } else if (this.activeBoard[this.position].type === "Property") {
+    } else if (this.activeBoard.board[this.position].type === "Property") {
       const property = propertyList.find((a) => {
-        return a.name === this.activeBoard[this.position].name;
+        return a.name === this.activeBoard.board[this.position].name;
       });
       if (property.owner === undefined || property.owner === "") {
         this.action = 1;
@@ -186,6 +187,11 @@ class Player {
           "You are not the owner of this property, your balance will be deducted accordingly"
         );
         this.balance -= property.price / 5;
+        for (let i = 0; i < this.activeBoard.players.length; i++) {
+          if (this.activeBoard.players[i].piece === property.owner) {
+            this.activeBoard.players[i].balance += property.price / 5;
+          }
+        }
         if (!this.balance >= property.price) {
           console.log(
             "You do not have enough money to pay the player, you have lost this game"
