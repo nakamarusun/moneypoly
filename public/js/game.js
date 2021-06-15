@@ -224,6 +224,7 @@ const IO = {
         new Piece(document.getElementById("piece-3"), 34, 24),
         new Piece(document.getElementById("piece-4"), 17, 24),
     ],
+    $logBox: document.getElementById("logbox"),
 
     // Load the socket io instance
     loadSocket: function() {
@@ -275,6 +276,12 @@ const IO = {
         sock.on("updateboard", IO.updateBoard);
         sock.on("startgame", IO.startGame);
         sock.on("notif", IO.showNotif);
+    },
+
+    // Utility to log the game moves
+    catLog(msg) {
+        // TODO:
+        IO.$logBox.appendChild()
     },
 
     showError(msgObj) {

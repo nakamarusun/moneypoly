@@ -40,6 +40,8 @@ function newRoomId(cl, req, res) {
       })
       .end((err, resp) => {
         // TODO: Handle server reject / error
+        console.log(err);
+        console.log(resp);
         if (err || resp.statusCode === 500) return res.sendStatus(500);
 
         cl.hmset(
