@@ -4,7 +4,7 @@ const propertyList = [];
 const propertyName = [
   "Taman Safari",
   "Ancol",
-  "Musuem Macan",
+  "Museum Macan",
   "Museum Wayang",
   "Sea World",
   "Taman Mini",
