@@ -120,13 +120,15 @@ class Player {
         this.status = 0;
         this.jailCD = 0;
         this.action = 0;
+        return rollJail;
       } else {
         this.jailCD -= 1;
-      }
-      if (this.jailCD <= 0) {
-        this.status = 0;
-        this.jailCD = 0;
-        this.action = 0;
+        if (this.jailCD <= 0) {
+          this.status = 0;
+          this.jailCD = 0;
+          this.action = 0;
+        }
+        return rollJail[0], rollJail[1];
       }
     } else if (this.status === 2) {
       console.log("you have lost this game you cannot act anymore");
