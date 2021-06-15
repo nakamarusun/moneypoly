@@ -200,13 +200,13 @@ class Player {
         console.log(
           "You are not the owner of this property, your balance will be deducted accordingly"
         );
-        this.balance -= property.price / 5;
+
         // for (let i = 0; i < playBoard.players.length; i++) {
         //   if (playBoard.players[i].piece === property.owner) {
         //     playBoard.players[i].balance += property.price / 5;
         //   }
         // }
-        if (!this.balance >= property.price) {
+        if (this.balance < property.price) {
           console.log(
             "You do not have enough money to pay the player, you have lost this game"
           );
@@ -215,6 +215,8 @@ class Player {
             this.properties[i].status = "free";
           }
           this.status = 2;
+        } else {
+          this.balance -= property.price / 5;
         }
       }
     }
