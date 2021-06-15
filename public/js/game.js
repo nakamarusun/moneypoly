@@ -494,7 +494,7 @@ const IO = {
             // Check free parking
             console.log(currentPlayer.position);
             console.log("Bruh Bruh");
-            if ((currentPlayer.position === 20 || (currentPlayer.position === 30 && currentPlayer.status === 0)) && !clientPlayer.rollable) {
+            if ((currentPlayer.position === 20 || (currentPlayer.position === 30 && currentPlayer.status === 0) || currentPlayer.position === 0) && !clientPlayer.rollable) {
                 boardData.actionType.player = selfIndex;
                 boardData.actionType.action = 7;
             }
@@ -541,7 +541,7 @@ const IO = {
                         break;
                     }
                     case 7: {
-                        UI.displayPrompt("You have landed on free parking! It does nothing just like in the games when you play with your parents!!");
+                        UI.displayPrompt("Safe 😊");
                         break;
                     }
                 }
