@@ -29,7 +29,7 @@ class Piece {
 
   jailPiece() {
     this.jail = true;
-    this.$piece.style.animation = "toJail 2s forwards";
+    this.$piece.style.animation = "toJail 2s backwards";
   } 
 
   move(randomNumber) {
