@@ -177,7 +177,7 @@ class Player {
       this.action = 4;
     } else if (this.activeBoard[this.position].name === "Go to Jail") {
       this.status = 1;
-      this.position = 10;
+      this.position = 30;
       this.jailCD = 2;
       this.action = 5;
     } else if (this.activeBoard[this.position].type === "Property") {
