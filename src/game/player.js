@@ -166,6 +166,9 @@ class Player {
     } else {
       this.balance -= gachaMoney[roll2];
       console.log("You have lost $" + gachaMoney[roll2]);
+      if (this.balance <= 0) {
+        this.balance = 0;
+      }
     }
   }
 
