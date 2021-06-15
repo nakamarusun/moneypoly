@@ -282,6 +282,7 @@ const IO = {
     },
 
     showNotif(msg) {
+        console.log(msg.msg);
         alert(msg.msg);
     },
 

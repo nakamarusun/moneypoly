@@ -54,8 +54,10 @@ function gameRoll() {
       const player = res.checkTurn();
 
       // Can't roll if not rollable or not the player calling it.
-      if (!player.rollable || player.uname !== uname)
+      if (!player.rollable || player.uname !== uname) {
+        console.log("Cannot roll");
         return notif(this, 1, "Cannot roll.");
+      }
 
       // // If in jail, move the player.
       // if (player.status === 1) {
@@ -64,7 +66,7 @@ function gameRoll() {
 
       // Move the player in the board
       console.log(player.move());
-      player.checkPosition();
+      // player.checkPosition();
 
       // Emit to player
       broadcastGameboard(room, res);
