@@ -68,7 +68,7 @@ class Player {
       return "you have lost this game you cannot act anymore";
     } else {
       const prop = propertyList.find((a) => {
-        return a.name === this.activeBoard.board[property].name;
+        return a.name === this.activeBoard[property].name;
       });
       if (this.properties.includes(prop)) {
         if (prop.level < 1) {
