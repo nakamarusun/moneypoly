@@ -141,6 +141,7 @@ class Board {
           player: this.turn % this.players.length,
           piece: currentPlayer.piece,
           action: currentPlayer.action,
+          amount: currentPlayer.gachaCost,
           msg:
             "You have landed on a gacha tile, money will randomly be added or subtracted from your balance"
         };

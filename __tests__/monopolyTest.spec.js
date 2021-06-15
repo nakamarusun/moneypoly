@@ -5,7 +5,7 @@ const board1 = new Board();
 board1.initBoard(40);
 board1.initGame(4);
 // console.log(board1.players);
-board1.players[0].move();
+board1.players[0].move(board1);
 board1.players[0].buy();
 // board1.players[0].upgrade();
 // console.log(board1.players);

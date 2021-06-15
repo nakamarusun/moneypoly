@@ -163,19 +163,21 @@ class Player {
     if (roll1 === 0) {
       this.balance += gachaMoney[roll2];
       console.log("You have gained $" + gachaMoney[roll2]);
+      return gachaMoney[roll2];
     } else {
       this.balance -= gachaMoney[roll2];
       console.log("You have lost $" + gachaMoney[roll2]);
       if (this.balance <= 0) {
         this.balance = 0;
       }
+      return -gachaMoney[roll2];
     }
   }
 
   // method to check the position of the player, used for identifying if the player is on a special tile
   checkPosition(playBoard) {
     if (this.activeBoard[this.position].type === "Gacha") {
-      this.gachaTile();
+      this.gachaCost = this.gachaTile();
       this.action = 3;
     } else if (this.activeBoard[this.position].name === "Instant -100") {
       this.balance -= 100;
