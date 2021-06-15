@@ -32,6 +32,7 @@ function freeRooms() {
             freeList[resp[0]].push(room);
           } catch (err) {
             console.log("No server: " + resp[0]);
+            cl.del(room);
           }
         } else {
           // If expired, delete from redis.

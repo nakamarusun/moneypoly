@@ -139,7 +139,7 @@ const UI = {
 
     init: function() {
         UI.$allPrompts = $("#taxui, #gacui, #upgui, #buyui, #jaiui, #payui");
-        UI.$skipButtons = $(".okButtonDialog, #skipButtonUpgDialog, #skipBuyButtonDialog, #payButtonDialog");
+        UI.$skipButtons = $("#skipButtonUpgDialog, #skipBuyButtonDialog, #payButtonDialog");
         UI.$skipButtons.click(UI.allPromptGone);
 
         $("#buyButtonDialog").click(() => {
@@ -180,6 +180,7 @@ const UI = {
 
     displayGac: function(res) {
         $("#gacui").removeClass("none");
+        $("#gachaAmount").text(`${res < 0 ? "-" : "+"}res`);
         UI.$skipButtons.prop("disabled", false);
     },
 
@@ -448,7 +449,8 @@ const IO = {
         const pRef = boardData.playerList;
         let selfIndex; // Index of this client
 
-        rollDice(diceVal[0], diceVal[1]);
+        if (!currentPlayer.rollable)
+            rollDice(diceVal[0], diceVal[1]);
 
         // Get info board thingy
         const $info = $(".info");
@@ -471,7 +473,8 @@ const IO = {
 
             // Change info properties
             const curInfo = $info[i];
-            curInfo.children[0].children[0].innerText = current.uname;
+            // Name
+            curInfo.children[0].children[0].innerText = `($${current.balance})- ${current.uname}`;
             const $property = curInfo.children[1].children[0];
 
             if (current.properties.length > 0) {
@@ -508,10 +511,10 @@ const IO = {
             // Check free parking
             console.log(currentPlayer.position);
             console.log("Bruh Bruh");
-            if ((currentPlayer.position === 20 || (currentPlayer.position === 30 && currentPlayer.status === 0) || currentPlayer.position === 0) && !clientPlayer.rollable) {
-                boardData.actionType.player = selfIndex;
-                boardData.actionType.action = 7;
-            }
+            // if ((currentPlayer.position === 20 || (currentPlayer.position === 30 && currentPlayer.status === 0) || currentPlayer.position === 0) && !clientPlayer.rollable) {
+            //     boardData.actionType.player = selfIndex;
+            //     boardData.actionType.action = 7;
+            // }
         } else {
             console.log("Not player");
             rollDiceToggle(false);
@@ -526,7 +529,9 @@ const IO = {
         const currentCell = clientPlayer.activeBoard[clientPlayer.position];
 
         setTimeout(() => {
+            // If there is an action, do the action.
             if (action.player === selfIndex) {
+                console.log("Do action: " + action.action);
                 switch(action.action) {
                     case 1: {
                         UI.displayBuy(currentCell.name, boardData.boardState.find((x) => {return x.name === currentCell.name}).price);
@@ -540,22 +545,25 @@ const IO = {
                         break;
                     }
                     case 3:
-                        UI.displayGac();
+                        UI.displayGac(action.amount);
+                        IO.socket.emit("game:next");
                         break;
                     case 4:
                         UI.displayTax();
+                        IO.socket.emit("game:next");
                         break;
                     case 5:
                         UI.displayPrompt("You are in jail so sad.");
+                        IO.socket.emit("game:next");
                         break;
-                    case 6: {
+                    case 6: { // Pay
                         const prop = boardData.boardState.find((x) => {return x.name === currentCell.name});
                         UI.displayPay(prop.name, 0);
                         break;
                     }
-                    case 7: {
-                        UI.displayPrompt("Safe 😊");
-                        break;
+                    default: {
+                        // Else, just continue the game.
+                        IO.socket.emit("game:next");
                     }
                 }
             }

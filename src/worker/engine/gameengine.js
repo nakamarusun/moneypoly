@@ -61,11 +61,11 @@ function gameRoll() {
 
       // // If in jail, move the player.
       // if (player.status === 1) {
-      //   player.move();
+      //   player.move(res);
       // }
 
       // Move the player in the board
-      console.log(player.move());
+      console.log(player.move(res));
       // player.checkPosition();
 
       // Emit to player
