@@ -1,3 +1,27 @@
+@media screen and (max-width: 1390px) {
+  .stats-section{
+    width: 100% !important;
+    margin: 20px auto !important;
+    display: block !important;
+  }
+  /* .layout{
+    display: block !important;
+  } */
+
+  .propertyContainer{
+    width: 60% !important;
+    margin-left: auto !important ;
+    margin-right: auto !important ;
+  }
+  .dice-section{
+    width: 50% !important;
+    margin-left: auto !important ;
+    margin-right: auto !important ;
+  }
+
+}
+
+
 /* stats Section */
 .stats-section{
     /* display:inline-block; */
@@ -14,7 +38,7 @@
 
 .propertyContainer{
     background-color: white;
-    width: auto;
+    width: 100%;
     height: 500px;
     border-radius: 10px;
     border-style: groove;
