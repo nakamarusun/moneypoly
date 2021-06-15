@@ -1,4 +1,5 @@
 const propertyList = require("./propertydata.js");
+const Board = require("./board");
 const gachaMoney = [50, 100, 150, 200];
 class Player {
   // each player will have a piece, balance, list of properties they control and their status jialed or not.
@@ -186,6 +187,11 @@ class Player {
           "You are not the owner of this property, your balance will be deducted accordingly"
         );
         this.balance -= property.price / 5;
+        // for (let i = 0; i < this.activeBoard.players.length; i++) {
+        //   if (this.activeBoard.players[i].piece === property.owner) {
+        //     this.activeBoard.players[i].balance += property.price / 5;
+        //   }
+        // }
         if (!this.balance >= property.price) {
           console.log(
             "You do not have enough money to pay the player, you have lost this game"

@@ -283,7 +283,7 @@ module.exports.onConnect = function (sock) {
           }
         ]
       };
-      cl.hset(room, "data", JSON.stringify(obj), "count", 1);
+      cl.hmset(room, "data", JSON.stringify(obj), "count", 1);
 
       // Send player list to room
       sendPlayerList(obj, io.in(room));
