@@ -224,18 +224,21 @@ class Board {
    */
   nextTurn() {
     let count = 0;
+    const curPlayer = this.turn % this.players.length;
 
-    let player = this.players[this.turn % this.players.length];
-
-    // Skip game over players
+    // Skip players which has bankrupted
+    let player;
     do {
       player = this.players[this.turn % this.players.length];
-      this.turn += 1;
+      this.turn++;
       count++;
     } while (player.status === 2 && count < 4);
 
     // Set the player to be able to roll
     this.players[this.turn % this.players.length].rollable = true;
+
+    // We got a winner
+    if (curPlayer === this.turn % this.players.length) return curPlayer;
 
     return player;
   }

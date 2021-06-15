@@ -142,6 +142,12 @@ const UI = {
         UI.$skipButtons = $("#skipButtonUpgDialog, #skipBuyButtonDialog, #payButtonDialog");
         UI.$skipButtons.click(UI.allPromptGone);
 
+        $(".okButtonDialog").click(() => {
+            UI.$allPrompts.addClass("none");
+            // Init skip buttons
+            UI.$skipButtons.prop("disabled", true);
+        });
+
         $("#buyButtonDialog").click(() => {
             IO.socket.emit("game:buy");
             UI.$allPrompts.addClass("none");
@@ -180,7 +186,7 @@ const UI = {
 
     displayGac: function(res) {
         $("#gacui").removeClass("none");
-        $("#gachaAmount").text(`${res < 0 ? "-" : "+"}res`);
+        $("#gachaAmount").text(`${res < 0 ? "-" : "+"}${Math.abs(res)}`);
         UI.$skipButtons.prop("disabled", false);
     },
 
@@ -528,6 +534,7 @@ const IO = {
         const action = boardData.actionType;
         const currentCell = clientPlayer.activeBoard[clientPlayer.position];
 
+        console.log("Do action: " + action.action);
         setTimeout(() => {
             // If there is an action, do the action.
             if (action.player === selfIndex) {

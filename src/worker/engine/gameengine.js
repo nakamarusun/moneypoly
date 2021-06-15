@@ -64,8 +64,17 @@ function gameRoll() {
       //   player.move(res);
       // }
 
+      // Check jail
+      const pStatus = player.status;
+
       // Move the player in the board
       console.log(player.move(res));
+
+      // Check if player is no longer in jail. If out of jail, move the player again.
+      if (pStatus === 1 && player.status === 0) {
+        player.move(res);
+      }
+
       // player.checkPosition();
 
       // Emit to player
@@ -93,13 +102,35 @@ function gameNext() {
       // Can't next if not turn or not the player calling it.
       if (player.uname !== uname) return notif(this, 1, "Can not next");
 
-      res.nextTurn();
+      // Already checks if the next player lost or not.
+      const p = res.nextTurn();
+      if (Number.isInteger(p)) {
+        // Broadcast the winner
+        // TODO: delete all the board references
+        io.in(room).emit("game:winner", p);
+
+        // Create request to master to delete the room.
+        const turl = process.env.MASTERSERVER + "/io/delrooms";
+        superagent
+          .post(turl)
+          .set({
+            Authorization: "Bearer " + genToken(),
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          })
+          .send([room])
+          .end();
+
+        // Finally, delete from redis.
+        const cl = getRedis();
+        cl.del(room);
+      } else {
+        // Save board
+        setBoard(room, res);
+      }
 
       // Emit to player
       broadcastGameboard(room, res);
-
-      // Save board
-      setBoard(room, res);
     })
     .catch((errP) => {
       console.log(errP);
@@ -189,7 +220,7 @@ function startGame() {
     setBoard(room, game);
 
     // Start the game here
-    io.in(room).emit("startgame"); // Useless for now
+    io.in(room).emit("startgame");
     broadcastGameboard(room, game);
   });
 }
