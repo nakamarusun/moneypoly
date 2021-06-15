@@ -489,7 +489,8 @@ const IO = {
 
             // Check free parking
             console.log(currentPlayer.position);
-            if (currentPlayer.position === 20) {
+            console.log("Bruh Bruh");
+            if (currentPlayer.position === 20 && !clientPlayer.rollable) {
                 boardData.actionType.player = selfIndex;
                 boardData.actionType.action = 7;
             }
