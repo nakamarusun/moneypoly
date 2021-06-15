@@ -30,7 +30,12 @@ class Piece {
   jailPiece() {
     this.jail = true;
     this.$piece.style.animation = "toJail 2s forwards";
-  } 
+  }
+
+  unjailPiece() {
+    this.jail = false;
+    this.$piece.style.animation = "";
+  }
 
   move(randomNumber) {
     this.setPosition(this.position + randomNumber);

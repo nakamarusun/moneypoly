@@ -455,6 +455,13 @@ const IO = {
                 selfIndex = parseInt(i);
             }
 
+            // Place pieces in jail
+            if (current.status === 1) {
+                IO.pieces[i].jailPiece();
+            } else {
+                IO.pieces[i].unjailPiece();
+            }
+
             // Change info properties
             const curInfo = $info[i];
             curInfo.children[0].children[0].innerText = current.uname;
@@ -532,7 +539,6 @@ const IO = {
                         UI.displayTax();
                         break;
                     case 5:
-                        IO.pieces[selfIndex].jailPiece();
                         UI.displayPrompt("You are in jail so sad.");
                         break;
                     case 6: {
