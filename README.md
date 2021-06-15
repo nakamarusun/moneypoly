@@ -79,4 +79,4 @@ Do both `a. Run worker instance` and `b. Run master instance` in order.
 - npm run format: Formats all code with Prettier and ESLint
 
 # Poster
-![Alt text](https://github.com/nakamarusun/moneypoly/blob/main/Moneypoly%20Poster.png?raw=true "Poster")
+![Alt text](https://github.com/nakamarusun/moneypoly/blob/main/Monopoly%20Poster.png?raw=true "Poster")

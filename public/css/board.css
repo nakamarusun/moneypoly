@@ -10,6 +10,11 @@ for info section */
     }
   
   }
+ @media screen and (max-width: 1390px) {
+   .board{
+     margin-left: 90px !important;
+   }
+ }
   
   .infoSection{
     background-color: white;
@@ -102,7 +107,7 @@ for info section */
   background: #080808;
   border: 2px solid #080808;
   grid-gap: 2px;
-  margin: 0px !important;
+  margin: 0px;
 }
 .middle{
   grid-column: 2/11;

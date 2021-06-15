@@ -40,8 +40,6 @@ function newRoomId(cl, req, res) {
       })
       .end((err, resp) => {
         // TODO: Handle server reject / error
-        console.log(err);
-        console.log(resp);
         if (err || resp.statusCode === 500) return res.sendStatus(500);
 
         cl.hmset(
@@ -54,7 +52,7 @@ function newRoomId(cl, req, res) {
             if (err) return res.sendStatus(500);
 
             // TODO: Make sure the server is available
-            console.log(resp.body);
+            console.log("Room alocated: " + id);
 
             // Send back the room id and server.
             res.status(201);
