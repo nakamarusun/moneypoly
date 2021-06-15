@@ -169,6 +169,7 @@ class Player {
       this.action = 3;
     } else if (this.activeBoard[this.position].name === "Instant -100") {
       this.balance -= 100;
+      console.log("Lol lose 100");
       this.action = 4;
     } else if (this.activeBoard[this.position].name === "Go to Jail") {
       this.status = 1;

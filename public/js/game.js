@@ -139,7 +139,7 @@ const UI = {
 
     init: function() {
         UI.$allPrompts = $("#taxui, #gacui, #upgui, #buyui, #jaiui");
-        UI.$skipButtons = $(".okButtonDialog, #skipButtonUpgDialog, #skipBuyButtonDialog");
+        UI.$skipButtons = $(".okButtonDialog, #skipButtonUpgDialog, #skipBuyButtonDialog, #payButtonDialog");
         UI.$skipButtons.click(UI.allPromptGone);
 
         $("#buyButtonDialog").click(() => {
@@ -461,6 +461,7 @@ const IO = {
                 $property.innerHTML = "";
             }
 
+            console.log(current.properties);
             for (const propOwned of current.properties) {
                 const $prop = document.createElement("li");
                 $prop.classList.add("default-propertyList");
