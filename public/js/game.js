@@ -198,8 +198,9 @@ const UI = {
         }
     },
 
-    displayJail: function() {
+    displayPrompt: function(msg) {
         $("#jaiui").removeClass("none");
+        $("#displayPromptText").text(msg);
         UI.$skipButtons.prop("disabled", false);
     },
 
@@ -485,6 +486,12 @@ const IO = {
             // Set roll button availability
             console.log(clientPlayer.rollable);
             rollDiceToggle(clientPlayer.rollable);
+
+            // Check free parking
+            if (clientPlayer.position) {
+                boardData.actionType.player = selfIndex;
+                boardData.actionType.action = 7;
+            }
         } else {
             rollDiceToggle(false);
         }
@@ -516,11 +523,16 @@ const IO = {
                         UI.displayTax();
                         break;
                     case 5:
-                        UI.displayJail();
+                        UI.displayPrompt("You are in jail so sad.");
                         break;
                     case 6: {
                         const prop = boardData.boardState.find((x) => {return x.name === currentCell.name});
                         UI.displayPay(prop.name, 0);
+                        break;
+                    }
+                    case 7: {
+                        UI.displayPrompt("You have landed on free parking! It does nothing just like in the games when you play with your parents!!");
+                        break;
                     }
                 }
             }
