@@ -488,7 +488,8 @@ const IO = {
             rollDiceToggle(clientPlayer.rollable);
 
             // Check free parking
-            if (clientPlayer.position) {
+            console.log(currentPlayer.position);
+            if (currentPlayer.position === 20) {
                 boardData.actionType.player = selfIndex;
                 boardData.actionType.action = 7;
             }
