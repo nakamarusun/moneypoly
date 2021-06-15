@@ -35,7 +35,7 @@ class Piece {
   unjailPiece() {
     this.jail = false;
     this.$piece.style.animation = "";
-  }
+  } 
 
   move(randomNumber) {
     this.setPosition(this.position + randomNumber);

@@ -122,6 +122,7 @@ class Player {
         this.status = 0;
         this.jailCD = 0;
         this.action = 0;
+        this.position = this.position + rollJail[0] + rollJail[1];
         return rollJail;
       } else {
         console.log("minus jail CD");
