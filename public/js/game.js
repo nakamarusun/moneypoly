@@ -529,7 +529,7 @@ const IO = {
                         console.log(clientPlayer);
                         console.log(currentCell);
                         const updg = clientPlayer.properties.find((x) => {return x.name === currentCell.name});
-                        UI.displayUpg(currentCell.name, property.price, updg.level);
+                        UI.displayUpg(currentCell.name, updg.price, updg.level);
                         break;
                     }
                     case 3:
