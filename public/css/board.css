@@ -729,7 +729,7 @@ for info section */
   
 }
 .playerColumn{
-  width: 40% !important;
+  width: 80% !important;
 }
 #leaderboard-table{
   width: 90%;
@@ -755,7 +755,7 @@ table{
 }
 
 th{
-  font-size: 17px;
+  font-size: 25px;
   cursor: context-menu;
   background-color: black;
   color: honeydew;
@@ -763,7 +763,7 @@ th{
 
 }
 td{
-  font-size: 15px;
+  font-size: 20px;
   text-align: center;
   cursor: context-menu;
 }
