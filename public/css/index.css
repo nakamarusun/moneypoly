@@ -166,6 +166,11 @@
     cursor: pointer;
 }
 
+.choiceSection input:disabled{
+    background-color: #5e6e5d;
+    box-shadow: 0 7px #96b995;
+}
+
 .choiceBoxes{
     display: flex;
     margin: 30px auto;
@@ -235,3 +240,5 @@
 .none{
     display: none;
 }
+
+

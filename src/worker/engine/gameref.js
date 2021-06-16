@@ -24,14 +24,8 @@ module.exports.createBoard = function (players) {
   const b = new Board();
   b.initBoard(40);
 
-  // Insert names
-  const names = [];
-  p.forEach((item, i) => {
-    names.push(item.n);
-  });
-
   // Create the game.
-  b.initGame(names);
+  b.initGame(p);
 
   //   b.players[0].move();
   return b;
