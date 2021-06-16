@@ -15,6 +15,8 @@ class Player {
     this.action; // 1 = buy, 2 = upgrade, 3 = gacha, 4 = tax, 5 = jail, 6 = pay
     this.uname; // Username of the user.
     this.rollable = false; // Whether the user can roll or not.
+    this.gachaCost; // Helper variable to return board
+    this.isBot; // Whether this player is a bot.
   }
 
   // method for a player to buy a property, this method checks if the property if owned yet or not

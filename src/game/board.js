@@ -83,7 +83,8 @@ class Board {
     // Assign player names
     if (names) {
       this.players.forEach((item, i) => {
-        item.uname = names[i];
+        item.uname = names[i].n;
+        item.isBot = names[i].b;
       });
     }
 

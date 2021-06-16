@@ -339,6 +339,10 @@ const IO = {
                 IO.socket.emit("startgame");
             });
         }
+        
+        // Unbind the buttons
+        const $btns = $("#addBotBtn, #removeBtn");
+        $btns.off("click");
 
         // Spawn and delete the buttons for the waiting room
         for (let i = 0; i < 4; i++) {
@@ -352,7 +356,7 @@ const IO = {
                         addButton(el[2]);
 
                         // Add listener to send remove command.
-                        el[2].addEventListener("click", () => {
+                        $(el[2]).click(() => {
                             hideButton(el[2]);
                             IO.socket.emit("kickplayer", {
                                 player: i
@@ -366,13 +370,13 @@ const IO = {
                 el[0].innerText = "-Empty-";
                 hideButton(el[2]);
                 if (isHost) {
-                    // addButton(el[1]); // TODO;
+                    addButton(el[1]);
 
                     // Add listener to add bot
-                    el[1].addEventListener("click", () => {
+                    $(el[1]).click(() => {
                         hideButton(el[1]);
                         IO.socket.emit("addbot");
-                    })
+                    });
                 } else {
                     hideButton(el[1]);
                 }

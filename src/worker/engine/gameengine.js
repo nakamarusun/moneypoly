@@ -6,6 +6,20 @@ const { getBoard, setBoard, createBoard } = require("./gameref");
 const superagent = require("superagent");
 // const util = require("../../util");
 
+const BOTNAMES = [
+  "Duncan",
+  "Jordy",
+  "Shayla",
+  "Bobby",
+  "Jane",
+  "Eileen",
+  "Augustin",
+  "Antoinette",
+  "Mikoto",
+  "Saito",
+  "Nikolav"
+];
+
 // Socket io reference
 let io;
 
@@ -13,7 +27,7 @@ function bindEvents(sock) {
   sock.on("kickplayer", kickplayer);
   sock.on("startgame", startGame);
   sock.on("disconnect", onDisconnect);
-  // sock.on("addbot", undefined); // TODO
+  sock.on("addbot", addBot);
 
   sock.on("game:roll", gameRoll);
   sock.on("game:next", gameNext);
@@ -199,18 +213,6 @@ function startGame() {
 
     cl.hset(room, "status", RoomStatus.STARTED);
 
-    // Create request to master to delete the room.
-    // const turl = process.env.MASTERSERVER + "/io/delrooms";
-    // superagent
-    //   .post(turl)
-    //   .set({
-    //     Authorization: "Bearer " + genToken(),
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json"
-    //   })
-    //   .send([room])
-    //   .end();
-
     // Create board object
     const game = createBoard({
       players: obj.players
@@ -222,6 +224,48 @@ function startGame() {
     // Start the game here
     io.in(room).emit("startgame");
     broadcastGameboard(room, game);
+  });
+}
+
+function addBot() {
+  const botName = BOTNAMES[Math.floor(Math.random() * BOTNAMES.length)];
+  const room = this.handshake.query.room;
+  const cl = getRedis();
+
+  console.log(`Room called addBot: ${room}`);
+
+  // Gets the board data to see whether the command is valid.
+  cl.hget(room, "status", (err, rep) => {
+    if (err || !rep) return;
+
+    // Check the status if not started and full
+    const status = parseInt(rep);
+    if (status === RoomStatus.FULL && status === RoomStatus.STARTED) return;
+
+    cl.hget(room, "data", (err, rep) => {
+      if (err || !rep) return;
+
+      // Parse the data
+      const obj = JSON.parse(rep);
+
+      // Add bot to the game
+      obj.players.push({
+        n: botName,
+        b: true
+      });
+      // Save
+      cl.hset(room, "data", JSON.stringify(obj));
+
+      // Incr player count
+      cl.hincrby(room, "count", 1, (err, rep) => {
+        if (err || !rep) return;
+        // Set room status to full
+        if (rep >= 4) cl.hset(room, "status", RoomStatus.FULL);
+      });
+
+      // Send player list to room
+      sendPlayerList(obj, io.in(room));
+    });
   });
 }
 
