@@ -1,4 +1,4 @@
-const propertyList = require("./propertydata.js");
+const PropertyList = require("./propertydata.js");
 const Player = require("./player.js");
 const PLAYERS = ["Car", "Hat", "Shoe", "Iron"];
 const makeBoardTile = (name, type) => {
@@ -10,6 +10,7 @@ class Board {
     this.board;
     this.players = [];
     this.turn = 0;
+    this.propertyList = new PropertyList();
   }
 
   initBoard(boardSize) {
@@ -74,7 +75,7 @@ class Board {
     }
 
     for (let i = 0; i < playerSize; i++) {
-      const player = new Player(PLAYERS[i], this.board);
+      const player = new Player(PLAYERS[i]);
       const rollOrder = player.roll();
       player.rollValue = rollOrder;
       this.players.push(player);
@@ -99,7 +100,7 @@ class Board {
 
   returnBoard() {
     const playerList = [];
-    const boardState = propertyList;
+    const boardState = this.propertyList;
     const turnNumber = this.turn % this.players.length;
     const currentPlayer = this.checkTurn();
     for (let i = 0; i < this.players.length; i++) {

@@ -81,6 +81,19 @@ for (let i = 0; i < propertyName.length; i++) {
   );
   propertyList.push(newProperty);
 }
+class PropertyList {
+  constructor() {
+    this.propertyList = [];
+    for (let i = 0; i < propertyName.length; i++) {
+      const newProperty = new Property(
+        propertyName[i],
+        propertyPrice[i],
+        propertyColor[i]
+      );
+      this.propertyList.push(newProperty);
+    }
+  }
+}
 
 // for(let i = 0; i < propertyList.length; i++){
 //     if(propertyList[i].name === "Sea World"){
@@ -91,4 +104,4 @@ for (let i = 0; i < propertyName.length; i++) {
 //     }
 // }
 
-module.exports = propertyList;
+module.exports = PropertyList;
