@@ -26,9 +26,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Using python 3.9
+      uses: actions/setup-python@v2
       with:
         python-version: 3.9
-      run: |
+    - run: |
         python -m pip install --upgrade pip
         pip install -r src/workers/requirements.txt
     - run: npm ci
