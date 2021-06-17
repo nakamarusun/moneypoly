@@ -3,8 +3,6 @@ const Board = require("../../game/board");
 
 const { spawn } = require("child_process");
 
-const propertyList = require("../../game/propertydata.js");
-
 /**
  * Gets the row values for input to the AI
  * @param {Board} board
@@ -20,7 +18,7 @@ function getRowValues(board) {
 
   // Get property cost
   const currentProperty = board.board[current.position];
-  const prop = propertyList.find((a) => {
+  const prop = board.propertyList.propertyList.find((a) => {
     return a.name === currentProperty.name;
   });
   if (!prop) return undefined;
@@ -38,8 +36,19 @@ function getRowValues(board) {
   builder.push(40 - current.position);
 
   // Get distance to opponent's property
-  // TODO
-  builder.push(40);
+  let pRan = 0;
+  const board40 = board.board;
+  for (pRan = 0; pRan < board40.length; pRan++) {
+    // If a property with someone's elses name is found, stop the loop.
+    if (
+      board40[pRan].type === "Property" &&
+      board40[pRan].owner.length !== 0 &&
+      board40[pRan].owner !== current.uname
+    ) {
+      break;
+    }
+  }
+  builder.push(pRan);
 
   return builder;
 }

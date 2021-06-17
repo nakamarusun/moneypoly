@@ -561,7 +561,7 @@ const IO = {
 
         // Display action, according to the players.
         const action = boardData.actionType;
-        const currentCell = clientPlayer.activeBoard[clientPlayer.position];
+        const currentCell = boardData.board[clientPlayer.position];
 
         console.log("Do action: " + action.action);
         setTimeout(() => {
@@ -570,7 +570,7 @@ const IO = {
                 console.log("Do action: " + action.action);
                 switch(action.action) {
                     case 1: {
-                        UI.displayBuy(currentCell.name, boardData.boardState.find((x) => {return x.name === currentCell.name}).price);
+                        UI.displayBuy(currentCell.name, boardData.boardState.propertyList.find((x) => {return x.name === currentCell.name}).price);
                         break;
                     }
                     case 2: {
@@ -593,7 +593,7 @@ const IO = {
                         IO.socket.emit("game:next");
                         break;
                     case 6: { // Pay
-                        const prop = boardData.boardState.find((x) => {return x.name === currentCell.name});
+                        const prop = boardData.boardState.propertyList.find((x) => {return x.name === currentCell.name});
                         UI.displayPay(prop.name, 0);
                         IO.socket.emit("game:next");
                         break;

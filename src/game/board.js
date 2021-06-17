@@ -1,16 +1,17 @@
-const propertyList = require("./propertydata.js");
+const PropertyList = require("./propertydata.js");
 const Player = require("./player.js");
 const PLAYERS = ["Car", "Hat", "Shoe", "Iron"];
 const makeBoardTile = (name, type) => {
-  return { name: name, type: type }; // type would be property, gacha tile(?), or others
+  return { name: name, type: type, owner: "" }; // type would be property, gacha tile(?), or others
 };
 
 class Board {
   constructor() {
-    this.board;
+    this.board = undefined;
     this.players = [];
     this.turn = 0;
     this.losers = [];
+    this.propertyList = new PropertyList();
   }
 
   initBoard(boardSize) {
@@ -75,7 +76,7 @@ class Board {
     }
 
     for (let i = 0; i < playerSize; i++) {
-      const player = new Player(PLAYERS[i], this.board);
+      const player = new Player(PLAYERS[i]);
       const rollOrder = player.roll();
       player.rollValue = rollOrder;
       this.players.push(player);
@@ -101,14 +102,14 @@ class Board {
 
   returnBoard() {
     const playerList = [];
-    const boardState = propertyList;
+    const boardState = this.propertyList;
     const turnNumber = this.turn % this.players.length;
     const currentPlayer = this.checkTurn();
     for (let i = 0; i < this.players.length; i++) {
       playerList.push(this.players[i]);
     }
     switch (currentPlayer.action) {
-      case 1:
+      case 1: {
         const actionType1 = {
           player: this.turn % this.players.length,
           piece: currentPlayer.piece,
@@ -122,9 +123,11 @@ class Board {
           turnNumber: turnNumber,
           turnTotal: this.turn,
           actionType: actionType1,
-          losers: this.losers
+          losers: this.losers,
+          board: this.board
         };
-      case 2:
+      }
+      case 2: {
         const actionType2 = {
           player: this.turn % this.players.length,
           piece: currentPlayer.piece,
@@ -138,9 +141,11 @@ class Board {
           turnNumber: turnNumber,
           turnTotal: this.turn,
           actionType: actionType2,
-          losers: this.losers
+          losers: this.losers,
+          board: this.board
         };
-      case 3:
+      }
+      case 3: {
         const actionType3 = {
           player: this.turn % this.players.length,
           piece: currentPlayer.piece,
@@ -156,9 +161,11 @@ class Board {
           turnNumber: turnNumber,
           turnTotal: this.turn,
           actionType: actionType3,
-          losers: this.losers
+          losers: this.losers,
+          board: this.board
         };
-      case 4:
+      }
+      case 4: {
         const actionType4 = {
           player: this.turn % this.players.length,
           piece: currentPlayer.piece,
@@ -172,9 +179,11 @@ class Board {
           turnNumber: turnNumber,
           turnTotal: this.turn,
           actionType: actionType4,
-          losers: this.losers
+          losers: this.losers,
+          board: this.board
         };
-      case 5:
+      }
+      case 5: {
         const actionType5 = {
           player: this.turn % this.players.length,
           piece: currentPlayer.piece,
@@ -188,9 +197,11 @@ class Board {
           turnNumber: turnNumber,
           turnTotal: this.turn,
           actionType: actionType5,
-          losers: this.losers
+          losers: this.losers,
+          board: this.board
         };
-      case 6:
+      }
+      case 6: {
         const actionType6 = {
           player: this.turn % this.players.length,
           piece: currentPlayer.piece,
@@ -204,9 +215,11 @@ class Board {
           turnNumber: turnNumber,
           turnTotal: this.turn,
           actionType: actionType6,
-          losers: this.losers
+          losers: this.losers,
+          board: this.board
         };
-      default:
+      }
+      default: {
         this.checkTurn().action = 0;
         return {
           boardState,
@@ -214,8 +227,10 @@ class Board {
           turnNumber,
           actionType: {},
           turnTotal: this.turn,
-          losers: this.losers
+          losers: this.losers,
+          board: this.board
         };
+      }
     }
   }
 

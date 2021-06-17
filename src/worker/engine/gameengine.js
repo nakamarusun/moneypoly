@@ -66,11 +66,11 @@ function runAI(board, player, room) {
     if (player.action === 1) {
       // Run the AI
       if (getAIBuyPrediction(getRowValues(board))) {
-        player.buy();
+        player.buy(board);
       }
     } else if (player.action === 2) {
       if (getAIBuyPrediction(getRowValues(board))) {
-        player.upgrade();
+        player.upgrade(board);
       }
     }
     broadcastGameboard(room, board);
@@ -193,7 +193,8 @@ function gameBuy() {
       // Can't next if not turn or not the player calling it.
       if (player.uname !== uname) return notif(this, 1, "Not allowed");
 
-      if (!res.checkTurn().buy()) notif(this, 1, "Can not buy this property!");
+      if (!res.checkTurn().buy(res))
+        notif(this, 1, "Can not buy this property!");
 
       gameNext.bind(this)();
     })
@@ -214,7 +215,7 @@ function gameUpgrade() {
       // Can't next if not turn or not the player calling it.
       if (player.uname !== uname) return notif(this, 1, "Not allowed");
 
-      if (!res.checkTurn().upgrade())
+      if (!res.checkTurn().upgrade(board))
         notif(this, 1, "Can not upgrade this property!");
 
       gameNext.bind(this)();
