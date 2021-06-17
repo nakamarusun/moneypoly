@@ -68,7 +68,7 @@ class Player {
     if (this.status === 2) {
       return "you have lost this game you cannot act anymore";
     } else {
-      const prop = playBoard.propertyList.find((a) => {
+      const prop = playBoard.propertyList.propertyList.find((a) => {
         return a.name === playBoard.board[property].name;
       });
       if (this.properties.includes(prop)) {
@@ -89,7 +89,7 @@ class Player {
 
   // function to upgrade a property's level
   upgrade(playBoard) {
-    const prop = playBoard.propertyList.find((a) => {
+    const prop = playBoard.propertyList.propertyList.find((a) => {
       return a.name === playBoard.board[this.position].name;
     });
     if (this.properties.includes(prop)) {
