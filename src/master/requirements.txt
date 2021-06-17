@@ -1,0 +1,5 @@
+pydotplus
+matplotlib
+ipython
+pandas
+six

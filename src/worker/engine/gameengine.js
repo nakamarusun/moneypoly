@@ -149,7 +149,7 @@ function gameNext() {
         console.log("We got a winner!");
 
         // Push the final guy
-        res.losers.push(res.players[p]);
+        res.losers.push(res.players[p].uname);
 
         // Emit leaderboard
         io.in(room).emit("winner", res.losers);
@@ -231,7 +231,7 @@ function gameBuy(data) {
       // Push data to redis
       const cl = getRedis();
       cl.hget(room, "aidata", (err, res) => {
-        if (err || !res) return;
+        if (err) return;
         cl.hset(room, "aidata", res + aiData + "\n");
       });
 
@@ -272,7 +272,7 @@ function gameUpgrade(data) {
       // Push data to redis
       const cl = getRedis();
       cl.hget(room, "aidata", (err, res) => {
-        if (err || !res) return;
+        if (err) return;
         cl.hset(room, "aidata", res + aiData + "\n");
       });
 
@@ -300,7 +300,7 @@ function startGame() {
     const obj = JSON.parse(rep[1]);
     if (obj.host !== this.handshake.query.uname) return;
 
-    cl.hmset(room, "status", RoomStatus.STARTED, "aidata", "");
+    cl.hmset(room, "status", RoomStatus.STARTED, "aidata", "\n");
 
     // Create board object
     const game = createBoard({
@@ -377,20 +377,24 @@ function onDisconnect(reason) {
 
     // If game hasnt started yet
     if (parseInt(rep[0]) !== RoomStatus.STARTED) {
-      const obj = JSON.parse(rep[1]);
-      // Erase player from data
-      obj.players.splice(obj.players.indexOf(uname), 1);
-      // Save object
-      cl.hset(room, "data", JSON.stringify(obj));
-      // Decrement player count
-      cl.hincrby(room, "count", -1, (err, rep) => {
-        if (err || !rep) return;
-        // Set room status to full
-        cl.hset(room, "status", RoomStatus.POPULATED);
-      });
+      try {
+        const obj = JSON.parse(rep[1]);
+        // Erase player from data
+        obj.players.splice(obj.players.indexOf(uname), 1);
+        // Save object
+        cl.hset(room, "data", JSON.stringify(obj));
+        // Decrement player count
+        cl.hincrby(room, "count", -1, (err, rep) => {
+          if (err || !rep) return;
+          // Set room status to full
+          cl.hset(room, "status", RoomStatus.POPULATED);
+        });
 
-      // Resend object
-      sendPlayerList(obj, io.in(room));
+        // Resend object
+        sendPlayerList(obj, io.in(room));
+      } catch (err) {
+        console.log(err);
+      }
     } else {
       // If game has started
       // TODO: Handle disconnect when game is going on
