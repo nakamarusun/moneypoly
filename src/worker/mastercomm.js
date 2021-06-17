@@ -12,16 +12,21 @@ inter.post("/new", (req, res) => {
     if (err) return res.sendStatus(500);
     if (rep) return res.sendStatus(500); // If room already existed
 
-    cl.hmset(room, "status", RoomStatus.READY, (err, rep) => {
-      if (err) return res.sendStatus(500);
+    cl.hmset(
+      room,
+      "status",
+      RoomStatus.READY,
+      "created",
+      Date.now(),
+      (err, rep) => {
+        if (err) return res.sendStatus(500);
 
-      // Insert room in the array
-      cl.sadd("rml", room);
+        // Insert room in the array
+        cl.sadd("rml", room);
 
-      // TODO: Prepare the room
-
-      res.sendStatus(202);
-    });
+        res.sendStatus(202);
+      }
+    );
   });
 });
 
@@ -34,12 +39,17 @@ inter.post("/keeprooms", (req, res) => {
   cl.smembers("rml", (err, rep) => {
     if (err || !rep) return;
     for (const room of rep) {
-      cl.hget(room, "status", (err, resp) => {
+      cl.hmget(room, "status", "created", (err, resp) => {
         if (err || !resp) return;
 
         if (!otherRooms.includes(room)) {
-          // Dont delete rooms that has game started.
-          if (parseInt(resp) === RoomStatus.STARTED) return;
+          // Dont delete rooms that has game started,
+          // or the room has been created within 30 seconds
+          if (
+            parseInt(resp[0]) === RoomStatus.STARTED ||
+            Date.now() < parseInt(resp[1]) + 30000
+          )
+            return;
           console.log("Deleting room " + room);
           cl.srem("rml", room);
           cl.del(room);

@@ -170,13 +170,14 @@ function gameNext() {
         const cl = getRedis();
         cl.hget(room, "aidata", (err, resp) => {
           if (err || !resp) return;
-          const turl = process.env.MASTERSERVER + "/io/aidata";
+          const turl = process.env.MASTERSERVER + "/io/aibuydata";
           superagent
             .post(turl)
             .set({
               Authorization: "Bearer " + genToken(),
               "Content-Type": "application/json",
-              Accept: "application/json"
+              Accept: "application/json",
+              "Worker-Name": process.env.WORKERNAME
             })
             .send(resp)
             .end();

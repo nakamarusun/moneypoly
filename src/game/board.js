@@ -249,6 +249,7 @@ class Board {
   nextTurn() {
     let count = 0;
     const curPlayer = this.turn % this.players.length;
+    console.log("Begin turn: " + curPlayer);
 
     // Skip players which has bankrupted
     let player;
@@ -262,8 +263,12 @@ class Board {
     // Set the player to be able to roll
     this.players[this.turn % this.players.length].rollable = true;
 
-    // We got a winner
-    if (curPlayer === this.turn % this.players.length) return curPlayer;
+    console.log("Begin turn: " + (this.turn % this.players.length));
+
+    // We got a winner if the loop goes back.
+    if (curPlayer === this.turn % this.players.length) {
+      return curPlayer;
+    }
 
     return player;
   }

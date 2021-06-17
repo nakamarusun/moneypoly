@@ -27,7 +27,7 @@ function freeRooms() {
       cl.hmget(room, "server", "expire", (err, resp) => {
         if (err || !resp) return;
         // If not expired yet, then insert the server to "keep list"
-        if (resp[1] > Date.now()) {
+        if (parseInt(resp[1]) > Date.now()) {
           try {
             freeList[resp[0]].push(room);
           } catch (err) {

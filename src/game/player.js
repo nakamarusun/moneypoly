@@ -64,6 +64,7 @@ class Player {
 
   // function to mortgage or downgrade a property's level
   // TODO: Havent implemented .board owner
+  // UNUSED
   sell(property, playBoard) {
     if (this.status === 2) {
       return "you have lost this game you cannot act anymore";
@@ -89,10 +90,13 @@ class Player {
 
   // function to upgrade a property's level
   upgrade(playBoard) {
-    const prop = playBoard.propertyList.propertyList.find((a) => {
+    const _prop = playBoard.propertyList.propertyList.find((a) => {
       return a.name === playBoard.board[this.position].name;
     });
-    if (this.properties.includes(prop)) {
+    const prop = this.properties.find((x) => {
+      return x.name === _prop.name;
+    });
+    if (prop) {
       if (prop.level > 4) {
         // TODO make popup saying property already at highest level
         console.log("Property already at the highest level");
@@ -101,6 +105,7 @@ class Player {
         console.log("No money to upgrade");
         return false;
       } else {
+        console.log("Property bought!");
         prop.level += 1;
         this.balance -= prop.price;
         prop.price = prop.price * 2;

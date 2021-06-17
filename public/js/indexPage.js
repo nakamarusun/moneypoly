@@ -4,6 +4,7 @@ $(document).ready(function(){
     $("#goButton").click(function(){
       $("#goButton").fadeOut("slow",() => {
         $("#nameSection").fadeIn();
+        document.getElementById("userName").focus();
       });
     });
 });

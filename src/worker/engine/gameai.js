@@ -59,7 +59,7 @@ function getRowValues(board) {
  * @returns {Promise<boolean>}
  */
 function getAIBuyPrediction(rowValues) {
-  print(rowValues);
+  console.log("Rows:" + rowValues);
   return new Promise((resolve, reject) => {
     const proc = spawn(process.env.PYTHON, [
       process.env.BUYMODELPATH,
@@ -68,6 +68,7 @@ function getAIBuyPrediction(rowValues) {
     ]);
     proc.stdout.on("data", function (data) {
       const res = data.toString();
+      console.log(res.trim());
       resolve(res.trim() === "1");
     });
     proc.stderr.on("data", (data) => {

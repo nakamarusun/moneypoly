@@ -52,7 +52,7 @@ function newRoomId(cl, req, res) {
             if (err) return res.sendStatus(500);
 
             // TODO: Make sure the server is available
-            console.log("Room alocated: " + id);
+            console.log("Room allocated: " + id);
 
             // Send back the room id and server.
             res.status(201);

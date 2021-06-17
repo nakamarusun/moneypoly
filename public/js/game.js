@@ -141,6 +141,12 @@ const UI = {
         UI.$allPrompts = $("#taxui, #gacui, #upgui, #buyui, #jaiui, #payui");
         UI.$skipButtons = $("#skipButtonUpgDialog, #skipBuyButtonDialog");
 
+        $("#payButtonDialog").click(() => {
+            UI.$allPrompts.addClass("none");
+            // Init skip buttons
+            UI.$skipButtons.prop("disabled", true);
+        });
+
         $("#skipButtonUpgDialog").click(() => {
             IO.socket.emit("game:upgrade", {act: false});
             UI.$allPrompts.addClass("none");
@@ -298,9 +304,10 @@ const IO = {
 
         const $win = $(".winner-section");
         $win.removeClass("none");
-        const $table = $("#leaderboard-table");
-        for (const i in winners) {
-            $($table[i + 1])[1].innerText = winners[i];
+        const $table = $("#leaderboard-table > tbody > tr");
+        winners.reverse();
+        for (const i of winners) {
+            $table[i + 1].innerText = winners[i];
         }
     },
 
@@ -522,7 +529,7 @@ const IO = {
                 const $prop = document.createElement("li");
                 $prop.classList.add("default-propertyList");
                 console.log(`${propOwned.name} - Worth:$ ${propOwned.price} - ${propOwned.level}`)
-                $prop.innerText = `${propOwned.name} - Worth:$ ${propOwned.price / (propOwned.level + 1)}`;
+                $prop.innerText = `${propOwned.name} - Worth:$ ${propOwned.price / 2} ^${propOwned.level}`;
 
                 $property.appendChild($prop);
             }
