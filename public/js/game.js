@@ -306,8 +306,8 @@ const IO = {
         $win.removeClass("none");
         const $table = $("#leaderboard-table > tbody > tr");
         winners.reverse();
-        for (const i of winners) {
-            $table[i + 1].innerText = winners[i];
+        for (const i in winners) {
+            $table[parseInt(i) + 1].children[1].innerText = winners[i];
         }
     },
 
@@ -529,7 +529,7 @@ const IO = {
                 const $prop = document.createElement("li");
                 $prop.classList.add("default-propertyList");
                 console.log(`${propOwned.name} - Worth:$ ${propOwned.price} - ${propOwned.level}`)
-                $prop.innerText = `${propOwned.name} - Worth:$ ${propOwned.price / 2} ^${propOwned.level}`;
+                $prop.innerText = `${propOwned.name} - Worth:$ ${propOwned.price / 2} ^Lvl.${propOwned.level}`;
 
                 $property.appendChild($prop);
             }

@@ -2,6 +2,10 @@ const { getRedis } = require("../redisdb");
 const { RoomStatus } = require("./roomstatus");
 
 const inter = require("../interserver/inter").router;
+const multer = require("multer");
+
+const path = require("path");
+const fs = require("fs");
 
 // Creates a new room in the database.
 inter.post("/new", (req, res) => {
@@ -63,6 +67,22 @@ inter.post("/keeprooms", (req, res) => {
 
 inter.post("/join", (req, res) => {
   res.sendStatus(200);
+});
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+inter.post("/updatebuymodel", upload.single("buymodel"), (req, res) => {
+  console.log("Beginning receiving buymodel from master...");
+  fs.writeFile(
+    path.resolve(__dirname, "model.joblib"),
+    req.file.buffer,
+    { flag: "w" },
+    (err) => {
+      if (err) return;
+      console.log("Received updated buymodel from master!");
+      res.sendStatus(200);
+    }
+  );
 });
 
 module.exports = inter;

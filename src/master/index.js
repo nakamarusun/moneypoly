@@ -8,6 +8,7 @@ const fs = require("fs");
 const gamerouter = require("./routes/game");
 const comm = require("./workercomm");
 const scheder = require("./schedjob");
+const { updateModel } = require("./ai/buypredictor");
 
 // Create the express app
 const app = express();
@@ -60,3 +61,6 @@ serverModule.createServer(serverOpt, app).listen(port, () => {
 
 // Register schedulers
 scheder.initSchedules();
+
+// Update the model
+// updateModel(true);

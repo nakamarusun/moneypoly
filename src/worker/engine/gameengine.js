@@ -169,7 +169,8 @@ function gameNext() {
         // Emit the AI data gathered to the master server.
         const cl = getRedis();
         cl.hget(room, "aidata", (err, resp) => {
-          if (err || !resp) return;
+          if (err || !resp) return deleteRoom(room);
+          console.log("Sending ai buy data to master");
           const turl = process.env.MASTERSERVER + "/io/aibuydata";
           superagent
             .post(turl)
@@ -179,12 +180,14 @@ function gameNext() {
               Accept: "application/json",
               "Worker-Name": process.env.WORKERNAME
             })
-            .send(resp)
-            .end();
+            .send({ data: resp })
+            .end((err) => {
+              if (err) console.log("Error sending ai data to main");
+              console.log("Deleting room reference");
+              // Delete all room references
+              deleteRoom(room);
+            });
         });
-
-        // Delete all room references
-        deleteRoom(room);
       } else {
         // Save board
         setBoard(room, res);

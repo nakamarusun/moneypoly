@@ -1,6 +1,7 @@
 const { getRedis } = require("../redisdb");
 const mkdirp = require("mkdirp");
 const fs = require("fs");
+const path = require("path");
 
 const inter = require("../interserver/inter").router;
 const buyAi = require("./ai/buypredictor");
@@ -28,20 +29,20 @@ inter.post("/aibuydata", (req, res) => {
       buyAi.aiBuyBase,
       { flag: "wx" },
       function (err) {
-        if (err) throw err;
+        if (err) return;
         console.log("Buy AI file created!");
-
-        // Append to AI file
-        fs.appendFile(buyAi.aiBuyPath, req.body, () => {
-          console.log(
-            `Successfully appended AI buy data from worker (${req.header(
-              "Worker-Name"
-            )})`
-          );
-          res.sendStatus(200);
-        });
       }
     );
+
+    // Append to AI file
+    fs.appendFile(buyAi.aiBuyPath, req.body.data, () => {
+      console.log(
+        `Successfully appended AI buy data from worker (${req.header(
+          "Worker-Name"
+        )})`
+      );
+      res.sendStatus(200);
+    });
   });
 });
 

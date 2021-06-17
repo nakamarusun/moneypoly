@@ -1,8 +1,7 @@
 // Module to schedule and do stuff.
 const { getRedis } = require("../redisdb");
-
+const { updateModel } = require("./ai/buypredictor");
 const { genToken } = require("../interserver/inter");
-
 const superagent = require("superagent");
 
 // Interval of time to check and free rooms.
@@ -63,6 +62,7 @@ function freeRooms() {
 
 module.exports.initSchedules = function () {
   setInterval(freeRooms, FREEROOMSSECONDS * 1000);
+  setInterval(updateModel, 86400 * 1000); // Every 24 hours
 };
 
 module.exports.freeRooms = freeRooms;
