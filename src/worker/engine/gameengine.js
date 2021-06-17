@@ -166,6 +166,22 @@ function gameNext() {
           .send([room])
           .end();
 
+        // Emit the AI data gathered to the master server.
+        const cl = getRedis();
+        cl.hget(room, "aidata", (err, resp) => {
+          if (err || !resp) return;
+          const turl = process.env.MASTERSERVER + "/io/aidata";
+          superagent
+            .post(turl)
+            .set({
+              Authorization: "Bearer " + genToken(),
+              "Content-Type": "application/json",
+              Accept: "application/json"
+            })
+            .send(resp)
+            .end();
+        });
+
         // Delete all room references
         deleteRoom(room);
       } else {
@@ -181,7 +197,7 @@ function gameNext() {
     });
 }
 
-function gameBuy() {
+function gameBuy(data) {
   console.log("Buy");
   const uname = this.handshake.query.uname;
   const room = this.handshake.query.room;
@@ -193,8 +209,27 @@ function gameBuy() {
       // Can't next if not turn or not the player calling it.
       if (player.uname !== uname) return notif(this, 1, "Not allowed");
 
-      if (!res.checkTurn().buy(res))
-        notif(this, 1, "Can not buy this property!");
+      // Get AI data
+      const aiData = getRowValues(res);
+
+      // If buy
+      if (data.act) {
+        const canBuy = res.checkTurn().buy(res);
+        if (!canBuy) notif(this, 1, "Cannot buy this property!");
+
+        // Push data
+        aiData.push(canBuy ? 1 : 0);
+      } else {
+        // Push data
+        aiData.push(0);
+      }
+
+      // Push data to redis
+      const cl = getRedis();
+      cl.hget(room, "aidata", (err, res) => {
+        if (err || !res) return;
+        cl.hset(room, "aidata", res + aiData + "\n");
+      });
 
       gameNext.bind(this)();
     })
@@ -203,7 +238,7 @@ function gameBuy() {
     });
 }
 
-function gameUpgrade() {
+function gameUpgrade(data) {
   console.log("Upgrade");
   const uname = this.handshake.query.uname;
   const room = this.handshake.query.room;
@@ -215,8 +250,27 @@ function gameUpgrade() {
       // Can't next if not turn or not the player calling it.
       if (player.uname !== uname) return notif(this, 1, "Not allowed");
 
-      if (!res.checkTurn().upgrade(board))
-        notif(this, 1, "Can not upgrade this property!");
+      // Get AI data
+      const aiData = getRowValues(res);
+
+      // If buy
+      if (data.act) {
+        const canBuy = res.checkTurn().upgrade(res);
+        if (!canBuy) notif(this, 1, "Cannot upgrade this property!");
+
+        // Push data
+        aiData.push(canBuy ? 1 : 0);
+      } else {
+        // Push data
+        aiData.push(0);
+      }
+
+      // Push data to redis
+      const cl = getRedis();
+      cl.hget(room, "aidata", (err, res) => {
+        if (err || !res) return;
+        cl.hset(room, "aidata", res + aiData + "\n");
+      });
 
       gameNext.bind(this)();
     })
@@ -242,7 +296,7 @@ function startGame() {
     const obj = JSON.parse(rep[1]);
     if (obj.host !== this.handshake.query.uname) return;
 
-    cl.hset(room, "status", RoomStatus.STARTED);
+    cl.hmset(room, "status", RoomStatus.STARTED, "aidata", "");
 
     // Create board object
     const game = createBoard({

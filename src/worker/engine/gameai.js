@@ -36,9 +36,9 @@ function getRowValues(board) {
   builder.push(40 - current.position);
 
   // Get distance to opponent's property
-  let pRan = 0;
+  let pRan = 1;
   const board40 = board.board;
-  for (pRan = 0; pRan < board40.length; pRan++) {
+  for (pRan = 1; pRan < board40.length; pRan++) {
     // If a property with someone's elses name is found, stop the loop.
     if (
       board40[pRan].type === "Property" &&
@@ -59,6 +59,7 @@ function getRowValues(board) {
  * @returns {Promise<boolean>}
  */
 function getAIBuyPrediction(rowValues) {
+  print(rowValues);
   return new Promise((resolve, reject) => {
     const proc = spawn(process.env.PYTHON, [
       process.env.BUYMODELPATH,

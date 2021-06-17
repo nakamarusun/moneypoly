@@ -140,7 +140,20 @@ const UI = {
     init: function() {
         UI.$allPrompts = $("#taxui, #gacui, #upgui, #buyui, #jaiui, #payui");
         UI.$skipButtons = $("#skipButtonUpgDialog, #skipBuyButtonDialog");
-        UI.$skipButtons.click(UI.allPromptGone);
+
+        $("#skipButtonUpgDialog").click(() => {
+            IO.socket.emit("game:upgrade", {act: false});
+            UI.$allPrompts.addClass("none");
+            // Init skip buttons
+            UI.$skipButtons.prop("disabled", true);
+        });
+
+        $("#skipBuyButtonDialog").click(() => {
+            IO.socket.emit("game:buy", {act: false});
+            UI.$allPrompts.addClass("none");
+            // Init skip buttons
+            UI.$skipButtons.prop("disabled", true);
+        });
 
         $(".okButtonDialog").click(() => {
             UI.$allPrompts.addClass("none");
@@ -149,24 +162,17 @@ const UI = {
         });
 
         $("#buyButtonDialog").click(() => {
-            IO.socket.emit("game:buy");
+            IO.socket.emit("game:buy", {act: true});
             UI.$allPrompts.addClass("none");
             // Init skip buttons
             UI.$skipButtons.prop("disabled", true);
         });
         $("#upgradeButtonDialog").click(() => {
-            IO.socket.emit("game:upgrade");
+            IO.socket.emit("game:upgrade", {act: true});
             UI.$allPrompts.addClass("none");
             // Init skip buttons
             UI.$skipButtons.prop("disabled", true);
         });
-    },
-
-    allPromptGone: function() {
-        UI.$allPrompts.addClass("none");
-        // Init skip buttons
-        UI.$skipButtons.prop("disabled", true);
-        IO.socket.emit("game:next");
     },
 
     displayBuy: function(place, price) {
