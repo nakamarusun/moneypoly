@@ -75,3 +75,11 @@ module.exports.setBoard = async function (room, obj) {
   roomBoard[room] = obj;
   cl.hset(room, "boardref", JSON.stringify(obj));
 };
+
+module.exports.deleteRoom = function (room) {
+  // Finally, delete from redis.
+  const cl = getRedis();
+  cl.del(room);
+
+  delete roomBoard[room];
+};

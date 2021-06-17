@@ -139,7 +139,7 @@ const UI = {
 
     init: function() {
         UI.$allPrompts = $("#taxui, #gacui, #upgui, #buyui, #jaiui, #payui");
-        UI.$skipButtons = $("#skipButtonUpgDialog, #skipBuyButtonDialog, #payButtonDialog");
+        UI.$skipButtons = $("#skipButtonUpgDialog, #skipBuyButtonDialog");
         UI.$skipButtons.click(UI.allPromptGone);
 
         $(".okButtonDialog").click(() => {
@@ -225,6 +225,7 @@ const IO = {
     connecting: false, // Whether a connection is being attempted or made
     players: [], // Players
     canRoll: false,
+    isLost: false, // Whether lose
     pieces: [
         new Piece(document.getElementById("piece-1"), 34, 18),
         new Piece(document.getElementById("piece-2"), 17, 18),
@@ -283,6 +284,18 @@ const IO = {
         sock.on("updateboard", IO.updateBoard);
         sock.on("startgame", IO.startGame);
         sock.on("notif", IO.showNotif);
+        sock.on("winner", IO.onWinner);
+    },
+
+    onWinner(winners) {
+        console.log("Winner time!");
+
+        const $win = $(".winner-section");
+        $win.removeClass("none");
+        const $table = $("#leaderboard-table");
+        for (const i in winners) {
+            $($table[i + 1])[1].innerText = winners[i];
+        }
     },
 
     // Utility to log the game moves
@@ -348,7 +361,7 @@ const IO = {
         for (let i = 0; i < 4; i++) {
             const el = $c[i].children;
             if (i < plArr.length) {
-                el[0].innerText = (plArr[i].bot ? "[BOT] " : "") + plArr[i].name;
+                el[0].innerText = plArr[i].name;
                 hideButton(el[1]);
 
                 if (isHost) {
@@ -484,7 +497,15 @@ const IO = {
             // Change info properties
             const curInfo = $info[i];
             // Name
-            curInfo.children[0].children[0].innerText = `($${current.balance})- ${current.uname}`;
+            const nameText = curInfo.children[0].children[0];
+            nameText.innerText = `($${current.balance})- ${current.uname}`;
+
+            // Lose color
+            if (current.status === 2) {
+                nameText.style.color = "red";
+                nameText.innerText += "(L)";
+            }
+
             const $property = curInfo.children[1].children[0];
 
             if (current.properties.length > 0) {
@@ -513,7 +534,15 @@ const IO = {
         console.log(IO.uname);
         console.log(clientPlayer);
         // Handle the current player
-        if (currentPlayer.uname === IO.uname) {
+        if (currentPlayer.uname === IO.uname && !IO.isLost) {
+
+            // Set lose
+            if (clientPlayer.status === 2) {
+                IO.isLost = true;
+                alert("Uh oh! You have bankrupted :(");
+                clientPlayer.rollable = false;
+            }
+
             // Set roll button availability
             console.log(clientPlayer.rollable);
             rollDiceToggle(clientPlayer.rollable);
@@ -521,10 +550,6 @@ const IO = {
             // Check free parking
             console.log(currentPlayer.position);
             console.log("Bruh Bruh");
-            // if ((currentPlayer.position === 20 || (currentPlayer.position === 30 && currentPlayer.status === 0) || currentPlayer.position === 0) && !clientPlayer.rollable) {
-            //     boardData.actionType.player = selfIndex;
-            //     boardData.actionType.action = 7;
-            // }
         } else {
             console.log("Not player");
             rollDiceToggle(false);
@@ -540,8 +565,8 @@ const IO = {
 
         console.log("Do action: " + action.action);
         setTimeout(() => {
-            // If there is an action, do the action.
-            if (action.player === selfIndex) {
+            // Check if current turn, and do the action.
+            if (boardData.turnNumber === selfIndex && !clientPlayer.rollable) {
                 console.log("Do action: " + action.action);
                 switch(action.action) {
                     case 1: {
@@ -570,6 +595,7 @@ const IO = {
                     case 6: { // Pay
                         const prop = boardData.boardState.find((x) => {return x.name === currentCell.name});
                         UI.displayPay(prop.name, 0);
+                        IO.socket.emit("game:next");
                         break;
                     }
                     default: {

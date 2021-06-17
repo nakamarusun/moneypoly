@@ -10,6 +10,7 @@ class Board {
     this.board;
     this.players = [];
     this.turn = 0;
+    this.losers = [];
   }
 
   initBoard(boardSize) {
@@ -120,7 +121,8 @@ class Board {
           playerList: playerList,
           turnNumber: turnNumber,
           turnTotal: this.turn,
-          actionType: actionType1
+          actionType: actionType1,
+          losers: this.losers
         };
       case 2:
         const actionType2 = {
@@ -135,7 +137,8 @@ class Board {
           playerList: playerList,
           turnNumber: turnNumber,
           turnTotal: this.turn,
-          actionType: actionType2
+          actionType: actionType2,
+          losers: this.losers
         };
       case 3:
         const actionType3 = {
@@ -152,7 +155,8 @@ class Board {
           playerList: playerList,
           turnNumber: turnNumber,
           turnTotal: this.turn,
-          actionType: actionType3
+          actionType: actionType3,
+          losers: this.losers
         };
       case 4:
         const actionType4 = {
@@ -167,7 +171,8 @@ class Board {
           playerList: playerList,
           turnNumber: turnNumber,
           turnTotal: this.turn,
-          actionType: actionType4
+          actionType: actionType4,
+          losers: this.losers
         };
       case 5:
         const actionType5 = {
@@ -182,7 +187,8 @@ class Board {
           playerList: playerList,
           turnNumber: turnNumber,
           turnTotal: this.turn,
-          actionType: actionType5
+          actionType: actionType5,
+          losers: this.losers
         };
       case 6:
         const actionType6 = {
@@ -197,7 +203,8 @@ class Board {
           playerList: playerList,
           turnNumber: turnNumber,
           turnTotal: this.turn,
-          actionType: actionType6
+          actionType: actionType6,
+          losers: this.losers
         };
       default:
         this.checkTurn().action = 0;
@@ -206,7 +213,8 @@ class Board {
           playerList,
           turnNumber,
           actionType: {},
-          turnTotal: this.turn
+          turnTotal: this.turn,
+          losers: this.losers
         };
     }
   }
@@ -230,9 +238,10 @@ class Board {
     // Skip players which has bankrupted
     let player;
     do {
-      player = this.players[this.turn % this.players.length];
       this.turn++;
       count++;
+      player = this.players[this.turn % this.players.length];
+      console.log("Next player");
     } while (player.status === 2 && count < 4);
 
     // Set the player to be able to roll

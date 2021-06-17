@@ -5,7 +5,7 @@ const { getAIBuyPrediction } = require("../src/worker/engine/gameai");
 
 const path = require("path");
 
-process.env.PYTHON="python"
+process.env.PYTHON="python";
 process.env.BUYMODELPATH=path.resolve(__dirname, "../", "src", "worker", "predictor.py");
 process.env.BUYMODELSCRIPT=path.resolve(__dirname, "model.joblib");
 

@@ -2,8 +2,9 @@ const { getRedis } = require("../../redisdb");
 const { RoomStatus } = require("../roomstatus");
 const { dcClientError, notif } = require("./sockutil");
 const { genToken } = require("../../interserver/inter");
-const { getBoard, setBoard, createBoard } = require("./gameref");
+const { getBoard, setBoard, createBoard, deleteRoom } = require("./gameref");
 const superagent = require("superagent");
+const { getAIBuyPrediction, getRowValues } = require("./gameai");
 // const util = require("../../util");
 
 const BOTNAMES = [
@@ -57,6 +58,27 @@ function broadcastGameboard(room, board) {
 /**
  * Game stuff
  */
+
+function runAI(board, player, room) {
+  // Run the bots
+  while (!Number.isInteger(player) && player.isBot) {
+    player.move(board);
+    if (player.action === 1) {
+      // Run the AI
+      if (getAIBuyPrediction(getRowValues(board))) {
+        player.buy();
+      }
+    } else if (player.action === 2) {
+      if (getAIBuyPrediction(getRowValues(board))) {
+        player.upgrade();
+      }
+    }
+    broadcastGameboard(room, board);
+    player = board.nextTurn();
+  }
+  return player;
+}
+
 // Called when player sends a roll command.
 function gameRoll() {
   console.log("Roll");
@@ -110,18 +132,27 @@ function gameNext() {
   const room = this.handshake.query.room;
 
   getBoard(room)
-    .then((res) => {
+    .then(async (res) => {
       const player = res.checkTurn();
 
       // Can't next if not turn or not the player calling it.
       if (player.uname !== uname) return notif(this, 1, "Can not next");
 
       // Already checks if the next player lost or not.
-      const p = res.nextTurn();
+      let p = res.nextTurn();
+
+      // Run the bots
+      p = runAI(res, p, room);
+
       if (Number.isInteger(p)) {
         // Broadcast the winner
-        // TODO: delete all the board references
-        io.in(room).emit("game:winner", p);
+        console.log("We got a winner!");
+
+        // Push the final guy
+        res.losers.push(res.players[p]);
+
+        // Emit leaderboard
+        io.in(room).emit("winner", res.losers);
 
         // Create request to master to delete the room.
         const turl = process.env.MASTERSERVER + "/io/delrooms";
@@ -135,9 +166,8 @@ function gameNext() {
           .send([room])
           .end();
 
-        // Finally, delete from redis.
-        const cl = getRedis();
-        cl.del(room);
+        // Delete all room references
+        deleteRoom(room);
       } else {
         // Save board
         setBoard(room, res);
@@ -218,6 +248,10 @@ function startGame() {
       players: obj.players
     });
 
+    // Run the bots
+    const p = game.checkTurn();
+    runAI(game, p, room);
+
     // Save the board to reference manager
     setBoard(room, game);
 
@@ -228,7 +262,8 @@ function startGame() {
 }
 
 function addBot() {
-  const botName = BOTNAMES[Math.floor(Math.random() * BOTNAMES.length)];
+  const botName =
+    "[BOT] " + BOTNAMES[Math.floor(Math.random() * BOTNAMES.length)];
   const room = this.handshake.query.room;
   const cl = getRedis();
 

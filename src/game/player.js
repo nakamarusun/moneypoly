@@ -98,6 +98,9 @@ class Player {
         // TODO make popup saying property already at highest level
         console.log("Property already at the highest level");
         return false;
+      } else if (this.balance < prop.price) {
+        console.log("No money to upgrade");
+        return false;
       } else {
         prop.level += 1;
         this.balance -= prop.price;
@@ -204,7 +207,7 @@ class Player {
         console.log(
           "You are not the owner of this property, your balance will be deducted accordingly"
         );
-        if (this.balance < property.price) {
+        if (this.balance < property.price / 5) {
           console.log(
             "You do not have enough money to pay the player, you have lost this game"
           );
@@ -213,6 +216,7 @@ class Player {
             this.properties[i].status = "free";
           }
           this.status = 2;
+          playBoard.losers.push(this.uname);
         } else {
           this.balance -= property.price / 5;
           for (let i = 0; i < playBoard.players.length; i++) {
