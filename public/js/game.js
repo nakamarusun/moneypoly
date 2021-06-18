@@ -529,7 +529,7 @@ const IO = {
                 const $prop = document.createElement("li");
                 $prop.classList.add("default-propertyList");
                 console.log(`${propOwned.name} - Worth:$ ${propOwned.price} - ${propOwned.level}`)
-                $prop.innerText = `${propOwned.name} - Worth:$ ${propOwned.price / 2} ^Lvl.${propOwned.level}`;
+                $prop.innerText = `${propOwned.name} - Worth:$ ${propOwned.price} ^Lvl.${propOwned.level}`;
 
                 $property.appendChild($prop);
             }
