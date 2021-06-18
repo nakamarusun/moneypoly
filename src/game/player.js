@@ -218,6 +218,7 @@ class Player {
           for (let i = 0; i < this.properties.length; i++) {
             this.properties[i].owner = "";
             this.properties[i].status = "free";
+            this.properties[i].price = this.properties[i].price / 2;
           }
           this.status = 2;
           playBoard.losers.push(this.uname);
