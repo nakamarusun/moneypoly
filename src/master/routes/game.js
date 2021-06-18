@@ -4,6 +4,8 @@ const validator = require("validator");
 const { getRedis } = require("../../redisdb");
 const { genAlphanum } = require("../../util");
 
+const { aiBuyPath } = require("../ai/buypredictor");
+
 const { genToken } = require("../../interserver/inter");
 
 const IDLENGTH = 5; // Room id length
@@ -99,6 +101,10 @@ router.post("/join", (req, res) => {
       server: rep
     });
   });
+});
+
+router.get("/buymodel", (req, res) => {
+  res.sendFile(aiBuyPath);
 });
 
 module.exports = router;
