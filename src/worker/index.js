@@ -31,7 +31,9 @@ app.use(
 // Register routes
 app.use("/io", comm);
 
-require("../redisdb").prefix = `wm${process.env.WORKERNAME}:`;
+const redisdb = require("../redisdb");
+redisdb.prefix = `wm${process.env.WORKERNAME}:`;
+redisdb.init();
 
 // Load SSL certificates, if exists
 const sslFileAvailable = (process.env.KEY && process.env.CERT) !== undefined;

@@ -37,7 +37,9 @@ app.use("/io", comm);
 app.use("/moneypoly/v1", gamerouter);
 
 // Setup redis
-require("../redisdb").prefix = "mm:";
+const redisdb = require("../redisdb");
+redisdb.prefix = "mm:";
+redisdb.init();
 
 // Load SSL certificates, if exists
 const sslFileAvailable = (process.env.KEY && process.env.CERT) !== undefined;
